@@ -1,0 +1,39 @@
+import * as Yup from 'yup';
+
+export const validationSignSchema = Yup.object().shape({
+  username: Yup.string().required('Name is required'),
+  password: Yup.string()
+    .required('Password is required')
+    .min(6, 'Password must be at least 8 characters long'), // Add minimum length for the password
+});
+export const validationSchema = Yup.object().shape({
+  leave_type: Yup.string().required('Leave type is required'),
+  leave_from_date: Yup.string().required('Start date is required'),
+  leave_to_date: Yup.string().required('End date is required'),
+  leave_reason: Yup.string().required('Reason is required'),
+});
+export const validationtravelSchema = Yup.object().shape({
+  travel_type: Yup.string().required('Travel type is required'),
+  travel_purpose: Yup.string().required('Travel purpose is required'),
+  travel_funding: Yup.string().required('Travel funding is required'),
+  travel_mode: Yup.string().required('Travel mode is required'),
+  travel_from_date: Yup.string().required('Start date is required'),
+  travel_to_date: Yup.string().required('End date is required'),
+  travel_description: Yup.string().required('Travel description is required'),
+
+  travel_from_place: Yup.string().required('Travel from place is required'),
+  travel_to_place: Yup.string().required('Travel to place is required'),
+});
+export const validationtrainingSchema = Yup.object().shape({
+  training_type: Yup.string().required('Training type is required'),
+  training_category: Yup.string().required('Training Category is required'),
+  course_programme: Yup.string().required('Course/Programme is required'),
+  institute_name_location: Yup.string().required('Institute Name/Location is required'),
+  training_from_date: Yup.string().required('Start date is required'),
+  training_to_date: Yup.string().required('End date is required'),
+  country: Yup.string().required('Country description is required'),
+
+  source_of_funding: Yup.string().required('Source of Funding is required'),
+  training_description: Yup.string().required('Description is required'),
+ 
+});

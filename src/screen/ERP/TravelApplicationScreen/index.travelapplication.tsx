@@ -1,0 +1,237 @@
+/* eslint-disable react-native/no-inline-styles */
+import React, {useEffect, useState} from 'react';
+import {View, ScrollView} from 'react-native';
+import {Formik} from 'formik';
+import Button from '../../../component/Button';
+import Wrapper from '../../auth';
+
+import dayjs from 'dayjs';
+import {DateType} from 'react-native-ui-datepicker';
+
+import NavComponent from '../../../component/NavComponent/navvomponent';
+import {
+  initialValues,
+  TravelRequestForm,
+} from '../../../utils/erp/travelapplication';
+import {validationtravelSchema} from '../../auth/validation/signIn.validation';
+import {
+  ModeofTravels,
+  PurposeofTravels,
+  TravelFundings,
+} from '../../../public/utility/data/travelrequest';
+import {renderField} from '../../../public/customfields/custom.fields';
+import {CreateTravelAttributes} from '../../../interface/ERP/leaveapplication';
+import {
+  TokenAttributes,
+  tokenMiddleware,
+} from '../../../public/middleware/token.middleware';
+import {styles} from '../LeaveApplicationPage/style.leaveapplicationpage';
+import travelStyles from './style.travelapplication';
+import {useMutation} from '@tanstack/react-query';
+import apiClient from '../../../post/postapi';
+import {ERPURL} from '../../../component/APIURL/ERP/erpurl';
+import {AxiosError} from 'axios';
+import {fetchTrainingDropDownData} from './trainingTypeData';
+import extractDropdownData from './function';
+
+const TravelApplicationScreen: React.FC = () => {
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
+  const [openStart, setOpenStart] = useState(false);
+  const [openEnd, setOpenEnd] = useState(false);
+  const [tokenData, setTokenData] = useState<TokenAttributes | undefined>(
+    undefined,
+  );
+  // const [travelData, setTravelData] = useState<TravelData>({
+  //   Travel_funding: [],
+  //   Travel_mode: [],
+  //   Travel_purpose: [],
+  //   Travel_type: [],
+  // });
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  );
+  const [openDialog, setOpenDialog] = useState(false);
+  const [servError, setServerError] = useState(false);
+  const {data: TrainingDropDownData} = fetchTrainingDropDownData();
+  
+ 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await tokenMiddleware();
+      setTokenData(data);
+    };
+    fetchData();
+  }, []);
+
+  const {
+    mutateAsync,
+    error,
+    isPending,
+    isSuccess,
+    data: testData,
+  } = useMutation({
+    mutationFn: async (credentials: CreateTravelAttributes) => {
+      try {
+        const response = await apiClient.post(ERPURL.createtravel, credentials);
+
+        if (response) {
+          setOpenDialog(true);
+
+          return response;
+        }
+
+        // eslint-disable-next-line no-catch-shadow
+      } catch (error) {
+        if (error) {
+          setErrorMessage((error as AxiosError)?.message);
+          throw error;
+        }
+        setErrorMessage((error as unknown as axiosError)?.response.data.error);
+        setServerError(true);
+
+        throw error;
+      }
+    },
+  });
+  const ConditionalFieldConfig = [
+    {
+      targetField: 'travel_advance_amount',
+      dependsOn: 'need_advance', // Field that controls the target
+      condition: (value: boolean) => value === true, // Function that determines if target is enabled
+    },
+  ];
+
+  const onFormSubmit = (values: CreateTravelAttributes) => {
+    let datevalue = 0;
+
+    if (values.travel_from_date && values.travel_to_date) {
+      const fromDate = new Date(values.travel_from_date);
+      const toDate = new Date(values.travel_to_date);
+
+      datevalue =
+        (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24);
+
+      if (datevalue === 0) {
+        datevalue = 1;
+      }
+    }
+    const dataToSend = {
+      ...(tokenData?.employee_code && {employee_code: tokenData.employee_code}),
+      travel_type: values.travel_type,
+      travel_purpose: values.travel_purpose,
+      travel_expense_applicable: values.travel_expense_applicable,
+      travel_funding: values.travel_funding,
+      travel_mode: values.travel_mode,
+      travel_duration: values.travel_duration,
+      travel_from_date: values.travel_from_date, // Already an array
+      travel_to_date: values.travel_to_date,
+      travel_advance_amount: values.travel_advance_amount, // Already an array
+      travel_from_place: values.travel_from_place, // Already in correct format
+      travel_to_place: values.travel_to_place, // Already in correct format
+
+      travel_description: values.travel_description,
+    };
+    mutateAsync(dataToSend as CreateTravelAttributes);
+    setServerError(false);
+    setOpenDialog(true);
+  };
+  const travelType = {
+    data: TrainingDropDownData?.data?.Travel_funding ?? []
+  };
+  const travel_purpose = extractDropdownData(TrainingDropDownData,TravelFundings)
+  
+  return (
+    <Wrapper>
+      <NavComponent
+        size={35}
+        container1Style={styles.container1}
+        headercontainerStyle={styles.headercontainer}
+        subcontainerStyle={{}}
+        width={24}
+        backIcon={'chevron-back-sharp'}
+        height={24}
+        imageStyle={styles.imagev}
+        textSytle={styles.text}
+        text="Travel Request"
+      />
+      <ScrollView style={{paddingHorizontal: 16, flexGrow: 1}}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationtravelSchema}
+          onSubmit={onFormSubmit}>
+          {({handleSubmit, values, setFieldValue, errors, touched}) => {
+            const handleDateChange = (date: DateType) => {
+              const formattedDate = dayjs(date).format('YYYY-MM-DD');
+              setStartDate(formattedDate);
+              setFieldValue('travel_from_date', formattedDate);
+              setOpenStart(false);
+            };
+
+            const handleEndDateChange = (date: DateType) => {
+              const formattedDate = dayjs(date).format('YYYY-MM-DD');
+              setEndDate(formattedDate);
+              setFieldValue('travel_to_date', formattedDate);
+              setOpenEnd(false);
+            };
+
+            return (
+              <View>
+                {TravelRequestForm(
+                  travelType,
+                  {data: PurposeofTravels},
+                  {data: TravelFundings},
+                  {data: ModeofTravels},
+                ).map((fieldConfig: any, index) => {
+                  return (
+                    <View key={index}>
+                      {renderField({
+                        fieldConfig,
+                        values,
+                        setFieldValue: (name, value) =>
+                          setFieldValue(name, value),
+                        touched,
+                        errors,
+                        ConditionalFieldConfig,
+                        setOpenStart,
+                        setOpenEnd,
+                        openStart,
+                        startDate,
+                        handleDateChange,
+                        openEnd,
+                        endDate,
+                        startDateFieldName: 'travel_from_date', // 👈 this was using = instead of :
+                        handleEndDateChange,
+                        dropdownStyle: styles.dropdownStyle,
+                        reasonTextStyle: travelStyles.reasonStyle,
+                        checkcontainerStyle: styles.checkconatinerStyle,
+                        inputContainer: styles.containerInput,
+                        textInputStyle: styles.textInputStyle,
+                        placeholderStyle: styles.placeHolderStyle,
+                        dateLabelStyle: styles.textInputStyle,
+                      })}
+                    </View>
+                  );
+                })}
+
+                <View style={styles.buttonContainer}>
+                  <Button
+                    title="Submit Application"
+                    onPress={() => {
+                      handleSubmit();
+                    }}
+                    style={styles.ButtonStyle}
+                    labelStyle={styles.buttonTextStyle}
+                  />
+                </View>
+              </View>
+            );
+          }}
+        </Formik>
+      </ScrollView>
+    </Wrapper>
+  );
+};
+
+export default TravelApplicationScreen;

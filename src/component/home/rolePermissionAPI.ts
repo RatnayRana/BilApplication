@@ -1,0 +1,59 @@
+import {AxiosError} from 'axios';
+import apiClient from '../../post/postapi';
+import {ERPURL} from '../APIURL/ERP/erpurl';
+import {CacheManager} from '../../public/middleware/cacheManager/cachemanager';
+
+type ResponseCustom = {
+  status: string;
+  message: string;
+  // errorMessage?:string
+  roles: string[];
+  permission: string[];
+};
+
+type errorResponse = {
+  errorMessage: string;
+};
+const cacheManager = new CacheManager();
+
+type combinedResponse = ResponseCustom | errorResponse;
+// Example ERP-related API functions
+export const ERPURLAPI = async (
+  username?: string,
+): Promise<combinedResponse> => {
+  const UserName = {username: username};
+  try {
+    username = JSON.stringify(`erprolepermission${username}`);
+    console.log(username)
+    if (cacheManager.has(username)) {
+      console.log('cacahed hit');
+      
+      return cacheManager.get(username)!;
+    }
+
+    console.log('cache missed');
+    
+    
+    const response = await apiClient.post(ERPURL.permission, UserName);
+    const data = response?.data;
+    if (data) {
+    }
+    const resultdata = {
+      status: data.status,
+      message: data.message,
+      roles: data.data.role,
+      permission: data.data.permission,
+    } as ResponseCustom;
+
+    cacheManager.set(username,resultdata );
+    return resultdata;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      const errorMessage = error.response?.data?.error || 'error message';
+      return {errorMessage};
+    }
+    return {errorMessage: 'unkown'};
+  }
+};
+
+export default ERPURLAPI;
