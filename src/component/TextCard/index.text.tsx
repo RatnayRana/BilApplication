@@ -16,8 +16,8 @@ const Card: React.FC<CardProps> = ({
   return (
     <View>
       {item?.map((itemCard, index) => {
-        
-        const IconComponent = itemCard.iconLib ? iconLibraries[itemCard.iconLib] : MaterialCommunityIcons;        
+
+        const IconComponent = itemCard.iconLib ? iconLibraries[itemCard.iconLib] : MaterialCommunityIcons;
         return (
           <TouchableOpacity
             key={index}
@@ -27,9 +27,9 @@ const Card: React.FC<CardProps> = ({
           >
             <View style={imageandTitleStyle}>
               <IconComponent name={itemCard.iconName} size={40} color={colors.primary} />
-              <TextCompoment 
-                text={itemCard.item_name} 
-                style={[titleStyle, {color: colors.primary, fontWeight: '600'}]} 
+              <TextCompoment
+                text={itemCard.item_name}
+                style={[titleStyle, { color: colors.primary, fontWeight: '600' }]}
               />
               {itemCard?.icon && (
                 <View>

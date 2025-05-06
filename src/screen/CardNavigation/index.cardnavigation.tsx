@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/react-in-jsx-scope */
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackNavigatorParamsList} from '../../component/interface/routeinterface';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackNavigatorParamsList } from '../../component/interface/routeinterface';
 import TextCard from '../../component/TextCard/index.text';
-import {ERPApprovalOption} from '../../public/utility/data/homeItem';
-import {ScrollView} from 'react-native';
-import {NavigationProp, useNavigation} from '@react-navigation/core';
-import {RoleAndPermission} from '../../component/home/roleAndPermission';
-import {useEffect, useState} from 'react';
+import { ERPApprovalOption } from '../../public/utility/data/homeItem';
+import { ScrollView } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/core';
+import { RoleAndPermission } from '../../component/home/roleAndPermission';
+import { useEffect, useState } from 'react';
 import NavComponent from '../../component/NavComponent/navvomponent';
-import {styles} from '../ERP/LeaveApplicationPage/style.leaveapplicationpage';
+import { styles } from '../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import aprrovalStyles from './style.cardnavigation';
 type RolePermission = {
   permission: string;
@@ -22,7 +22,7 @@ type CardDetails = {
   iconName?: string;
   permission: string;
   iconLib?: string;
-  icon:string
+  icon: string
   screen: string;
 };
 type CardNavigationProps = NativeStackScreenProps<
@@ -30,13 +30,13 @@ type CardNavigationProps = NativeStackScreenProps<
   'CardNavigation'
 >;
 
-const CardNavigation: React.FC<CardNavigationProps> = ({route}) => {
+const CardNavigation: React.FC<CardNavigationProps> = ({ route }) => {
   const [permissions, setPermission] = useState<RolePermission[] | null>(null);
   const [approveOptions, setApproveOptions] = useState<CardDetails[]>();
   const navigation =
     useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
 
-  const {itemName} = route.params;
+  const { itemName } = route.params;
 
   const fetchRoleAndPermission = async () => {
     try {
@@ -57,6 +57,7 @@ const CardNavigation: React.FC<CardNavigationProps> = ({route}) => {
   };
 
   useEffect(() => {
+
     fetchRoleAndPermission();
   }, []);
 
@@ -74,7 +75,7 @@ const CardNavigation: React.FC<CardNavigationProps> = ({route}) => {
   }, [permissions]);
 
   switch (itemName) {
-    case 'ERP':
+    case 'Approved Application':
       return (
         <>
           <NavComponent
@@ -89,7 +90,7 @@ const CardNavigation: React.FC<CardNavigationProps> = ({route}) => {
             textSytle={styles.text}
             text="Approval"
           />
-          <ScrollView style={{marginTop: 5, padding: 16}}>
+          <ScrollView style={{ marginTop: 5, padding: 16 }}>
             <TextCard
               item={approveOptions}
               imageandTitleStyle={aprrovalStyles.imageandTitleStyle}

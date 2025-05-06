@@ -11,7 +11,7 @@ export const RoleAndPermission = ({
 }: RoleAndPermissionAttributes) => {
   // return new Promise(async (resolve, reject) => {
   try {
-    if (itemName === 'ERP') {
+    if (itemName === 'Approved Application') {
       return ERPURLAPI(username);
 
       // } else if (itemName === 'HR') {

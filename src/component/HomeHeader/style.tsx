@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native';
 import {colors} from '../../utils/color';
-
+import { Dimensions } from 'react-native';
+const { height, width } = Dimensions.get('window');
 export const styles = StyleSheet.create({
   headercontainer: {
-    height: 180,
+    height: height/5,
 
     // backgroundColor: colors.special_backgroundcolor,
     backgroundColor: "rgb(37, 99, 235)",

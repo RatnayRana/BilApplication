@@ -23,17 +23,19 @@ export interface TokenAttributes {
   employee_id: string;
   employee_code: string;
 }
-interface LeaveApprovalData {
+export interface LeaveApprovalData {
   leave_id: string;
   employee_code: string;
-
+  leave_type:number;
+  leave_half_day:string;
   emp_full_name: string;
   emp_employee_number: string;
   branch_name: string;
   leave_total_days: number;
   leave_type_name: string;
-  from_date: Date;
-  to_Date: Date;
+  leave_from_date: Date;
+  leave_to_date: Date;
+  leave_reason:string
 }
 
 const LeaveApproval = () => {
@@ -172,40 +174,3 @@ const [openStart, setOpenStart] = useState(true);
 
 export default LeaveApproval;
 
-// const SignIn: React.FC<SignInProps> = ({navigation}) => {
-//   const [isLoading, setIsLoading] = useState(false);
-
-//   const {
-//     mutateAsync,
-//     isError,
-//     isPending,
-//     isSuccess,
-//     data: token,
-//   } = useMutation({
-//     mutationFn: async (credentials: AuthAttributes) => {
-//       return (await apiClient.post(ERPURL.login, credentials)) as {
-//         status: number;
-//         message: string;
-//         data: Token;
-//       };
-//     },
-//   });
-
-//   // const handleSubmit = useCallback(
-//   //   async (values: AuthAttributes) => {
-//   //     setIsLoading(true);
-//   //     mutation.mutate(values, {
-//   //       onSettled: () => {
-//   //         setIsLoading(false);
-//   //       },
-//   //     });
-//   //   },
-//   //   [mutation],
-//   // );
-
-//   const handleSubmit = async(values:AuthAttributes)=>{
-//     console.log("hy")
-//     const response = await mutateAsync(values)
-//     console.log(response)
-
-//   }

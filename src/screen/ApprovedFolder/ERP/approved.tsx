@@ -23,6 +23,8 @@ import ErrorDialog from '../../../component/ErrorDialog/errordialog';
 import NavComponent from '../../../component/NavComponent/navvomponent';
 import {styles} from '../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import Wrapper from '../../auth';
+import { CacheManager } from '../../../public/middleware/cacheManager/cachemanager';
+import { NavigationProp, useNavigation } from '@react-navigation/core';
 
 type approvedScreen = NativeStackScreenProps<
   RootStackNavigatorParamsList,
@@ -39,7 +41,7 @@ interface apData {
 }
 
 const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
-  const {approvedData} = route.params || {};
+  const {approvedData} = route.params;
   const [initialValues, setInitialValues] = useState<apData | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -47,6 +49,8 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
   );
+  const navigation =
+      useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
 
   function handleClose() {
     setOpenDialog(!openDialog);
@@ -54,6 +58,8 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
 
   function handleSuccess() {
     setOpenDialog(!openDialog);
+    navigation.navigate('ApprovalNavigator')
+    
   }
 
   useEffect(() => {
@@ -69,6 +75,7 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
     }
   }, [approvedData]);
 
+
   const {
     mutateAsync,
     isPending,
@@ -81,9 +88,10 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
         const data = await apiClient.post(ERPURL.approvedLeave, credentials);
         if (data) {
           setOpenDialog(true);
-
+          
           return data;
         }
+
 
         return data;
         // eslint-disable-next-line no-catch-shadow, @typescript-eslint/no-shadow
@@ -167,7 +175,6 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
   const handleSubmit = (values: ApprovedLeaveAttributes) => {
     const {
       emp_employee_number,
-      email,
       employee_code,
       leave_type,
       leave_from_date,
@@ -180,7 +187,6 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
     } = approvedData[0];
     const DataToSend = {
       employee_id: emp_employee_number,
-      email,
       employee_code: employee_code,
       leave_type: leave_type,
       leave_from_date,

@@ -8,7 +8,9 @@ import SignInScreen from './signIn';
 import CardNavigation from '../screen/CardNavigation/index.cardnavigation';
 import ApprovedScreen from '../screen/ApprovedFolder/ERP/approved';
 import {ApprovalNavigator} from './ERP/erpapproval';
-import { ApplicationNavigator } from './ERP/application';
+import { HomeNavigator } from './Home/homeNavigator';
+import LeaveApplication from '../screen/ERP/LeaveApplication/index.leave';
+import SearchApplication from '../screen/ERP/Search/search';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
 
@@ -46,14 +48,19 @@ export default function RootStack() {
         component={ApprovalNavigator}
         options={{headerShown: false}}
       />
-        {/* <Stack.Screen
-        name="Leave"
+        <Stack.Screen
+        name="HomeNavigator"
+        component={HomeNavigator}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="LeaveApplication"
         component={LeaveApplication}
         options={{headerShown: false}}
-      /> */}
-        <Stack.Screen
-        name="Application"
-        component={ApplicationNavigator}
+      />
+      <Stack.Screen
+        name="SearchApplication"
+        component={SearchApplication}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

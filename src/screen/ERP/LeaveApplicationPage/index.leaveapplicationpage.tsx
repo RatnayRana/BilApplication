@@ -130,6 +130,7 @@ const FormExample = () => {
   console.log(Type_of_Leave)
   return (
     <Wrapper>
+      
       <ErrorDialog
         error={error || servError}
         errormessage={
@@ -169,7 +170,8 @@ const FormExample = () => {
         text="Leave Application"
       />
       <ScrollView
-        style={{paddingHorizontal: 16, flexGrow: 1}}
+        style={{paddingHorizontal: 16}}
+        contentContainerStyle={{flexGrow:1,paddingBottom:30}}
         keyboardShouldPersistTaps="handled"
         // contentContainerStyle={{flex: 1 }}
       >

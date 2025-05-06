@@ -1,41 +1,44 @@
 import AuthHeader from '../../../component/AuthHeader';
 
-import React, {useState} from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
-import {useMutation} from '@tanstack/react-query';
+import React, { useState } from 'react';
+import { Platform, SafeAreaView, ScrollView } from 'react-native';
+import { useMutation } from '@tanstack/react-query';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackNavigatorParamsList} from '../../../component/interface/routeinterface';
-import {ERPURL} from '../../../component/APIURL/ERP/erpurl';
-import {AuthAttributes} from '../../../interface/auth/auth.interface';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackNavigatorParamsList } from '../../../component/interface/routeinterface';
+import { ERPURL } from '../../../component/APIURL/ERP/erpurl';
+import { AuthAttributes } from '../../../interface/auth/auth.interface';
 import apiClient from '../../../post/postapi';
 import Wrapper from '../index';
 import LoaderCompoment from '../../../component/Loader/index.loader';
 import AuthForm from './signinmemo';
-import {styles} from './styles';
-import {authFields} from '../../../utils/InputFields/AuthInput';
+import { styles } from './styles';
+import { authFields } from '../../../utils/InputFields/AuthInput';
 import CustomDialog from '../../../component/DialogBox/dialogbox';
-import {AxiosError} from 'axios'; // Ensure AxiosError is imported
+import { AxiosError } from 'axios'; // Ensure AxiosError is imported
 
 type SignInProps = NativeStackScreenProps<
   RootStackNavigatorParamsList,
   'SignIn'
 >;
 
-const SignIn: React.FC<SignInProps> = ({navigation}) => {
+const SignIn: React.FC<SignInProps> = ({ navigation }) => {
   const [openStart, setOpenStart] = useState(true);
   const [servError, setServerError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
   );
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   function handleClose() {
-    setOpenStart(!openStart);
+    setOpenStart(false);
   }
 
   function handleSuccess() {
-    handleClose();
+
+    setShowSuccessDialog(false);
     navigation.navigate('Main');
+
   }
 
   const {
@@ -53,6 +56,9 @@ const SignIn: React.FC<SignInProps> = ({navigation}) => {
             'accessToken',
             JSON.stringify(data.data.data.accessToken),
           );
+
+          setShowSuccessDialog(true);
+
         }
 
         return data;
@@ -74,6 +80,7 @@ const SignIn: React.FC<SignInProps> = ({navigation}) => {
   });
 
   const handleSubmit = (values: AuthAttributes) => {
+    // navigation.navigate('Main');
     setOpenStart(true); // Reset to make sure dialog shows again
     setServerError(false);
     mutateAsync(values);
@@ -95,15 +102,17 @@ const SignIn: React.FC<SignInProps> = ({navigation}) => {
         />
       )}
 
-      {isSuccess && (
+      {showSuccessDialog && (
         <CustomDialog
-          message={testdata?.data.message || 'successFull '}
+          message={testdata?.data.message || 'successFull'}
           color="#0AA06E"
           iconColor="#0AA06"
           iconName="sticker-check-outline"
+          visible={showSuccessDialog}
           onClose={handleSuccess}
         />
       )}
+
 
       <SafeAreaView>
         <ScrollView contentContainerStyle={styles.mainContainer}>

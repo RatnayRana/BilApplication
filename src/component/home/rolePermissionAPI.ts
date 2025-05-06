@@ -24,14 +24,11 @@ export const ERPURLAPI = async (
   const UserName = {username: username};
   try {
     username = JSON.stringify(`erprolepermission${username}`);
-    console.log(username)
     if (cacheManager.has(username)) {
-      console.log('cacahed hit');
       
       return cacheManager.get(username)!;
     }
 
-    console.log('cache missed');
     
     
     const response = await apiClient.post(ERPURL.permission, UserName);

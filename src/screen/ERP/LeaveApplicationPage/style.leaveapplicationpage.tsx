@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     height: height / 7,
     alignItems: 'center',
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     backgroundColor: colors.primary,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
@@ -219,32 +219,20 @@ export const styles = StyleSheet.create({
   halfday: {
     marginRight: 20,
   },
-  input: {
-    borderWidth: 2,
-    borderColor: colors.primary,
-    backgroundColor: colors.white,
-    height: 200,
-  },
-
+ 
   text: {
+    alignSelf:'center',
     fontSize: 20,
     color: colors.white,
     fontWeight: 400,
   },
-  ReasonContainer: {
-    backgroundColor: colors.black,
-    marginHorizontal: 5,
-    height: 200,
-    paddingTop: 10,
-    borderWidth: 3,
-    borderColor: colors.primary,
-  },
+
   buttonContainer: {
     marginVertical: 10,
     alignSelf: 'center',
     alignItems: 'center', // Ensures button is centered
     width: '100%',
-    height: 'auto', // Ensures button stays within bounds
+    // height: 'auto', // Ensures button stays within bounds
   },
   loaderStyle: {
     position: 'absolute',

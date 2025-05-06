@@ -6,8 +6,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import TextCompoment from '../TextComponent/index.text';
-import {StyleProp} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { StyleProp } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // ✅ Use the correct icon set
 import { colors } from '../../utils/color';
 
@@ -22,7 +22,7 @@ interface navComponent {
   height?: number;
   text: string;
   backIcon: string;
-  size:number
+  size: number
 }
 
 const NavComponent = ({
@@ -45,7 +45,10 @@ const NavComponent = ({
         <TouchableOpacity style={subcontainerStyle} onPress={handleBackPress}>
           <Ionicons name={backIcon} size={35} color={colors.white} />
         </TouchableOpacity>
-        <TextCompoment text={text} style={textSytle} />
+        <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center' }}>
+          <TextCompoment text={text} style={textSytle} />
+
+        </View>
         <View></View>
       </View>
     </View>

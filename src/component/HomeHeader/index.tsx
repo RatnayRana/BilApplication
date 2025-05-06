@@ -7,6 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { colors } from '../../utils/color';
 import ImageComponent from '../Image/index.image';
 
+
 const HomeHeader: React.FC<imageInterface> = ({imageSource,name}) => {
 
   return (

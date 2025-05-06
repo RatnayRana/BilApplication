@@ -7,11 +7,13 @@ import {
 } from 'react-native';
 
 export interface Item {
-  item_name:string;
+
+  item_name: string;
   iconName?: string;
   iconLib?: string;
   icon: string;
   screen: string;
+  item_id?: number;  skipPermissionCheck?: boolean; 
 }
 
 // Define the props for the Card component

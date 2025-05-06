@@ -1,36 +1,41 @@
-import {StyleSheet} from 'react-native';
-import {colors} from '../../utils/color';
-import {Dimensions} from 'react-native';
-const { height} = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
+import { colors } from '../../utils/color';
+import { Dimensions } from 'react-native';
+const { height, width } = Dimensions.get('window');
+const cardGap = 16;
 
+const cardWidth = (Dimensions.get('window').width - cardGap * 3) / 2;
 export const styles = StyleSheet.create({
- 
+
   CardContainer: {
-    // width: width,
-    paddingHorizontal: 15,
+
+    // paddingHorizontal: 12,
+    paddingVertical: 16,
     height: height,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    // marginStart: 2,
-    // marginEnd: 2
-    
+    justifyContent: 'center',
+    gap: 12
+
 
   },
   Card: {
-    // width: width / 3,
-    // height: height / 6,
-    width: "32%",
-    height: 100,
-    backgroundColor: colors.white,
+    width: cardWidth,
+    height: height / 5,
     marginTop: 10,
-    borderRadius: 5,
+    borderRadius: 18,
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
     elevation: 6,
-    borderWidth: 1,
-    borderColor: colors.borderColor,
+    paddingHorizontal: 22,
+    paddingVertical: 20,
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+
   },
   cardimageStyle: {
     width: 40,
@@ -44,13 +49,15 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     color: colors.black,
   },
-  cardTextStyle:{
+  cardTextStyle: {
     fontSize: 18,
-      color: colors.black,
-      textAlign: 'center', // Centers text horizontally
-      flexWrap: 'wrap',
-      width: '100%', // Keeps text within bounds
-      marginTop: 10,
+    color: colors.black,
+    textAlign: 'left', // Centers text horizontally
+    flexWrap: 'wrap',
+    width: '100%', // Keeps text within bounds
+    marginVertical: 15,
+    fontWeight: 600,
+    marginHorizontal: 3
 
   }
 });
