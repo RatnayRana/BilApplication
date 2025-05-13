@@ -28,5 +28,5 @@ export interface CardProps {
   SubmitTextStyle?: StyleProp<TextStyle>;
   item?: Item[];
   title?: string;
-  onPress: (event: GestureResponderEvent, item: Item) => void;
+  onPress: (item:Item) => void;
 }

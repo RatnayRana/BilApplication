@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dropdown} from 'react-native-element-dropdown';
+import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
 import Label from '../../component/Label/index.label';
 import {
   Text,
@@ -12,12 +12,12 @@ import {
 } from 'react-native';
 import CheckBox from '../../component/CheckBox/Index.checkbox';
 import CustomTextInput from '../../component/TextInput/index.textinput';
-import {styles} from './custom.style';
+import { styles } from './custom.style';
 import dayjs from 'dayjs';
 import Icon from 'react-native-vector-icons/AntDesign'; // Added missing import
 import MultiDatePicker from '../../component/Date';
-import {DateType} from 'react-native-ui-datepicker';
-import {colors} from '../../utils/color';
+import { DateType } from 'react-native-ui-datepicker';
+import { colors } from '../../utils/color';
 
 interface DropdownItem {
   label: string;
@@ -31,6 +31,7 @@ interface FieldConfig {
   data?: DropdownItem[];
   placeholder?: string;
   values?: any;
+  multiple?: boolean
 }
 interface ConditionalFieldConfig {
   targetField: string;
@@ -47,10 +48,10 @@ interface customInputFields {
   textInputStyle?: StyleProp<TextStyle>;
   fieldConfig: FieldConfig;
   inputContainer?: StyleProp<ViewStyle>;
-  values: {[key: string]: any};
-  setFieldValue?: (key: string, value: any) => void;
-  touched: {[key: string]: boolean};
-  errors: {[key: string]: string};
+  values: { [key: string]: any };
+  setFieldValue?: (key: string, value: any | any[]) => void;
+  touched: { [key: string]: any };
+  errors: { [key: string]: any };
   setOpenStart?: (value: boolean) => void;
   openStart?: boolean;
   startDate?: string | null;
@@ -122,12 +123,46 @@ export const renderField = ({
             valueField="value"
             placeholder={fieldConfig.placeholder}
             value={values[fieldConfig.name]}
+
           />
           {touched[fieldConfig.name] && errors[fieldConfig.name] && (
             <Text style={styles.errorText}>{errors[fieldConfig.name]}</Text>
           )}
         </>
       );
+    // Updated MultiSelect case in renderField function
+    case 'MultiSelect':
+      return (
+        <>
+          <Label text={fieldConfig.label} style={textInputStyle} />
+          <MultiSelect
+            style={dropdownStyle}
+            data={fieldConfig.data || []}
+            placeholderStyle={placeholderStyle}
+            labelField="label"
+            valueField="value"
+            value={values[fieldConfig.name] || []} // Ensure it's an array but not nested
+            placeholder={fieldConfig.placeholder}
+            mode="default"
+            onChange={(items) => {
+              // Directly use the items array as it already contains the selected values
+              setFieldValue?.(fieldConfig.name, items);
+            }}
+            renderSelectedItem={(item, unSelect) => (
+              <View style={styles.selectedItemContainer}>
+                <Text style={styles.selectedItemText}>{item.label}</Text>
+                <TouchableOpacity onPress={() => unSelect && unSelect(item)}>
+                  <Icon name="close" size={16} color={colors.white} />
+                </TouchableOpacity>
+              </View>
+            )}
+          />
+          {touched[fieldConfig.name] && errors[fieldConfig.name] && (
+            <Text style={styles.errorText}>{errors[fieldConfig.name]}</Text>
+          )}
+        </>
+      );
+
     case 'date':
       // Determine if this is a start date or end date field
       const isStartDate = fieldConfig.name === startDateFieldName;
@@ -217,6 +252,7 @@ export const renderField = ({
             containerStyle={inputContainer}
             inputStyle={reasonTextStyle}
             onChangeText={text =>
+
               !disabled && setFieldValue?.(fieldConfig.name, text)
             }
             value={values[fieldConfig.name]}

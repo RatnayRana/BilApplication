@@ -27,13 +27,9 @@ export const validationtravelSchema = Yup.object().shape({
 export const validationtrainingSchema = Yup.object().shape({
   training_type: Yup.string().required('Training type is required'),
   training_category: Yup.string().required('Training Category is required'),
-  course_programme: Yup.string().required('Course/Programme is required'),
-  institute_name_location: Yup.string().required('Institute Name/Location is required'),
-  training_from_date: Yup.string().required('Start date is required'),
-  training_to_date: Yup.string().required('End date is required'),
-  country: Yup.string().required('Country description is required'),
+  // training_course: Yup.string().required('Training course is required'),
+  training_country: Yup.string().required('Country description is required'),
 
-  source_of_funding: Yup.string().required('Source of Funding is required'),
   training_description: Yup.string().required('Description is required'),
- 
+
 });

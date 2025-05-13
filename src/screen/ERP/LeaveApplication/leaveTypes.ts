@@ -26,6 +26,7 @@ export const FetchLeaveTypes = () => {
         );
         cachemanager.set(leavesType, response.data);
         return response.data;
+    
       } catch (error) {
         throw error;
       }

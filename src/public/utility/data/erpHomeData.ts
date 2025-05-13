@@ -1,7 +1,7 @@
 export const ERPHomeData = [
   {
     item_id: 1,
-    item_name: 'Leave Application',
+    item_name: 'Create Application',
     iconName: 'briefcase-outline',
     screen: 'LeaveApplication',
     icon: 'chevron-forward',
@@ -28,6 +28,17 @@ export const ERPHomeData = [
     screen: 'SearchApplication',
     icon: 'chevron-forward',
     iconLib: 'MaterialCommunityIcons'
+
+  },
+  {
+    item_id: 4,
+    item_name: 'View Application',
+    iconName: 'local-see',
+    skipPermissionCheck: true,
+
+    screen: 'View_Application',
+    icon: 'chevron-forward',
+    iconLib: 'MaterialIcons'
 
   },
 

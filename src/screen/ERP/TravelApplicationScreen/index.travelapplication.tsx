@@ -1,38 +1,38 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
-import {View, ScrollView} from 'react-native';
-import {Formik} from 'formik';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView } from 'react-native';
+import { Formik } from 'formik';
 import Button from '../../../component/Button';
 import Wrapper from '../../auth';
 
 import dayjs from 'dayjs';
-import {DateType} from 'react-native-ui-datepicker';
+import { DateType } from 'react-native-ui-datepicker';
 
 import NavComponent from '../../../component/NavComponent/navvomponent';
 import {
   initialValues,
   TravelRequestForm,
 } from '../../../utils/erp/travelapplication';
-import {validationtravelSchema} from '../../auth/validation/signIn.validation';
-import {
-  ModeofTravels,
-  PurposeofTravels,
-  TravelFundings,
-} from '../../../public/utility/data/travelrequest';
-import {renderField} from '../../../public/customfields/custom.fields';
-import {CreateTravelAttributes} from '../../../interface/ERP/leaveapplication';
+import { validationtravelSchema } from '../../auth/validation/signIn.validation';
+
+import { renderField } from '../../../public/customfields/custom.fields';
+import { CreateTravelAttributes } from '../../../interface/ERP/leaveapplication';
 import {
   TokenAttributes,
   tokenMiddleware,
 } from '../../../public/middleware/token.middleware';
-import {styles} from '../LeaveApplicationPage/style.leaveapplicationpage';
+import { styles } from '../LeaveApplicationPage/style.leaveapplicationpage';
 import travelStyles from './style.travelapplication';
-import {useMutation} from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import apiClient from '../../../post/postapi';
-import {ERPURL} from '../../../component/APIURL/ERP/erpurl';
-import {AxiosError} from 'axios';
-import {fetchTrainingDropDownData} from './trainingTypeData';
-import extractDropdownData from './function';
+import { ERPURL } from '../../../component/APIURL/ERP/erpurl';
+import { AxiosError } from 'axios';
+import ErrorDialog from '../../../component/ErrorDialog/errordialog';
+import LoaderComponent from '../../../component/UniversalLoader/loader';
+import SuccessDialog from '../../../component/SuccessDialog/successdialog';
+import { NavigationProp, useNavigation } from '@react-navigation/core';
+import { RootStackNavigatorParamsList } from '../../../component/interface/routeinterface';
+import { fetchTravelDropDownData } from './trainingTypeData';
 
 const TravelApplicationScreen: React.FC = () => {
   const [startDate, setStartDate] = useState<string | null>(null);
@@ -42,20 +42,25 @@ const TravelApplicationScreen: React.FC = () => {
   const [tokenData, setTokenData] = useState<TokenAttributes | undefined>(
     undefined,
   );
-  // const [travelData, setTravelData] = useState<TravelData>({
-  //   Travel_funding: [],
-  //   Travel_mode: [],
-  //   Travel_purpose: [],
-  //   Travel_type: [],
-  // });
+  const navigation = useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
+
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
   );
   const [openDialog, setOpenDialog] = useState(false);
   const [servError, setServerError] = useState(false);
-  const {data: TrainingDropDownData} = fetchTrainingDropDownData();
-  
- 
+  const { data: TrainingDropDownData } = fetchTravelDropDownData();
+  function handleClose() {
+    setOpenDialog(!openDialog);
+  }
+
+  function handleSuccess() {
+    setOpenDialog(!openDialog);
+    navigation.goBack()
+
+    // handleClose();
+    // navigation.navigate('Main');
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,6 +78,7 @@ const TravelApplicationScreen: React.FC = () => {
     data: testData,
   } = useMutation({
     mutationFn: async (credentials: CreateTravelAttributes) => {
+      console.log("Attempting to send API request with data:", credentials);
       try {
         const response = await apiClient.post(ERPURL.createtravel, credentials);
 
@@ -84,6 +90,8 @@ const TravelApplicationScreen: React.FC = () => {
 
         // eslint-disable-next-line no-catch-shadow
       } catch (error) {
+        console.log(error);
+
         if (error) {
           setErrorMessage((error as AxiosError)?.message);
           throw error;
@@ -104,6 +112,7 @@ const TravelApplicationScreen: React.FC = () => {
   ];
 
   const onFormSubmit = (values: CreateTravelAttributes) => {
+    const valuef = values.travel_expense_applicable ? 'Yes' : 'No';
     let datevalue = 0;
 
     if (values.travel_from_date && values.travel_to_date) {
@@ -118,16 +127,16 @@ const TravelApplicationScreen: React.FC = () => {
       }
     }
     const dataToSend = {
-      ...(tokenData?.employee_code && {employee_code: tokenData.employee_code}),
+      ...(tokenData?.employee_code && { employee_code: tokenData.employee_code }),
       travel_type: values.travel_type,
       travel_purpose: values.travel_purpose,
-      travel_expense_applicable: values.travel_expense_applicable,
+      travel_expense_applicable: valuef,
       travel_funding: values.travel_funding,
       travel_mode: values.travel_mode,
-      travel_duration: values.travel_duration,
+      travel_duration: datevalue,
       travel_from_date: values.travel_from_date, // Already an array
       travel_to_date: values.travel_to_date,
-      travel_advance_amount: values.travel_advance_amount, // Already an array
+      travel_advance_amount: Number(values.travel_advance_amount), // Already an array
       travel_from_place: values.travel_from_place, // Already in correct format
       travel_to_place: values.travel_to_place, // Already in correct format
 
@@ -138,12 +147,47 @@ const TravelApplicationScreen: React.FC = () => {
     setOpenDialog(true);
   };
   const travelType = {
-    data: TrainingDropDownData?.data?.Travel_funding ?? []
+    data: TrainingDropDownData?.data?.data.Travel_funding ?? []
   };
-  const travel_purpose = extractDropdownData(TrainingDropDownData,TravelFundings)
-  
+  const travel_purpose = {
+    data: TrainingDropDownData?.data?.data.Travel_purpose ?? []
+  };
+  const travel_funding = {
+    data: TrainingDropDownData?.data?.data.Travel_funding ?? []
+  };
+  const travel_mode = {
+    data: TrainingDropDownData?.data?.data.Travel_mode ?? []
+  };
+
+
   return (
     <Wrapper>
+      <ErrorDialog
+        error={error || servError}
+        errormessage={
+          (error as unknown as axiosError)?.response?.data?.error ||
+          errorMessage
+        }
+        visible={openDialog}
+        onClose={handleClose}
+      />
+
+      <LoaderComponent
+        ispending={isPending}
+        loaderStyle={styles.loaderStyle}
+        name="BallPulseSync"
+        width={50}
+        height={50}
+        color="blue"
+        isLoading={true}
+      />
+      <SuccessDialog
+        isSuccess={isSuccess}
+        message={testData?.data.message || 'successFull '}
+        visible={openDialog}
+        onClose={handleSuccess}
+      />
+
       <NavComponent
         size={35}
         container1Style={styles.container1}
@@ -156,12 +200,12 @@ const TravelApplicationScreen: React.FC = () => {
         textSytle={styles.text}
         text="Travel Request"
       />
-      <ScrollView style={{paddingHorizontal: 16, flexGrow: 1}}>
+      <ScrollView style={{ paddingHorizontal: 16, flexGrow: 1 }}>
         <Formik
           initialValues={initialValues}
           validationSchema={validationtravelSchema}
           onSubmit={onFormSubmit}>
-          {({handleSubmit, values, setFieldValue, errors, touched}) => {
+          {({ handleSubmit, values, setFieldValue, errors, touched }) => {
             const handleDateChange = (date: DateType) => {
               const formattedDate = dayjs(date).format('YYYY-MM-DD');
               setStartDate(formattedDate);
@@ -180,9 +224,9 @@ const TravelApplicationScreen: React.FC = () => {
               <View>
                 {TravelRequestForm(
                   travelType,
-                  {data: PurposeofTravels},
-                  {data: TravelFundings},
-                  {data: ModeofTravels},
+                  travel_purpose,
+                  travel_funding,
+                  travel_mode,
                 ).map((fieldConfig: any, index) => {
                   return (
                     <View key={index}>
@@ -235,3 +279,5 @@ const TravelApplicationScreen: React.FC = () => {
 };
 
 export default TravelApplicationScreen;
+
+

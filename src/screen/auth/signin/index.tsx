@@ -1,7 +1,7 @@
 import AuthHeader from '../../../component/AuthHeader';
 
 import React, { useState } from 'react';
-import { Platform, SafeAreaView, ScrollView } from 'react-native';
+import {  SafeAreaView, ScrollView } from 'react-native';
 import { useMutation } from '@tanstack/react-query';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -106,7 +106,7 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
         <CustomDialog
           message={testdata?.data.message || 'successFull'}
           color="#0AA06E"
-          iconColor="#0AA06"
+          iconColor="#0AA06E"
           iconName="sticker-check-outline"
           visible={showSuccessDialog}
           onClose={handleSuccess}

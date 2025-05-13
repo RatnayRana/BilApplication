@@ -99,7 +99,8 @@ const [openStart, setOpenStart] = useState(true);
 
     fetchTokenData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run once when the component mounts
+  }, []); 
+
   const handleSubmit = (selectedItem: LeaveApprovalData) => {
     // const approvedData = testData?.data.data;
     navogation.navigate('ApprovedScreen', {approvedData: [selectedItem]});

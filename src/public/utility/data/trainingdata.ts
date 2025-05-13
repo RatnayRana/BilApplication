@@ -18,8 +18,8 @@ export const Source_Of_Funding = [
   {id: 0, name: 'Select Source of Funding'},
   {id: 1, name: 'Office'},
   {id: 2, name: 'Employee'},
-  {id: 2, name: 'Others'},
-  {id: 3, name: 'Not Applicable'},
+  {id: 3, name: 'Others'},
+  {id: 4, name: 'Not Applicable'},
 ];
 // export const ModeofTravels = [
 //   {id: 0, name: 'Select Travel TypeMode of Travel'},

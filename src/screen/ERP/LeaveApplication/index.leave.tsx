@@ -39,7 +39,7 @@ const LeaveApplication = () => {
           titleStyle={applicationStyles.textStyle}
           SubmitStyle={applicationStyles.submitStyle}
           SubmitTextStyle={applicationStyles.SubmitTextStyle}
-          onPress={(_, item) => {
+          onPress={(item) => {
             handleCardPress(item);
           }}
           item={leaveItem}

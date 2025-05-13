@@ -6,11 +6,12 @@ import {RootStackNavigatorParamsList} from '../component/interface/routeinterfac
 import SignInScreen from './signIn';
 // import ApprovedScreen from '../screen/ApprovedFolder/ERP/approved';
 import CardNavigation from '../screen/CardNavigation/index.cardnavigation';
-import ApprovedScreen from '../screen/ApprovedFolder/ERP/approved';
+import ApprovedScreen from '../screen/ApprovedFolder/ERP/Leave/approved';
 import {ApprovalNavigator} from './ERP/erpapproval';
 import { HomeNavigator } from './Home/homeNavigator';
 import LeaveApplication from '../screen/ERP/LeaveApplication/index.leave';
 import SearchApplication from '../screen/ERP/Search/search';
+import TravelApprovedScreen from '../screen/ApprovedFolder/ERP/TravelRequest/travelApproved';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
 
@@ -40,6 +41,11 @@ export default function RootStack() {
       <Stack.Screen
         name="ApprovedScreen"
         component={ApprovedScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="TravelApprovedScreen"
+        component={TravelApprovedScreen}
         options={{headerShown: false}}
       />
 

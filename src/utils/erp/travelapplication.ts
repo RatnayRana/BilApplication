@@ -88,7 +88,6 @@ export const TravelRequestForm = (
       type: 'text',
       label: 'advance_amount',
       name: 'travel_advance_amount',
-      placeholder: '0',
     },
     {
       type: 'text',

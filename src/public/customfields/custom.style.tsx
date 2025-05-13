@@ -217,4 +217,24 @@ export const styles = StyleSheet.create({
     // height: 200,
     paddingTop: 10,
   },
+
+  selectedItemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: colors.primary, // Or any highlight color
+  },
+  item: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  selectedItemText: {
+    fontWeight: 'bold',
+    color: colors.white,
+  },
+  itemText: {
+    color: colors.black,
+  }
 });

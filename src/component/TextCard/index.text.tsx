@@ -21,8 +21,8 @@ const Card: React.FC<CardProps> = ({
         return (
           <TouchableOpacity
             key={index}
-            onPress={(event) => {
-              onPress(event, itemCard);
+            onPress={() => {
+              onPress( itemCard);
             }}
           >
             <View style={imageandTitleStyle}>

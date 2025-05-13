@@ -26,7 +26,11 @@ import SuccessDialog from '../../../component/SuccessDialog/successdialog';
 import ErrorDialog from '../../../component/ErrorDialog/errordialog';
 import LoaderComponent from '../../../component/UniversalLoader/loader';
 import NavComponent from '../../../component/NavComponent/navvomponent';
+import { NavigationProp, useNavigation } from '@react-navigation/core';
+import { RootStackNavigatorParamsList } from '../../../component/interface/routeinterface';
 const FormExample = () => {
+    const navigation =
+      useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
   const [tokenData, setTokenData] = useState<TokenAttributes | undefined>(
     undefined,
   );
@@ -48,6 +52,7 @@ const FormExample = () => {
 
   function handleSuccess() {
     setOpenDialog(!openDialog);
+    navigation.goBack()
     // handleClose();
     // navigation.navigate('Main');
   }
@@ -127,7 +132,6 @@ const FormExample = () => {
     data: leaveTypes?.data ?? [],
   };
 
-  console.log(Type_of_Leave)
   return (
     <Wrapper>
       

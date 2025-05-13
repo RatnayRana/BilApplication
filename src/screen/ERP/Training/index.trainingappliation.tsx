@@ -1,65 +1,182 @@
-import React, {useEffect, useState} from 'react';
-import {View, ScrollView} from 'react-native';
-import {DateType} from 'react-native-ui-datepicker';
-
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView } from 'react-native';
+import { DateType } from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-
 import NavComponent from '../../../component/NavComponent/navvomponent';
 import Wrapper from '../../auth';
-import {Formik} from 'formik';
-import {
-  initialValues,
-  TrainingRequestForm,
-} from '../../../utils/erp/trainingapplication';
-import {validationtrainingSchema} from '../../auth/validation/signIn.validation';
-import {renderField} from '../../../public/customfields/custom.fields';
-import {
-  Source_Of_Funding,
-  TraingingType,
-  TrainingCategory,
-} from '../../../public/utility/data/trainingdata';
+import { Formik } from 'formik';
+import { initialValues, TrainingRequestForm } from '../../../utils/erp/trainingapplication';
+import { validationtrainingSchema } from '../../auth/validation/signIn.validation';
+import { renderField } from '../../../public/customfields/custom.fields';
 import Button from '../../../component/Button';
-import {Country} from '../../../interface/ERP/trainingtypes';
-import {styles} from '../LeaveApplicationPage/style.leaveapplicationpage';
+import { styles } from '../LeaveApplicationPage/style.leaveapplicationpage';
 import trainingStyles from './style.trainingapplication';
-dayjs.extend(utc);
+import { CountryDataQuery, fetchTrainingDropDownData } from './trainingTypeData';
+import { Source_Of_Funding } from '../../../public/utility/data/trainingdata';
+import { CreateTrainingAttributes } from '../../../interface/ERP/tainingTypes';
+import { TrainingCategoryDropDownData } from './trainingCategory';
+import { TokenAttributes, tokenMiddleware } from '../../../public/middleware/token.middleware';
+import { useMutation } from '@tanstack/react-query';
+import apiClient from '../../../post/postapi';
+import { ERPURL } from '../../../component/APIURL/ERP/erpurl';
+import { AxiosError } from 'axios';
+import ErrorDialog from '../../../component/ErrorDialog/errordialog';
+import LoaderComponent from '../../../component/UniversalLoader/loader';
+import SuccessDialog from '../../../component/SuccessDialog/successdialog';
+import { NavigationProp, useNavigation } from '@react-navigation/core';
+import { RootStackNavigatorParamsList } from '../../../component/interface/routeinterface';
 
+dayjs.extend(utc);
 const TrainingApplicationScreen: React.FC = () => {
-  const [countries, setCountries] = useState<Country[]>([]);
+      const navigation =
+        useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
   const [startDate, setStartDate] = useState<string | null>(null);
+  const [tokenData, setTokenData] = useState<TokenAttributes | undefined>(
+    undefined,
+  );
   const [endDate, setEndDate] = useState<string | null>(null);
   const [openStart, setOpenStart] = useState(false);
   const [openEnd, setOpenEnd] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [servError, setServerError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+      undefined,
+    );
+  const { data: TrainingCategory, mutateAsync, isPending } = TrainingCategoryDropDownData()
+  const { data: countriesData, isPending: countryDataisPending, error } = CountryDataQuery()
+
+  const {
+    mutateAsync: TrainingDataMutate,
+    error: TrainingDataError,
+    isPending: isTrainingDataPending,
+    isSuccess,
+    data: testData,
+  } = useMutation({
+    mutationFn: async (credentials: CreateTrainingAttributes) => {
+      try {
+        const response = await apiClient.post(ERPURL.createTraining, credentials);
+
+        if (response) {
+          setOpenDialog(true);
+
+          return response;
+        }
+
+        // eslint-disable-next-line no-catch-shadow
+      } catch (error) {
+        if (error) {
+          setErrorMessage((error as AxiosError)?.message);
+          throw error;
+        }
+        setErrorMessage((error as unknown as axiosError)?.response.data.error);
+        setServerError(true);
+
+        throw error;
+      }
+    },
+  });
+  const handleFieldChange = (fieldName: string, value: any, setFieldValue: Function) => {
+    setFieldValue(fieldName, value);
+    if (fieldName === 'training_type') {
+      mutateAsync(value)
+    }
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await tokenMiddleware();
+      setTokenData(data);
+    };
+    fetchData();
+  }, []);
+
+  function handleClose() {
+    setOpenDialog(!openDialog);
+  }
+
+  function handleSuccess() {
+    setOpenDialog(!openDialog);
+    navigation.goBack()
+
+    // handleClose();
+    // navigation.navigate('Main');
+  }
+
+  const { data: TrainingDropDownData } = fetchTrainingDropDownData();
+  const trainingType = { data: TrainingDropDownData?.data }
+  const TrainingData = trainingType.data
   const ConditionalFieldConfig = [
     {
-      targetField: 'travel_advance_amount',
-      dependsOn: 'need_advance', // Field that controls the target
+      targetField: 'training_advance_amount',
+      dependsOn: 'training_need_advance', // Field that controls the target
       condition: (value: boolean) => value === true, // Function that determines if target is enabled
     },
   ];
-  useEffect(() => {
-    fetch('https://restcountries.com/v2/all?fields=name')
-      .then(response => response.json())
-      .then(data => {
-        const mappedCountries: Country[] = data.map(
-          (item: {name: string}, index: number) => ({
-            id: index + 1,
-            name: item.name,
-          }),
-        );
-        const countryData: Country[] = [
-          {id: 0, name: 'Select the Country'},
-          ...mappedCountries,
-        ];
-        setCountries(countryData);
-      })
+  const onFormSubmit = (values: CreateTrainingAttributes) => {
+    const training_expense = values.training_expense_applicable ? 'Yes' : 'No'
+    const training_advance = values.training_need_advance ? 'Y' : null;
+    let Duration = 0;
+    if (values.training_from_date && values.training_end_date) {
+      const fromDate = new Date(values.training_from_date);
+      const toDate = new Date(values.training_end_date);
 
-      .catch(error => console.error('Error fetching countries:', error));
-  }, []);
+      Duration =
+        (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24);
 
+      if (Duration === 0) {
+        Duration = 1;
+
+      }
+    }
+    
+    const TrainingData = {
+      ...(tokenData?.employee_code && { employee_code: tokenData.employee_code }),
+      training_type: values.training_type,
+      training_category: values.training_category,
+      training_course: values.training_course,
+      training_institute_name: values.training_institute_name,
+      training_country: values.training_country,
+      training_expense_applicable: training_expense,
+      training_fund: values.training_fund,
+      training_from_date: values.training_from_date,
+      training_end_date: values.training_end_date,
+      training_duration: Duration,
+      training_need_advance: training_advance,
+      training_advance_amount: values.training_advance_amount,
+      training_description: values.training_description
+    }
+    TrainingDataMutate(TrainingData )
+    setServerError(false);
+    setOpenDialog(true);
+
+  }
   return (
     <Wrapper>
+      <ErrorDialog
+        error={TrainingDataError || servError}
+        errormessage={
+          (TrainingDataError as unknown as axiosError)?.response?.data?.error ||
+          errorMessage
+        }
+        visible={openDialog}
+        onClose={handleClose}
+      />
+
+      <LoaderComponent
+        ispending={isTrainingDataPending}
+        loaderStyle={styles.loaderStyle}
+        name="BallPulseSync"
+        width={50}
+        height={50}
+        color="blue"
+        isLoading={true}
+      />
+      <SuccessDialog
+        isSuccess={isSuccess}
+        message={testData?.data.message || 'successFull '}
+        visible={openDialog}
+        onClose={handleSuccess}
+      />
       <NavComponent
         size={35}
         container1Style={styles.container1}
@@ -74,13 +191,13 @@ const TrainingApplicationScreen: React.FC = () => {
       />
 
       <ScrollView
-        style={{paddingHorizontal: 16, flexGrow: 1}}
+        style={{ paddingHorizontal: 16, flexGrow: 1 }}
         keyboardShouldPersistTaps="handled">
         <Formik
           initialValues={initialValues}
-          onSubmit={() => {}}
+          onSubmit={onFormSubmit}
           validationSchema={validationtrainingSchema}>
-          {({handleSubmit, values, setFieldValue, errors, touched}) => {
+          {({ handleSubmit, values, setFieldValue, errors, touched }) => {
             const handleDateChange = (date: DateType) => {
               const formattedDate = dayjs(date).format('YYYY-MM-DD');
               setStartDate(formattedDate);
@@ -91,24 +208,24 @@ const TrainingApplicationScreen: React.FC = () => {
             const handleEndDateChange = (date: DateType) => {
               const formattedDate = dayjs(date).format('YYYY-MM-DD');
               setEndDate(formattedDate);
-              setFieldValue('training_to_date', formattedDate);
+              setFieldValue('training_end_date', formattedDate);
               setOpenEnd(false);
             };
 
             return (
               <View>
                 {TrainingRequestForm(
-                  {data: TraingingType},
-                  {data: TrainingCategory},
-                  {data: countries},
-                  {data: Source_Of_Funding},
+                  TrainingData,
+                  TrainingCategory,
+                  countriesData,
+                  { data: Source_Of_Funding },
                 ).map((fieldConfig: any, index) => (
                   <View key={index}>
                     {renderField({
                       fieldConfig,
                       values,
                       setFieldValue: (name, value) =>
-                        setFieldValue(name, value),
+                        handleFieldChange(name, value, setFieldValue),
                       touched,
                       errors,
                       ConditionalFieldConfig,

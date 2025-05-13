@@ -1,5 +1,6 @@
 import { ParamListBase } from '@react-navigation/native';
 import { LeaveApprovalData } from '../../screen/Approval/ERP/LeaveApproval/leave.approval';
+import { TravelApprovalData } from '../../interface/ERP/travelApproval';
 // import {LeavedApprovedAttributes} from '../../interface/ERP/leavetypes';
 // Define your param list, ensuring it extends ParamListBase
 export interface RootStackNavigatorParamsList extends ParamListBase {
@@ -14,7 +15,7 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
     username: string;
     leave_emp_code: number;
   };
-  ApprovalNavigator: { screen: 'LeaveApproval' } | undefined; //
+  ApprovalNavigator: { screen: 'LeaveApproval' }|{ screen: 'TravelApproval' } | undefined; //
   NestedNavigatorName: undefined;
 
   ApplicationNavigator: undefined;
@@ -24,6 +25,10 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
   SearchApplication: undefined
   ApprovedScreen: {
     approvedData:Array<LeaveApprovalData>
+   
+  }
+  TravelApprovedScreen: {
+    approvedData:Array<TravelApprovalData>
    
   }
 }

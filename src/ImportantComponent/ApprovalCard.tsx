@@ -15,7 +15,7 @@ interface ApprovalCardProps {
   name?: string;
   EmployeeID?: string;
   LeaveType?: string;
-  Duration?: number;
+  Duration?: number|string;
   Branch?: string;
   cardContainer?: StyleProp<ViewStyle>;
   actionButton?: StyleProp<ViewStyle>;

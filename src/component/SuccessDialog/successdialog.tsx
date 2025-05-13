@@ -23,7 +23,7 @@ const SuccessDialog = ({
     <CustomDialog
       message={message}
       color={color}
-      iconColor="#D32F2F"
+      iconColor="#0AA06E"
       iconName="sticker-check-outline"
       visible={visible}
       onClose={onClose}

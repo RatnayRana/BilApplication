@@ -10,7 +10,7 @@ export interface TrainingType {
   Travel_type: Trainingttributes[];
 }
 export interface TrainingResponse {
-  data: TrainingType;
+  data: {data:TrainingType};
   message: string;
   status: number;
 }

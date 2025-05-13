@@ -1,29 +1,29 @@
 /* eslint-disable quotes */
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
-import {ScrollView, View} from 'react-native';
-import {Formik} from 'formik';
-import {RootStackNavigatorParamsList} from '../../../component/interface/routeinterface';
-import {renderField} from '../../../public/customfields/custom.fields';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, View } from 'react-native';
+import { Formik } from 'formik';
+import { RootStackNavigatorParamsList } from '../../../../component/interface/routeinterface';
+import { renderField } from '../../../../public/customfields/custom.fields';
 import {
   ApprovedLeaveAttributes,
   ShiftCreationAttributes,
-} from '../../../interface/ERP/leavetypes';
-import {Status} from '../../../public/utility/data/leavetypedata';
+} from '../../../../interface/ERP/leavetypes';
+import { Status } from '../../../../public/utility/data/leavetypedata';
 import approvedLeaveStyles from './style';
 
-import Button from '../../../component/Button';
-import apiClient from '../../../post/postapi';
-import {ERPURL} from '../../../component/APIURL/ERP/erpurl';
-import {useMutation} from '@tanstack/react-query';
-import {AxiosError} from 'axios';
-import SuccessDialog from '../../../component/SuccessDialog/successdialog';
-import LoaderComponent from '../../../component/UniversalLoader/loader';
-import ErrorDialog from '../../../component/ErrorDialog/errordialog';
-import NavComponent from '../../../component/NavComponent/navvomponent';
-import {styles} from '../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
-import Wrapper from '../../auth';
-import { CacheManager } from '../../../public/middleware/cacheManager/cachemanager';
+import Button from '../../../../component/Button';
+import apiClient from '../../../../post/postapi';
+import { ERPURL } from '../../../../component/APIURL/ERP/erpurl';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import SuccessDialog from '../../../../component/SuccessDialog/successdialog';
+import LoaderComponent from '../../../../component/UniversalLoader/loader';
+import ErrorDialog from '../../../../component/ErrorDialog/errordialog';
+import NavComponent from '../../../../component/NavComponent/navvomponent';
+import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
+import Wrapper from '../../../auth';
+import { CacheManager } from '../../../../public/middleware/cacheManager/cachemanager';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
 
 type approvedScreen = NativeStackScreenProps<
@@ -36,12 +36,12 @@ interface apData {
   leave_to_date?: Date;
   leave_reason?: string;
   emp_employee_number?: string;
-  approval_remarks?:string
-  leave_status?:number
+  approval_remarks?: string
+  leave_status?: number
 }
 
-const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
-  const {approvedData} = route.params;
+const ApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
+  const { approvedData } = route.params;
   const [initialValues, setInitialValues] = useState<apData | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -50,7 +50,7 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
     undefined,
   );
   const navigation =
-      useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
+    useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
 
   function handleClose() {
     setOpenDialog(!openDialog);
@@ -59,7 +59,7 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
   function handleSuccess() {
     setOpenDialog(!openDialog);
     navigation.navigate('ApprovalNavigator')
-    
+
   }
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
         leave_from_date: firstLeaveData.leave_from_date,
         leave_to_date: firstLeaveData.leave_to_date,
         leave_reason: firstLeaveData.leave_reason,
-        approval_remarks:'',
+        approval_remarks: '',
         leave_status: 12
       });
     }
@@ -88,7 +88,7 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
         const data = await apiClient.post(ERPURL.approvedLeave, credentials);
         if (data) {
           setOpenDialog(true);
-          
+
           return data;
         }
 
@@ -97,7 +97,7 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
         // eslint-disable-next-line no-catch-shadow, @typescript-eslint/no-shadow
       } catch (error) {
         if (error) {
-          
+
           setErrorMessage((error as AxiosError)?.message);
           throw error;
         }
@@ -156,9 +156,9 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
         name: 'leave_status',
         data: Array.isArray(Status?.data)
           ? Status.data.map(item => ({
-              label: item.name, // Assuming each item has a `name` field
-              value: item.index, // Assuming each item has an `id` field
-            }))
+            label: item.name, // Assuming each item has a `name` field
+            value: item.index, // Assuming each item has an `id` field
+          }))
           : [],
         placeholder: 'Select the Status',
       },
@@ -197,7 +197,7 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
       leave_total_days,
       leave_reason,
       leave_id: leave_id.toString(),
-      leave_status:values.leave_status,
+      leave_status: values.leave_status,
       approval_remarks: values.approval_remarks,
     };
     mutateAsync(DataToSend as ApprovedLeaveAttributes);
@@ -245,12 +245,12 @@ const ApprovedScreen: React.FC<approvedScreen> = ({route}) => {
         textSytle={styles.text}
         text="Approved Leave"
       />
-      <ScrollView style={{paddingHorizontal: 16, flexGrow: 1}}>
+      <ScrollView style={{ paddingHorizontal: 16, flexGrow: 1 }}>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {({handleSubmit, errors, values, setFieldValue, touched}) => {
+          {({ handleSubmit, errors, values, setFieldValue, touched }) => {
             return (
               <View>
-                {formConfig({data: Status}).map((fieldConfig:any, index) => (
+                {formConfig({ data: Status }).map((fieldConfig: any, index) => (
                   <View key={index}>
                     {renderField({
                       fieldConfig,

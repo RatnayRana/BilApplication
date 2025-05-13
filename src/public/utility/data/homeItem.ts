@@ -117,7 +117,7 @@ export const ERPApprovalOption = [
     iconName: 'travel-explore',
     permission: 'approve-travel',
     iconLib: 'MaterialIcons',
-    screen: 'TravelApplicationScreen',
+    screen: 'TravelApproval',
     icon: 'chevron-forward',
   },
   {
