@@ -16,13 +16,14 @@ import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplication
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
 import leaveApprovalStyles from '../LeaveApproval/style';
 import { TravelApprovalData } from '../../../../interface/ERP/travelApproval';
+import { CreateTrainingAttributes } from '../../../../interface/ERP/tainingTypes';
 
 
 
 
-const TravelApproval = () => {
+const TrainingApproval = () => {
     const [openStart, setOpenStart] = useState(true);
-    const [ApprovedCredentials,setApprovedCredentials] = useState<string>()
+    const [ApprovedCredentials, setApprovedCredentials] = useState<string>()
 
     const navogation =
         useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
@@ -30,36 +31,33 @@ const TravelApproval = () => {
         mutateAsync,
         isPending,
         error,
-        data: testData,
+        data: TraingData,
     } = useMutation({
-        mutationKey: ['test'],
+        mutationKey: ['TrainingData'],
         mutationFn: async (val: {
-            leaveQueryApproval: string;
-            approvedCredentials: {
-                email: string;
-                username: string;
-                employee_code: string;
-            };
+            TrainingQueryApproval: string;
+            approvedCredentials: { employee_code: string };
         }) => {
-            return (await apiClient.post(
-                val.leaveQueryApproval,
+
+          return (await apiClient.post(
+                val.TrainingQueryApproval,
                 val.approvedCredentials,
             )) as {
                 status: number;
                 message: string;
                 data: {
-                    data: {
-                        data: TravelApprovalData[]
-                    }
+
+                    data: CreateTrainingAttributes[]
+
                 };
             };
         },
+
     });
     function handleClose() {
         setOpenStart(!openStart);
 
     }
-
 
     useEffect(() => {
         const fetchTokenData = async () => {
@@ -67,18 +65,17 @@ const TravelApproval = () => {
             if (data) {
                 const tokenData: any = jwtDecode(data);
                 const decodedToken = tokenData?.dataValues;
-                const { email, employee_code, employee_id } = decodedToken;
+                const { employee_code } = decodedToken;
                 setApprovedCredentials(employee_code)
 
                 const approvedCredentials = {
-                    email: email,
-                    username: employee_id,
+
                     employee_code: employee_code,
 
                 };
 
                 mutateAsync({
-                    leaveQueryApproval: ERPURL.travelApprovalList,
+                    TrainingQueryApproval: ERPURL.fetchTrainingByCode,
                     approvedCredentials: approvedCredentials,
                 });
             }
@@ -87,10 +84,10 @@ const TravelApproval = () => {
         fetchTokenData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // Only run once when the component mounts
-    const handleSubmit = (selectedItem: TravelApprovalData) => {
+    const handleSubmit = (selectedItem: CreateTrainingAttributes) => {
         const selectedItemData = {
             ...selectedItem,
-            employee_code:ApprovedCredentials
+            employee_code: ApprovedCredentials
         }
         navogation.navigate('TrainingApprovedScreen', { approvedData: [selectedItemData] });
     };
@@ -107,7 +104,7 @@ const TravelApproval = () => {
                 height={24}
                 imageStyle={styles.imagev}
                 textSytle={styles.text}
-                text="Travel Approval"
+                text="Training Approval"
             />
 
             {isPending ? (
@@ -116,11 +113,11 @@ const TravelApproval = () => {
                 <ScrollView contentContainerStyle={{
                     paddingVertical: 10
                 }}>
-                    {testData && testData.data.data.data.length > 0 ? (
-                        testData.data.data.data.map(item => (
+                    {TraingData && TraingData.data.data.length > 0 ? (
+                        TraingData.data.data.map(item => (
 
                             <ApprovalCard
-                                key={item.travel_id}
+                                key={item.training_id}
                                 onPress={() => handleSubmit(item)}
                                 cardContainer={leaveApprovalStyles.cardContainer}
                                 infoContainer={leaveApprovalStyles.infoContainer}
@@ -134,7 +131,7 @@ const TravelApproval = () => {
                                 durationStyle={leaveApprovalStyles.durationStyle}
                                 actionButton={leaveApprovalStyles.actionButton}
                                 imageViewStyle={leaveApprovalStyles.ImageStyle}
-                                Duration={item.travel_duration}
+                                Duration={item.training_duration}
                                 iconSize={35}
                                 iconname='edit'
                             />
@@ -162,5 +159,5 @@ const TravelApproval = () => {
     );
 };
 
-export default TravelApproval;
+export default TrainingApproval;
 

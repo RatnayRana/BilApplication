@@ -78,7 +78,6 @@ const TravelApplicationScreen: React.FC = () => {
     data: testData,
   } = useMutation({
     mutationFn: async (credentials: CreateTravelAttributes) => {
-      console.log("Attempting to send API request with data:", credentials);
       try {
         const response = await apiClient.post(ERPURL.createtravel, credentials);
 
@@ -90,7 +89,6 @@ const TravelApplicationScreen: React.FC = () => {
 
         // eslint-disable-next-line no-catch-shadow
       } catch (error) {
-        console.log(error);
 
         if (error) {
           setErrorMessage((error as AxiosError)?.message);

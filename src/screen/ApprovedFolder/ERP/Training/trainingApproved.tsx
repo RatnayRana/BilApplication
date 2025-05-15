@@ -24,22 +24,22 @@ import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplication
 import Wrapper from '../../../auth';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
 import approvedLeaveStyles from '../Leave/style';
-import { TravelApproval } from '../../../../interface/ERP/travelApproval';
+import { CreateTrainingAttributes } from '../../../../interface/ERP/tainingTypes';
 
 type approvedScreen = NativeStackScreenProps<
     RootStackNavigatorParamsList,
-    'TravelApprovedScreen'
+    'TrainingApprovedScreen'
 >;
 
 interface apData {
-    travel_from_date?: Date;
-    travel_to_date?: Date;
-    travel_description?: string;
-    travel_remarks?: string
-    travel_status?: number
+    training_from_date?: Date;
+    training_end_date?: Date;
+    training_description?: string;
+    training_remarks?: string
+    training_status?: number
 }
 
-const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
+const TrainingApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
     const { approvedData } = route.params;
     const [initialValues, setInitialValues] = useState<apData | null>(null);
     const [openDialog, setOpenDialog] = useState(false);
@@ -65,12 +65,11 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
         if (approvedData && approvedData.length > 0) {
             const firstLeaveData = approvedData[0];
             setInitialValues({
-                travel_to_date: firstLeaveData.travel_to_date,
-                travel_from_date: firstLeaveData.travel_from_date,
-
-                travel_description: firstLeaveData.travel_description,
-                travel_remarks: '',
-                travel_status: 12
+                training_from_date: firstLeaveData.training_from_date,
+                training_end_date: firstLeaveData.training_end_date,
+                training_description: firstLeaveData.training_description,
+                training_remarks: '',
+                training_status: 12
             });
         }
     }, [approvedData]);
@@ -81,11 +80,11 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
         isPending,
         error,
         isSuccess,
-        data: testdata,
+        data: trainingData,
     } = useMutation({
-        mutationFn: async (credentials: TravelApproval) => {
+        mutationFn: async (credentials: CreateTrainingAttributes) => {
             try {
-                const data = await apiClient.post(ERPURL.travelVerification, credentials);
+                const data = await apiClient.post(ERPURL.trainingVerification, credentials);
                 if (data) {
                     setOpenDialog(true);
 
@@ -134,26 +133,26 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             {
                 type: 'displaytext',
                 label: 'From Date',
-                name: 'travel_from_date',
-                value: initialValues.travel_from_date,
+                name: 'training_from_date',
+                value: initialValues.training_from_date,
             },
             {
                 type: 'displaytext',
                 label: 'To Date',
-                name: 'travel_to_date',
-                value: initialValues.travel_to_date,
+                name: 'training_end_date',
+                value: initialValues.training_end_date,
             },
             {
-                type: 'text',
+                type: 'displaytext',
                 label: 'Reason',
-                name: 'travel_description',
+                name: 'training_description',
                 placeholder: 'Enter reason for travel',
-                value: initialValues.travel_description,
+                value: initialValues.training_description,
             },
             {
                 type: 'dropdown',
                 label: 'Status',
-                name: 'travel_status',
+                name: 'training_status',
                 data: Array.isArray(Status?.data)
                     ? Status.data.map(item => ({
                         label: item.name, // Assuming each item has a `name` field
@@ -167,49 +166,54 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
                 label: 'Approval Remarks',
                 name: 'approval_remarks',
                 placeholder: 'Enter reason for travel',
-                value: initialValues.travel_description,
+                value: initialValues.training_description,
             },
         ];
     };
 
-    const handleSubmit = (values: TravelApproval) => {
+    const handleSubmit = (values: CreateTrainingAttributes) => {
         const {
             employee_code,
-            emp_employee_number,
-            travel_type,
-            travel_from_date,
-            travel_to_date,
-            travel_expense_applicable,
-            travel_funding,
-            travel_mode,
-            travel_id,
-            travel_purpose,
-            travel_duration,
-            travel_from_place,
-            travel_to_place,
-        } = approvedData[0];
-        // const travel_advance_amount = Number(approvedData[0].travel_advance_amount)
-       const travel_advance_amount = approvedData[0].travel_advance_amount? Number(approvedData[0].travel_advance_amount):null
-        const DataToSend = {
-            travel_advance_amount: travel_advance_amount,
-            travel_from_place,
-            travel_to_place,
-            travel_id,
-            travel_type,
-            travel_purpose,
-            travel_expense_applicable,
-            travel_funding,
-            travel_mode,
-            employee_id: emp_employee_number,
-            employee_code: employee_code,
-            leave_type: travel_type,
-            travel_from_date,
-            travel_to_date,
-            travel_duration: Number(travel_duration),
+            training_type,
+            training_category,
+            training_course,
+            training_institute_name,
+            training_country,
+            training_expense_applicable,
+            training_fund,
+            training_from_date,
+            training_end_date,
+            training_duration,
+            training_need_advance,
+            training_advance_amount,
+            training_description,
+            training_id
 
-            travel_description: values.travel_description,
+        } = approvedData[0];
+        // // const travel_advance_amount = Number(approvedData[0].travel_advance_amount)
+        // const travel_advance_amount = approvedData[0].travel_advance_amount ? Number(approvedData[0].travel_advance_amount) : null
+        const TrainingApprovalData = {
+            training_type,
+            training_category,
+            training_course,
+            training_institute_name,
+            training_country,
+            training_expense_applicable,
+            training_fund,
+            training_from_date,
+            training_end_date,
+            training_duration,
+            training_need_advance,
+            training_advance_amount,
+            training_description,
+            training_id,
+            employee_code: employee_code,
+            training_status: values.training_status,
+            approval_remarks: values.approval_remarks
+
+
         };
-        mutateAsync(DataToSend as TravelApproval);
+        mutateAsync(TrainingApprovalData);
         setServerError(false);
         setOpenDialog(true);
     };
@@ -237,7 +241,7 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             />
             <SuccessDialog
                 isSuccess={isSuccess}
-                message={testdata?.data.message || 'successFull '}
+                message={trainingData?.data.message || 'successFull '}
                 visible={openDialog}
                 onClose={handleSuccess}
             />
@@ -292,4 +296,4 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
     );
 };
 
-export default TravelApprovedScreen;
+export default TrainingApprovedScreen;

@@ -27,20 +27,26 @@ export interface training_fund {
 }
 
 export interface CreateTrainingAttributes {
+  emp_full_name?:string
+  training_id?: string
   employee_code?: string;
-  training_type: number;
-  training_category: number;
-  training_course: string;
-  training_institute_name: string;
-  training_country: number;
-  training_expense_applicable: string | boolean; // "Yes" or "No"
+  training_type?: number;
+  training_category?: number;
+  training_course?: string;
+  training_institute_name?: string;
+  training_country?: number;
+  training_expense_applicable?: string | boolean; // "Yes" or "No"
   training_fund?: string[];
-  training_from_date: string;
-  training_end_date: string;
+  training_from_date?: any;
+  training_end_date?: any;
   training_duration?: number;
-  training_need_advance: string | null; // "Y" or null
-  training_advance_amount: string;
-  training_description: string;
+  training_need_advance?: string | null; // "Y" or null
+  training_advance_amount?: string;
+  training_description?: string;
+  emp_employee_number?:string;
+  branch_name?:string;
+  training_status?:number;
+  approval_remarks?:string
 }
 
 export interface CountryResponseData{

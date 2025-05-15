@@ -12,6 +12,8 @@ import { HomeNavigator } from './Home/homeNavigator';
 import LeaveApplication from '../screen/ERP/LeaveApplication/index.leave';
 import SearchApplication from '../screen/ERP/Search/search';
 import TravelApprovedScreen from '../screen/ApprovedFolder/ERP/TravelRequest/travelApproved';
+import TravelApproval from '../screen/Approval/ERP/TravelApproval/travelApproval';
+import TrainingApprovedScreen from '../screen/ApprovedFolder/ERP/Training/trainingApproved';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
 
@@ -48,6 +50,11 @@ export default function RootStack() {
         component={TravelApprovedScreen}
         options={{headerShown: false}}
       />
+         <Stack.Screen
+        name="TrainingApprovedScreen"
+        component={TrainingApprovedScreen}
+        options={{headerShown: false}}
+      />
 
       <Stack.Screen
         name="ApprovalNavigator"
@@ -68,6 +75,11 @@ export default function RootStack() {
         name="SearchApplication"
         component={SearchApplication}
         options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="TravelApproval"
+        component={TravelApproval}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

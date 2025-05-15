@@ -94,7 +94,7 @@ const ERPSystem = () => {
           <CustomDialog
             visible={showDialog} // ✅ Add this
             message={JSON.stringify(errorMessage)}
-            color="#000"
+            color="#D32F2F"
             iconColor="#D32F2F"
             iconName="sticker-remove-outline"
             onClose={handleClose}

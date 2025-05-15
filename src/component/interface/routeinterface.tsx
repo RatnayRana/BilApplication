@@ -1,6 +1,7 @@
 import { ParamListBase } from '@react-navigation/native';
 import { LeaveApprovalData } from '../../screen/Approval/ERP/LeaveApproval/leave.approval';
 import { TravelApprovalData } from '../../interface/ERP/travelApproval';
+import { CreateTrainingAttributes } from '../../interface/ERP/tainingTypes';
 // import {LeavedApprovedAttributes} from '../../interface/ERP/leavetypes';
 // Define your param list, ensuring it extends ParamListBase
 export interface RootStackNavigatorParamsList extends ParamListBase {
@@ -8,6 +9,7 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
   Home: undefined;
   LeaveApplicationScreen: undefined;
   TravelApplicationScreen: undefined;
+  TravelApproval:undefined
   // ApprovedScreen: LeavedApprovedAttributes;
   CardNavigation: {
     itemId: number;
@@ -29,6 +31,10 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
   }
   TravelApprovedScreen: {
     approvedData:Array<TravelApprovalData>
+   
+  }
+  TrainingApprovedScreen: {
+    approvedData:Array<CreateTrainingAttributes>
    
   }
 }

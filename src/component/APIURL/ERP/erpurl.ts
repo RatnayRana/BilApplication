@@ -14,7 +14,11 @@ export const ERPURL = {
     travelVerification: `${ERPURLAPI}/travelVerification`,
     trainingType: `${ERPURLAPI}/trainingType`,
     trainingCategory: `${ERPURLAPI}/trainingCategory`,
-    fetchTrainingCountryFunding:`${ERPURLAPI}/fetchTrainingCountryFunding`,
-    createTraining: `${ERPURLAPI}/createTraining`
+    fetchTrainingCountryFunding: `${ERPURLAPI}/fetchTrainingCountryFunding`,
+    createTraining: `${ERPURLAPI}/createTraining`,
+    traininglist: `${ERPURLAPI}/traininglist`,
+    fetchTrainingByCode: `${ERPURLAPI}/fetchTrainingByCode`,
+    trainingVerification: `${ERPURLAPI}/trainingVerification`
+
     // leaveApplication: 'leave-applications',
 };

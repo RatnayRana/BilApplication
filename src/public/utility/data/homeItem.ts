@@ -122,9 +122,11 @@ export const ERPApprovalOption = [
   },
   {
     item_id: 3,
+    iconName: 'cast-education',
     item_name: 'Training Approval',
-    permission: 'training-travel',
-    screen: 'TrainingApplicationScreen',
+    iconLib: 'MaterialCommunityIcons',
+    permission: 'approve-training',
+    screen: 'TrainingApproval',
     icon: 'chevron-forward',
   },
   {
