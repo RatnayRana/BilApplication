@@ -18,7 +18,9 @@ export const ERPURL = {
     createTraining: `${ERPURLAPI}/createTraining`,
     traininglist: `${ERPURLAPI}/traininglist`,
     fetchTrainingByCode: `${ERPURLAPI}/fetchTrainingByCode`,
-    trainingVerification: `${ERPURLAPI}/trainingVerification`
+    trainingVerification: `${ERPURLAPI}/trainingVerification`,
+    travelList: `${ERPURLAPI}/travelList`,
+
 
     // leaveApplication: 'leave-applications',
 };

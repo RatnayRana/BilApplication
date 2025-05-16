@@ -22,12 +22,47 @@ export const leaveItem = [
     iconLib:'MaterialCommunityIcons'
 
   },
+  // {
+  //   item_name: 'Change Request',
+  //   iconName: 'swap-horizontal-outline',
+  //   screen: 'ChangeRequestScreen',
+  //   icon: 'chevron-forward',
+  //   iconLib:'Ionicons'
+
+  // },
+];
+
+export const viewApplication = [
   {
-    item_name: 'Change Request',
-    iconName: 'swap-horizontal-outline',
-    screen: 'ChangeRequestScreen',
+    item_name: 'View Leave Application',
+    iconName: 'briefcase-outline',
+    screen: 'ViewLeaveApplication',
+    icon: 'chevron-forward',
+    iconLib:'MaterialCommunityIcons'
+  },
+  {
+    item_name: 'View Travel Application',
+    iconName: 'airplane-outline',
+    screen: 'ViewTravelApplication',
     icon: 'chevron-forward',
     iconLib:'Ionicons'
 
   },
+  {
+    item_name: 'View Training Application',
+    iconName: 'school-outline',
+    screen: 'ViewTrainingApplicationScreen',
+    icon: 'chevron-forward',
+    iconLib:'MaterialCommunityIcons'
+
+  },
+  // {
+  //   item_name: 'Change Request',
+  //   iconName: 'swap-horizontal-outline',
+  //   screen: 'ChangeRequestScreen',
+  //   icon: 'chevron-forward',
+  //   iconLib:'Ionicons'
+
+  // },
 ];
+

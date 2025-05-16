@@ -1,22 +1,25 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {RootStackNavigatorParamsList} from '../component/interface/routeinterface';
-import LeaveApplicationScreen from '../screen/ERP/LeaveApplicationPage/index.leaveapplicationpage';
-import TravelApplicationScreen from '../screen/ERP/TravelApplicationScreen/index.travelapplication';
-import TrainingApplicationScreen from '../screen/ERP/Training/index.trainingappliation';
-import ChangeRequestScreen from '../screen/ERP/ChangeRequest/index.changerequest';
+import { RootStackNavigatorParamsList } from '../../../component/interface/routeinterface';
+import ViewTravelApplication from '../../../screen/ERP/ViewData/Training/viewTrainingApplication';
+import ViewLeaveApplication from '../../../screen/ERP/ViewData/Leave/viewLeaveapplication';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
 
-const MainStackNavigator = () => {
+const NestedViewApplication = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="LeaveApplicationScreen"
-        component={LeaveApplicationScreen}
+        name="ViewLeaveApplication"
+        component={ViewLeaveApplication}
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="ViewTravelApplication"
+        component={ViewTravelApplication}
+        options={{headerShown: false}}
+      />
+      {/* <Stack.Screen
         name="TravelApplicationScreen"
         component={TravelApplicationScreen}
         options={{headerShown: false}}
@@ -30,11 +33,10 @@ const MainStackNavigator = () => {
         name="ChangeRequestScreen"
         component={ChangeRequestScreen}
         options={{headerShown: false}}
-      />
- 
+      /> */}
     
     </Stack.Navigator>
   );
 };
 
-export default MainStackNavigator;
+export default NestedViewApplication;

@@ -9,7 +9,9 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
   Home: undefined;
   LeaveApplicationScreen: undefined;
   TravelApplicationScreen: undefined;
-  TravelApproval:undefined
+  TravelApproval: undefined
+  NestedViewApplication: undefined
+  ViewPersonalScreen: undefined
   // ApprovedScreen: LeavedApprovedAttributes;
   CardNavigation: {
     itemId: number;
@@ -17,8 +19,9 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
     username: string;
     leave_emp_code: number;
   };
-  ApprovalNavigator: { screen: 'LeaveApproval' }|{ screen: 'TravelApproval' } | undefined; //
+  ApprovalNavigator: { screen: 'LeaveApproval' } | { screen: 'TravelApproval' } | undefined; //
   NestedNavigatorName: undefined;
+
 
   ApplicationNavigator: undefined;
   HomeNavigator: {
@@ -26,15 +29,15 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
   };
   SearchApplication: undefined
   ApprovedScreen: {
-    approvedData:Array<LeaveApprovalData>
-   
+    approvedData: Array<LeaveApprovalData>
+
   }
   TravelApprovedScreen: {
-    approvedData:Array<TravelApprovalData>
-   
+    approvedData: Array<TravelApprovalData>
+
   }
   TrainingApprovedScreen: {
-    approvedData:Array<CreateTrainingAttributes>
-   
+    approvedData: Array<CreateTrainingAttributes>
+
   }
 }

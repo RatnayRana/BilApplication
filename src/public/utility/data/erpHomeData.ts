@@ -36,7 +36,7 @@ export const ERPHomeData = [
     iconName: 'local-see',
     skipPermissionCheck: true,
 
-    screen: 'View_Application',
+    screen: 'ViewPersonalScreen',
     icon: 'chevron-forward',
     iconLib: 'MaterialIcons'
 
