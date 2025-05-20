@@ -116,18 +116,3 @@ export const TrainingRequestForm = (
 
   ];
 };
-
-export const initialValues = {
-  training_type: 0,
-  training_category: 0,
-  training_course: '',
-  training_institute_name: '',
-  training_country: 0,
-  training_expense_applicable: false,
-  training_fund: [],
-  training_from_date: '',
-  training_end_date: '',
-  training_need_advance: null,
-  training_advance_amount: '',
-  training_description: '',
-};

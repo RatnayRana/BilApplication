@@ -8,7 +8,8 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
   SignIn: undefined;
   Home: undefined;
   LeaveApplicationScreen: undefined;
-  TravelApplicationScreen: undefined;
+  TravelApplicationScreen: Array<TravelApprovalData>;
+  
   TravelApproval: undefined
   NestedViewApplication: undefined
   ViewPersonalScreen: undefined

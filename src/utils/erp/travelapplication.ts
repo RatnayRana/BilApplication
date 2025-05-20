@@ -110,17 +110,3 @@ export const TravelRequestForm = (
   ];
 };
 
-export const initialValues = {
-  travel_type: 0,
-  travel_purpose: 0,
-  travel_funding: 0,
-  travel_from_date: '',
-  travel_to_date: '',
-  travel_mode: 0,
-  travel_advance_amount: 0,
-  travel_from_place: '',
-  travel_expense_applicable: false,
-  travel_to_place: '',
-  need_advance: false,
-  travel_description: '',
-};

@@ -1,8 +1,9 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { RootStackNavigatorParamsList } from '../../../component/interface/routeinterface';
-import ViewTravelApplication from '../../../screen/ERP/ViewData/Training/viewTrainingApplication';
+import ViewTravelApplication from '../../../screen/ERP/ViewData/Travel/viewTravelApplication';
 import ViewLeaveApplication from '../../../screen/ERP/ViewData/Leave/viewLeaveapplication';
+import ViewTrainingApplication from '../../../screen/ERP/ViewData/Training/viewTrainingApplication';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
 
@@ -19,22 +20,12 @@ const NestedViewApplication = () => {
         component={ViewTravelApplication}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="TravelApplicationScreen"
-        component={TravelApplicationScreen}
+      <Stack.Screen
+        name="ViewTrainingApplication"
+        component={ViewTrainingApplication}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="TrainingApplicationScreen"
-        component={TrainingApplicationScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="ChangeRequestScreen"
-        component={ChangeRequestScreen}
-        options={{headerShown: false}}
-      /> */}
-    
+  
     </Stack.Navigator>
   );
 };

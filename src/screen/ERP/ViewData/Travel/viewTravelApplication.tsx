@@ -16,12 +16,11 @@ import { styles } from '../../LeaveApplicationPage/style.leaveapplicationpage';
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
 import { TravelApprovalData } from '../../../../interface/ERP/travelApproval';
 import leaveApprovalStyles from '../../../Approval/ERP/LeaveApproval/style';
-import { CreateTrainingAttributes } from '../../../../interface/ERP/tainingTypes';
 
 
 
 
-const ViewTrainingApplication = () => {
+const ViewTravelApplication = () => {
     const [openStart, setOpenStart] = useState(true);
     const [ApprovedCredentials, setApprovedCredentials] = useState<string>()
 
@@ -33,7 +32,7 @@ const ViewTrainingApplication = () => {
         error,
         data: testData,
     } = useMutation({
-        mutationKey: ['ViewTrainingData'],
+        mutationKey: ['ViewTravelData'],
         mutationFn: async (val: {
             leaveQueryApproval: string;
             approvedCredentials: {
@@ -47,9 +46,9 @@ const ViewTrainingApplication = () => {
                 status: number;
                 message: string;
                 data: {
-
-                    data: CreateTrainingAttributes[]
-
+                    data: {
+                        data: TravelApprovalData[]
+                    }
                 };
             };
         },
@@ -58,6 +57,8 @@ const ViewTrainingApplication = () => {
         setOpenStart(!openStart);
 
     }
+
+
     useEffect(() => {
         const fetchTokenData = async () => {
             const data = await EncryptedStorage.getItem('accessToken');
@@ -74,18 +75,20 @@ const ViewTrainingApplication = () => {
                 };
 
                 mutateAsync({
-                    leaveQueryApproval: ERPURL.traininglist,
+                    leaveQueryApproval: ERPURL.travelList,
                     approvedCredentials: approvedCredentials,
                 });
             }
         };
 
         fetchTokenData();
-    }, []); 
-    const handleSubmit = (selectedItem: CreateTrainingAttributes) => {
-
-        navogation.navigate('NestedNavigatorName', { screen: 'TrainingApplicationScreen', params: { approvedData: [selectedItem] } });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // Only run once when the component mounts
+    const handleSubmit = (selectedItem: TravelApprovalData) => {
+      
+        navogation.navigate('NestedNavigatorName', { screen:'TravelApplicationScreen', params: { approvedData: [selectedItem] }  });
     };
+
     return (
         <Wrapper>
             <NavComponent
@@ -98,7 +101,7 @@ const ViewTrainingApplication = () => {
                 height={24}
                 imageStyle={styles.imagev}
                 textSytle={styles.text}
-                text="View Training Details"
+                text="View Travel Details"
             />
 
             {isPending ? (
@@ -107,11 +110,11 @@ const ViewTrainingApplication = () => {
                 <ScrollView contentContainerStyle={{
                     paddingVertical: 10
                 }}>
-                    {testData && testData.data.data.length>0 ? (
-                        testData.data.data.map(item => (
+                    {testData && testData.data.data.data.length > 0 ? (
+                        testData.data.data.data.map(item => (
 
                             <ApprovalCard
-                                key={item.training_id}
+                                key={item.travel_id}
                                 onPress={() => handleSubmit(item)}
                                 cardContainer={leaveApprovalStyles.cardContainer}
                                 infoContainer={leaveApprovalStyles.infoContainer}
@@ -125,7 +128,7 @@ const ViewTrainingApplication = () => {
                                 durationStyle={leaveApprovalStyles.durationStyle}
                                 actionButton={leaveApprovalStyles.actionButton}
                                 imageViewStyle={leaveApprovalStyles.ImageStyle}
-                                Duration={item.training_duration}
+                                Duration={item.travel_duration}
                                 iconSize={35}
                                 iconname='edit'
                             />
@@ -153,4 +156,4 @@ const ViewTrainingApplication = () => {
     );
 };
 
-export default ViewTrainingApplication;
+export default ViewTravelApplication;

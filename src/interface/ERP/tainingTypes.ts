@@ -40,7 +40,7 @@ export interface CreateTrainingAttributes {
   training_from_date?: any;
   training_end_date?: any;
   training_duration?: number;
-  training_need_advance?: string | null; // "Y" or null
+  training_need_advance?: string | boolean; // "Y" or null
   training_advance_amount?: string;
   training_description?: string;
   emp_employee_number?:string;

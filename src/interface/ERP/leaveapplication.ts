@@ -33,4 +33,5 @@ export interface CreateTravelAttributes {
   travel_from_place?: string;
   travel_to_place?: string;
   travel_description?: string;
+  need_advance?:string | boolean
 }

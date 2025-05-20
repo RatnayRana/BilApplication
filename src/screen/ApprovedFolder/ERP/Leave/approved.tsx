@@ -23,7 +23,6 @@ import ErrorDialog from '../../../../component/ErrorDialog/errordialog';
 import NavComponent from '../../../../component/NavComponent/navvomponent';
 import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import Wrapper from '../../../auth';
-import { CacheManager } from '../../../../public/middleware/cacheManager/cachemanager';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
 
 type approvedScreen = NativeStackScreenProps<

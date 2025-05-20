@@ -51,7 +51,7 @@ export const viewApplication = [
   {
     item_name: 'View Training Application',
     iconName: 'school-outline',
-    screen: 'ViewTrainingApplicationScreen',
+    screen: 'ViewTrainingApplication',
     icon: 'chevron-forward',
     iconLib:'MaterialCommunityIcons'
 

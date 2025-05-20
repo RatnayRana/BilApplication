@@ -4,17 +4,13 @@ import { View, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import Button from '../../../component/Button';
 import Wrapper from '../../auth';
-
 import dayjs from 'dayjs';
 import { DateType } from 'react-native-ui-datepicker';
-
 import NavComponent from '../../../component/NavComponent/navvomponent';
 import {
-  initialValues,
   TravelRequestForm,
 } from '../../../utils/erp/travelapplication';
 import { validationtravelSchema } from '../../auth/validation/signIn.validation';
-
 import { renderField } from '../../../public/customfields/custom.fields';
 import { CreateTravelAttributes } from '../../../interface/ERP/leaveapplication';
 import {
@@ -30,11 +26,23 @@ import { AxiosError } from 'axios';
 import ErrorDialog from '../../../component/ErrorDialog/errordialog';
 import LoaderComponent from '../../../component/UniversalLoader/loader';
 import SuccessDialog from '../../../component/SuccessDialog/successdialog';
-import { NavigationProp, useNavigation } from '@react-navigation/core';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/core';
 import { RootStackNavigatorParamsList } from '../../../component/interface/routeinterface';
 import { fetchTravelDropDownData } from './trainingTypeData';
+import { TravelApprovalData } from '../../../interface/ERP/travelApproval';
+
+type RouteParams = {
+  approvedData?: TravelApprovalData[];
+};
 
 const TravelApplicationScreen: React.FC = () => {
+  const routeData = useRoute();
+  const params = routeData.params as RouteParams;
+  const TravelData = params.approvedData || [];
+
+
+
+  const isUpdateMode = !!(TravelData && TravelData.length > 0);
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const [openStart, setOpenStart] = useState(false);
@@ -43,6 +51,7 @@ const TravelApplicationScreen: React.FC = () => {
     undefined,
   );
   const navigation = useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
+
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
@@ -61,7 +70,39 @@ const TravelApplicationScreen: React.FC = () => {
     // handleClose();
     // navigation.navigate('Main');
   }
-
+  const getInitialValues = (): CreateTravelAttributes => {
+    if (TravelData && TravelData.length > 0 && isUpdateMode) {
+      const travelData = TravelData[0];
+      return {
+        travel_type: Number(travelData.travel_type) || 0,
+        travel_purpose: Number(travelData.travel_purpose) || 0,
+        travel_funding: Number(travelData.travel_funding) || 0,
+        travel_from_date: travelData.travel_from_date || '',
+        travel_to_date: travelData.travel_to_date || '',
+        travel_mode: Number(travelData.travel_mode) || 0,
+        travel_advance_amount: Number(travelData.travel_advance_amount) || 0,
+        travel_from_place: travelData.travel_from_place || '',
+        travel_to_place: travelData.travel_to_place || '',
+        need_advance: !!Number(travelData.travel_advance),
+        travel_expense_applicable: false,
+        travel_description: travelData.travel_description || '',
+      };
+    }
+    return {
+      travel_type: 0,
+      travel_purpose: 0,
+      travel_funding: 0,
+      travel_from_date: '',
+      travel_to_date: '',
+      travel_mode: 0,
+      travel_advance_amount: 0,
+      travel_from_place: '',
+      travel_expense_applicable: false,
+      travel_to_place: '',
+      need_advance: false,
+      travel_description: '',
+    };
+  };
   useEffect(() => {
     const fetchData = async () => {
       const data = await tokenMiddleware();
@@ -200,7 +241,7 @@ const TravelApplicationScreen: React.FC = () => {
       />
       <ScrollView style={{ paddingHorizontal: 16, flexGrow: 1 }}>
         <Formik
-          initialValues={initialValues}
+          initialValues={getInitialValues()}
           validationSchema={validationtravelSchema}
           onSubmit={onFormSubmit}>
           {({ handleSubmit, values, setFieldValue, errors, touched }) => {
@@ -256,7 +297,6 @@ const TravelApplicationScreen: React.FC = () => {
                     </View>
                   );
                 })}
-
                 <View style={styles.buttonContainer}>
                   <Button
                     title="Submit Application"

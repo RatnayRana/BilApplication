@@ -6,7 +6,7 @@ import utc from 'dayjs/plugin/utc';
 import NavComponent from '../../../component/NavComponent/navvomponent';
 import Wrapper from '../../auth';
 import { Formik } from 'formik';
-import { initialValues, TrainingRequestForm } from '../../../utils/erp/trainingapplication';
+import { TrainingRequestForm } from '../../../utils/erp/trainingapplication';
 import { validationtrainingSchema } from '../../auth/validation/signIn.validation';
 import { renderField } from '../../../public/customfields/custom.fields';
 import Button from '../../../component/Button';
@@ -24,13 +24,14 @@ import { AxiosError } from 'axios';
 import ErrorDialog from '../../../component/ErrorDialog/errordialog';
 import LoaderComponent from '../../../component/UniversalLoader/loader';
 import SuccessDialog from '../../../component/SuccessDialog/successdialog';
-import { NavigationProp, useNavigation } from '@react-navigation/core';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/core';
 import { RootStackNavigatorParamsList } from '../../../component/interface/routeinterface';
-
+type RouteParams = {
+  approvedData?: CreateTrainingAttributes[];
+};
 dayjs.extend(utc);
 const TrainingApplicationScreen: React.FC = () => {
-      const navigation =
-        useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
+  const navigation = useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
   const [startDate, setStartDate] = useState<string | null>(null);
   const [tokenData, setTokenData] = useState<TokenAttributes | undefined>(
     undefined,
@@ -41,8 +42,13 @@ const TrainingApplicationScreen: React.FC = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [servError, setServerError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
-      undefined,
-    );
+    undefined,
+  );
+
+  const routeData = useRoute();
+  const params = routeData.params as RouteParams;
+  const TrainingviewData = params.approvedData || [];
+  const isUpdateMode = !!(TrainingviewData && TrainingviewData.length > 0);
   const { data: TrainingCategory, mutateAsync, isPending } = TrainingCategoryDropDownData()
   const { data: countriesData, isPending: countryDataisPending, error } = CountryDataQuery()
 
@@ -97,10 +103,40 @@ const TrainingApplicationScreen: React.FC = () => {
   function handleSuccess() {
     setOpenDialog(!openDialog);
     navigation.goBack()
-
-    // handleClose();
-    // navigation.navigate('Main');
   }
+  const getInitialValues = (): CreateTrainingAttributes => {
+    if (TrainingviewData && TrainingviewData.length > 0 && isUpdateMode) {
+      const travelData = TrainingviewData[0];
+      return {
+        training_type: Number(travelData.training_type) || 0,
+        training_category: Number(travelData.training_category) || 0,
+        training_course: travelData.training_course || '',
+        training_from_date: travelData.training_from_date || '',
+        training_end_date: travelData.training_end_date || '',
+        training_country: Number(travelData.training_country) || 0,
+        training_fund: travelData.training_fund,
+        training_advance_amount: travelData.training_advance_amount,
+        training_institute_name: travelData.training_institute_name || '',
+        training_need_advance: !!Number(travelData.training_need_advance),
+        training_expense_applicable: false,
+        training_description: travelData.training_description || '',
+      };
+    }
+    return {
+      training_type: 0,
+      training_category: 0,
+      training_course: '',
+      training_institute_name: '',
+      training_country: 0,
+      training_expense_applicable: false,
+      training_fund: [],
+      training_from_date: '',
+      training_end_date: '',
+      training_need_advance: false,
+      training_advance_amount: '',
+      training_description: '',
+    };
+  };
 
   const { data: TrainingDropDownData } = fetchTrainingDropDownData();
   const trainingType = { data: TrainingDropDownData?.data }
@@ -128,7 +164,7 @@ const TrainingApplicationScreen: React.FC = () => {
 
       }
     }
-    
+
     const TrainingData = {
       ...(tokenData?.employee_code && { employee_code: tokenData.employee_code }),
       training_type: values.training_type,
@@ -145,7 +181,7 @@ const TrainingApplicationScreen: React.FC = () => {
       training_advance_amount: values.training_advance_amount,
       training_description: values.training_description
     }
-    TrainingDataMutate(TrainingData )
+    TrainingDataMutate(TrainingData as CreateTrainingAttributes)
     setServerError(false);
     setOpenDialog(true);
 
@@ -194,8 +230,7 @@ const TrainingApplicationScreen: React.FC = () => {
         style={{ paddingHorizontal: 16, flexGrow: 1 }}
         keyboardShouldPersistTaps="handled">
         <Formik
-          initialValues={initialValues}
-          onSubmit={onFormSubmit}
+          initialValues={getInitialValues()} onSubmit={onFormSubmit}
           validationSchema={validationtrainingSchema}>
           {({ handleSubmit, values, setFieldValue, errors, touched }) => {
             const handleDateChange = (date: DateType) => {
