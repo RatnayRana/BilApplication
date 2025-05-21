@@ -46,9 +46,13 @@ const TrainingApplicationScreen: React.FC = () => {
   );
 
   const routeData = useRoute();
-  const params = routeData.params as RouteParams;
-  const TrainingviewData = params.approvedData || [];
-  const isUpdateMode = !!(TrainingviewData && TrainingviewData.length > 0);
+  const params = routeData?.params as RouteParams;
+  const TrainingviewData = params?.approvedData || [];
+  let isUpdateMode: boolean;
+  if (TrainingviewData) {
+    isUpdateMode = !!(TrainingviewData && TrainingviewData?.length > 0);
+
+  }
   const { data: TrainingCategory, mutateAsync, isPending } = TrainingCategoryDropDownData()
   const { data: countriesData, isPending: countryDataisPending, error } = CountryDataQuery()
 

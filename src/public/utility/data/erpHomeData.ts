@@ -41,5 +41,16 @@ export const ERPHomeData = [
     iconLib: 'MaterialIcons'
 
   },
+   {
+    item_id: 4,
+    item_name: 'Employee Benefits',
+    iconName: 'money-check',
+    skipPermissionCheck: true,
+
+    screen: 'SalaryAdvance',
+    icon: 'chevron-forward',
+    iconLib: 'FontAwesome6'
+
+  },
 
 ];

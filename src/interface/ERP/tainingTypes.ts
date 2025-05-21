@@ -46,7 +46,8 @@ export interface CreateTrainingAttributes {
   emp_employee_number?:string;
   branch_name?:string;
   training_status?:number;
-  approval_remarks?:string
+  approval_remarks?:string;
+  
 }
 
 export interface CountryResponseData{

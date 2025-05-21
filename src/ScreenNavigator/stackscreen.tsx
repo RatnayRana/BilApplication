@@ -17,6 +17,7 @@ import TrainingApprovedScreen from '../screen/ApprovedFolder/ERP/Training/traini
 
 import ViewPersonalScreen from '../screen/ERP/ViewData/ApplicationView';
 import NestedViewApplication from './ERP/ViewApplication/viewApplication';
+import SalaryAdvance from '../screen/ERP/SalaryAdvance/salaryAdvance';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
 
@@ -96,6 +97,11 @@ export default function RootStack() {
       <Stack.Screen
         name="ViewPersonalScreen"
         component={ViewPersonalScreen}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name="SalaryAdvance"
+        component={SalaryAdvance}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

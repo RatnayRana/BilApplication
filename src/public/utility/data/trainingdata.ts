@@ -21,9 +21,3 @@ export const Source_Of_Funding = [
   {id: 3, name: 'Others'},
   {id: 4, name: 'Not Applicable'},
 ];
-// export const ModeofTravels = [
-//   {id: 0, name: 'Select Travel TypeMode of Travel'},
-//   {id: 1, name: 'By Air'},
-//   {id: 2, name: 'By Road'},
-//   {id: 3, name: 'Others'},
-// ];

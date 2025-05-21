@@ -11,7 +11,6 @@ import {
 } from '../../../../interface/ERP/leavetypes';
 import { Status } from '../../../../public/utility/data/leavetypedata';
 import approvedLeaveStyles from './style';
-
 import Button from '../../../../component/Button';
 import apiClient from '../../../../post/postapi';
 import { ERPURL } from '../../../../component/APIURL/ERP/erpurl';

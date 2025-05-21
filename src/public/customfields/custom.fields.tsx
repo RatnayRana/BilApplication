@@ -268,7 +268,7 @@ export const renderField = ({
           <Label text={fieldConfig.label} style={textInputStyle} />
           <View style={DisplayView}>
             <Label
-              text={values[fieldConfig.name] || 'No date is provided'}
+              text={values[fieldConfig.name] || '0'}
               style={styles.textStyle}
             />
           </View>

@@ -37,12 +37,14 @@ type RouteParams = {
 
 const TravelApplicationScreen: React.FC = () => {
   const routeData = useRoute();
-  const params = routeData.params as RouteParams;
-  const TravelData = params.approvedData || [];
+  const params = routeData?.params as RouteParams;
+  const TravelData = params?.approvedData || [];
 
+let isUpdateMode:boolean;
+  if(TravelData){
+    isUpdateMode = !!(TravelData && TravelData?.length > 0);
 
-
-  const isUpdateMode = !!(TravelData && TravelData.length > 0);
+  }
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const [openStart, setOpenStart] = useState(false);

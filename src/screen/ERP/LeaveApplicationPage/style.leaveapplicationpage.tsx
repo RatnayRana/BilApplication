@@ -285,7 +285,7 @@ export const styles = StyleSheet.create({
   textInputStyle: {
     marginTop: 10,
     fontSize: 20,
-    color: colors.primary,
+    color: colors.black,
     fontWeight: 600,
   },
   //PlaceHolderStyle

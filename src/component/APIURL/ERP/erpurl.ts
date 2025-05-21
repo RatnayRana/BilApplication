@@ -20,6 +20,7 @@ export const ERPURL = {
     fetchTrainingByCode: `${ERPURLAPI}/fetchTrainingByCode`,
     trainingVerification: `${ERPURLAPI}/trainingVerification`,
     travelList: `${ERPURLAPI}/travelList`,
+    fetchAdvancedetail: `${ERPURLAPI}/fetchAdvancedetail`,
 
 
     // leaveApplication: 'leave-applications',
