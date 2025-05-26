@@ -32,7 +32,7 @@ const TravelApproval = () => {
         error,
         data: testData,
     } = useMutation({
-        mutationKey: ['test'],
+        mutationKey: ['TravelApproval'],
         mutationFn: async (val: {
             leaveQueryApproval: string;
             approvedCredentials: {
@@ -59,7 +59,6 @@ const TravelApproval = () => {
         setOpenStart(!openStart);
 
     }
-
 
     useEffect(() => {
         const fetchTokenData = async () => {
@@ -92,7 +91,7 @@ const TravelApproval = () => {
             ...selectedItem,
             employee_code:ApprovedCredentials
         }
-        navogation.navigate('TrainingApprovedScreen', { approvedData: [selectedItemData] });
+        navogation.navigate('TravelApprovedScreen', { approvedData: [selectedItemData] });
     };
 
     return (

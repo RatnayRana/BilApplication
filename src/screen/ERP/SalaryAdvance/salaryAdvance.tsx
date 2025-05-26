@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import NavComponent from '../../../component/NavComponent/navvomponent';
@@ -29,7 +29,7 @@ const SalaryAdvance: React.FC = () => {
   const [monthly_installment, setMonthly_Installment] = useState<any | null>(null)
   const [sa_NewTakeHome, setSa_NewTakeHome] = useState<any | null>(null)
   const [saAmtPercentage, setSaAmtPercentage] = useState<any | null>(null)
- const [Employee_name, setEmployee_name] = useState<any | null>(null)
+  const [Employee_name, setEmployee_name] = useState<any | null>(null)
 
 
   //   const [endDate, setEndDate] = useState<string | null>(null);
@@ -41,42 +41,23 @@ const SalaryAdvance: React.FC = () => {
   //     undefined,
   //   );
 
-  const { data: salaryAdvance, mutateAsync, isPending } = fetchAdvanceDetails()
+
+  const { data: salaryAdvance, isPending } = fetchAdvanceDetails(
+    tokenData?.employee_code,
+    {
+      enabled: !!tokenData?.employee_code
+    }
+  )
   useEffect(() => {
     const fetchData = async () => {
       const data = await tokenMiddleware();
       setTokenData(data);
-      if (data?.employee_code) {
-        mutateAsync(data.employee_code);
-      }
+
     };
-    fetchData(); 4
+    fetchData();
+    // mutateAsync(tokenData?.employee_code)
+
   }, []);
-  const initialValues = useMemo(() => {
-  if (salaryAdvance?.data) {
-    return {
-      employee_name: tokenData?.name,
-      take_home_salary: salaryAdvance.data.take_home_salary,
-      applicable_advance_amt: '',
-      monthly_installment_amt: monthly_installment || 0,
-      sa_NewTakeHome: sa_NewTakeHome,
-      saAmtPercentage: saAmtPercentage,
-      monthly_lumsum: 0,
-      salary_purpose: '',
-    };
-  } else {
-    return {
-      employee_name: tokenData?.name,
-      take_home_salary: '',
-      applicable_advance_amt: '',
-      monthly_installment_amt: monthly_installment || 0,
-      sa_NewTakeHome: sa_NewTakeHome,
-      saAmtPercentage: saAmtPercentage,
-      monthly_lumsum: 0,
-      salary_purpose: '',
-    };
-  }
-}, [salaryAdvance?.data, tokenData]);
 
 
   // const {
@@ -109,11 +90,10 @@ const SalaryAdvance: React.FC = () => {
   //     }
   //   },
   // // });
-  console.log(SalaryAdvance)
   const handleFieldChange = (fieldName: string, value: any, setFieldValue: Function) => {
     setFieldValue(fieldName, value);
 
-    if (fieldName === 'applicable_advance_amt') {
+    if (fieldName === 'salary_advance_amt') {
       const sa_advance_amt = parseFloat(value) || 0;
       const remaining_month = 12 - (new Date().getMonth() + 1);
 
@@ -133,7 +113,6 @@ const SalaryAdvance: React.FC = () => {
           // Calculate new take home using the newly calculated installment amount
           const sa_new_take_home = parseFloat(salaryAdvance.data.take_home_salary) - installment;
           const formattedNewTakeHome = parseFloat(sa_new_take_home.toFixed(2));
-          console.log('FormattewsNewToake', formattedNewTakeHome)
 
           // Update take-home state and form value
           setSa_NewTakeHome(formattedNewTakeHome);
@@ -141,7 +120,6 @@ const SalaryAdvance: React.FC = () => {
 
           // Calculate percentage correctly
           const sa_new_take_home_amt_percentage = (formattedNewTakeHome / Number(salaryAdvance.data.gross_salary)) * 100;
-          console.log()
           // Update percentage state and form value
           setSaAmtPercentage(Number(sa_new_take_home_amt_percentage).toFixed(2));
           setFieldValue('saAmtPercentage', Number(sa_new_take_home_amt_percentage).toFixed(2));
@@ -155,8 +133,17 @@ const SalaryAdvance: React.FC = () => {
       }
     }
   }
-
-
+  console.log(sa_NewTakeHome)
+  const initialValues = {
+    employee_name: salaryAdvance?.data.employee_name,
+    take_home_salary: salaryAdvance?.data.take_home_salary,
+    salary_advance_amt: '',
+    monthly_installment_amt: monthly_installment || 0,
+    sa_NewTakeHome: sa_NewTakeHome,
+    saAmtPercentage: saAmtPercentage,
+    monthly_lumsum: 0,
+    salary_purpose: '',
+  }
 
   //   function handleClose() {
   //     setOpenDialog(!openDialog);
@@ -166,24 +153,6 @@ const SalaryAdvance: React.FC = () => {
   //     setOpenDialog(!openDialog);
   //     navigation.goBack()
   //   }
-  //   const getInitialValues = (): CreateTrainingAttributes => {
-
-  //     }
-  //     return {
-  //       training_type: 0,
-  //       training_category: 0,
-  //       training_course: '',
-  //       training_institute_name: '',
-  //       training_country: 0,
-  //       training_expense_applicable: false,
-  //       training_fund: [],
-  //       training_from_date: '',
-  //       training_end_date: '',
-  //       training_need_advance: false,
-  //       training_advance_amount: '',
-  //       training_description: '',
-  //     };
-  //   };
 
 
 
@@ -265,23 +234,18 @@ const SalaryAdvance: React.FC = () => {
         textSytle={styles.text}
         text="Salary Advance"
       />
-
       <ScrollView
         style={{ paddingHorizontal: 16, flexGrow: 1 }}
         keyboardShouldPersistTaps="handled">
         <Formik
+          // enableReinitialize={true}
           initialValues={initialValues}
           onSubmit={onFormSubmit}
-          enableReinitialize
           validationSchema={validationSalaryAdvanceSchema}>
           {({ handleSubmit, values, setFieldValue, errors, touched }) => {
-
-
             return (
               <View>
                 {SalaryAdvanceRequestForm(
-
-                  { data: monthly_lumsum },
                 ).map((fieldConfig: any, index) => (
                   <View key={index}>
                     {renderField({

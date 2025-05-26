@@ -75,7 +75,6 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
         }
     }, [approvedData]);
 
-
     const {
         mutateAsync,
         isPending,
@@ -91,8 +90,6 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
 
                     return data;
                 }
-
-
                 return data;
                 // eslint-disable-next-line no-catch-shadow, @typescript-eslint/no-shadow
             } catch (error) {
@@ -171,7 +168,6 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             },
         ];
     };
-
     const handleSubmit = (values: TravelApproval) => {
         const {
             employee_code,
@@ -189,7 +185,7 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             travel_to_place,
         } = approvedData[0];
         // const travel_advance_amount = Number(approvedData[0].travel_advance_amount)
-       const travel_advance_amount = approvedData[0].travel_advance_amount? Number(approvedData[0].travel_advance_amount):null
+        const travel_advance_amount = approvedData[0].travel_advance_amount ? Number(approvedData[0].travel_advance_amount) : null
         const DataToSend = {
             travel_advance_amount: travel_advance_amount,
             travel_from_place,

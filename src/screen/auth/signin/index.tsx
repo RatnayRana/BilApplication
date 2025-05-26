@@ -50,7 +50,6 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
   } = useMutation({
     mutationFn: async (credentials: AuthAttributes) => {
       try {
-console.log('tenzins',ERPURL.login)
         const data = await apiClient.post(ERPURL.login, credentials);
         if (data) {
           await EncryptedStorage.setItem(

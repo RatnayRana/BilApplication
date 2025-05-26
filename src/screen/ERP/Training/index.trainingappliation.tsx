@@ -148,9 +148,14 @@ const TrainingApplicationScreen: React.FC = () => {
   const ConditionalFieldConfig = [
     {
       targetField: 'training_advance_amount',
-      dependsOn: 'training_need_advance', // Field that controls the target
+      dependsOn: 'training_expense_applicable', // Field that controls the target
       condition: (value: boolean) => value === true, // Function that determines if target is enabled
     },
+     {
+      targetField: 'training_need_advance',
+      dependsOn: 'training_expense_applicable', // Field that controls the target
+      condition: (value: boolean) => value === true, // Function that determines if target is enabled
+    }
   ];
   const onFormSubmit = (values: CreateTrainingAttributes) => {
     const training_expense = values.training_expense_applicable ? 'Yes' : 'No'

@@ -71,6 +71,17 @@ export const TrainingRequestForm = (
       label: 'Is Training Expense Applicable?',
       name: 'training_expense_applicable',
     },
+     {
+      type: 'checkbox',
+      label: 'Need_advance ?',
+      name: 'training_need_advance',
+    },
+    {
+      type: 'text',
+      label: 'Advance Amount',
+      name: 'training_advance_amount',
+      placeholder: '0',
+    },
     {
       type: 'MultiSelect',
       label: 'Source of Funding ',
@@ -96,17 +107,7 @@ export const TrainingRequestForm = (
       placeholder: 'Select end date',
     },
 
-    {
-      type: 'checkbox',
-      label: 'Need_advance ?',
-      name: 'training_need_advance',
-    },
-    {
-      type: 'text',
-      label: 'Advance Amount',
-      name: 'training_advance_amount',
-      placeholder: '0',
-    },
+   
     {
       type: 'text',
       label: 'Training Description',

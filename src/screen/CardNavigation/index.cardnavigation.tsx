@@ -52,7 +52,6 @@ const CardNavigation: React.FC<CardNavigationProps> = ({ route }) => {
         }));
         setPermission(permissionData);
       }
-      console.log("Resulgt",result)
       return result;
     } catch (error) {
       console.log("error ",error)

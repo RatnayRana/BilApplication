@@ -1,7 +1,7 @@
 
 export const ERPURLAPI = process.env.ERPAPIURL;
-export const AUTHAPIURL = 'http://192.168.137.28:3000/api/v1'
-// export const AUTHAPIURL = process.env.AUTHAPIURL;
+// export const AUTHAPIURL = 'http://192.168.137.28:3000/api/v1'
+export const AUTHAPIURL = process.env.AUTHAPIURL;
 export const ERPURL = {
     login: `${AUTHAPIURL}/login`,
     leaveType: `${ERPURLAPI}/leaveTypesQuery`,

@@ -89,23 +89,38 @@ export const renderField = ({
   ConditionalFieldConfig = [],
   startDateFieldName,
   inputContainer,
-  placeholderStyle // Change from placeHolderStyle to placeholderStyle
-  ,
+  placeholderStyle,// Change from placeHolderStyle to placeholderStyle,
   dateLabelStyle,
 }: customInputFields) => {
-  const isFieldDisabled = () => {
-    if (!ConditionalFieldConfig || ConditionalFieldConfig.length === 0)
-      return false;
-    const condition = ConditionalFieldConfig.find(
-      c => c.targetField === fieldConfig.name,
-    );
-    if (!condition) {
+  const isFieldVisible = () => {
+    if (!ConditionalFieldConfig || ConditionalFieldConfig.length === 0) {
       return false;
     }
+    const condition = ConditionalFieldConfig.find(
+      c => c.targetField === fieldConfig.name
+    )
+    if (!condition) {
+      return false
+    }
+    return !condition.condition(values[condition.dependsOn])
+  }
+  // const isFieldDisabled = () => {
+  //   if (!ConditionalFieldConfig || ConditionalFieldConfig.length === 0)
+  //     return false;
+  //   const condition = ConditionalFieldConfig.find(
+  //     c => c.targetField === fieldConfig.name,
+  //   );
+  //   if (!condition) {
+  //     return false;
+  //   }
 
-    return !condition.condition(values[condition.dependsOn]);
-  };
-  const disabled = isFieldDisabled();
+  //   return !condition.condition(values[condition.dependsOn]);
+  // };
+  // const disabled = isFieldDisabled();
+  const visible = isFieldVisible()
+  if (visible) {
+    return null
+  }
 
   switch (fieldConfig.type) {
     case 'dropdown':
@@ -247,13 +262,12 @@ export const renderField = ({
         <>
           <Label text={fieldConfig.label} style={textInputStyle} />
           <CustomTextInput
-            editable={!disabled}
             required={true}
             containerStyle={inputContainer}
             inputStyle={reasonTextStyle}
             onChangeText={text =>
 
-              !disabled && setFieldValue?.(fieldConfig.name, text)
+              setFieldValue?.(fieldConfig.name, text)
             }
             value={values[fieldConfig.name]}
           />

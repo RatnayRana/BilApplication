@@ -147,7 +147,12 @@ let isUpdateMode:boolean;
   const ConditionalFieldConfig = [
     {
       targetField: 'travel_advance_amount',
-      dependsOn: 'need_advance', // Field that controls the target
+      dependsOn: 'travel_expense_applicable', // Field that controls the target
+      condition: (value: boolean) => value === true, // Function that determines if target is enabled
+    },
+     {
+      targetField: 'need_advance',
+      dependsOn: 'travel_expense_applicable', // Field that controls the target
       condition: (value: boolean) => value === true, // Function that determines if target is enabled
     },
   ];

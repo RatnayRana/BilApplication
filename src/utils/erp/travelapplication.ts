@@ -42,6 +42,16 @@ export const TravelRequestForm = (
       label: 'Is Travel Expense Application?',
       name: 'travel_expense_applicable',
     },
+      {
+      type: 'checkbox',
+      label: 'Need_advance ?',
+      name: 'need_advance',
+    },
+      {
+      type: 'text',
+      label: 'Advance_amount',
+      name: 'travel_advance_amount',
+    },
     {
       type: 'dropdown',
       label: 'Travel Funding ',
@@ -79,16 +89,8 @@ export const TravelRequestForm = (
       placeholder: 'Select end date',
     },
 
-    {
-      type: 'checkbox',
-      label: 'Need_advance ?',
-      name: 'need_advance',
-    },
-    {
-      type: 'text',
-      label: 'advance_amount',
-      name: 'travel_advance_amount',
-    },
+  
+  
     {
       type: 'text',
       label: 'From Place',
