@@ -104,19 +104,7 @@ export const renderField = ({
     }
     return !condition.condition(values[condition.dependsOn])
   }
-  // const isFieldDisabled = () => {
-  //   if (!ConditionalFieldConfig || ConditionalFieldConfig.length === 0)
-  //     return false;
-  //   const condition = ConditionalFieldConfig.find(
-  //     c => c.targetField === fieldConfig.name,
-  //   );
-  //   if (!condition) {
-  //     return false;
-  //   }
-
-  //   return !condition.condition(values[condition.dependsOn]);
-  // };
-  // const disabled = isFieldDisabled();
+  
   const visible = isFieldVisible()
   if (visible) {
     return null
@@ -267,7 +255,7 @@ export const renderField = ({
             inputStyle={reasonTextStyle}
             onChangeText={text =>
 
-              setFieldValue?.(fieldConfig.name, text)
+             setFieldValue?.(fieldConfig.name, text)
             }
             value={values[fieldConfig.name]}
           />

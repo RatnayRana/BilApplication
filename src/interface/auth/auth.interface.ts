@@ -11,6 +11,7 @@ export interface AuthResponse {
   refreshToken: string;
 }
 export interface AuthField {
+  id:number
   name: 'username' | 'password';
   label: string;
   placeholder: string;

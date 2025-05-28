@@ -9,9 +9,10 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
   Home: undefined;
   LeaveApplicationScreen: undefined;
   TravelApplicationScreen: Array<TravelApprovalData>;
-  
+  ClaimsOverviewScreen:undefined
   TravelApproval: undefined
   NestedViewApplication: undefined
+  ClaimsNavigator:undefined
   ViewPersonalScreen: undefined
   // ApprovedScreen: LeavedApprovedAttributes;
   CardNavigation: {
@@ -41,4 +42,7 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
     approvedData: Array<CreateTrainingAttributes>
 
   }
+        // NotificationScreen
+
+  NotificationScreen:undefined
 }

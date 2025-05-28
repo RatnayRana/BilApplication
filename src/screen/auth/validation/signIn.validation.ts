@@ -35,7 +35,7 @@ export const validationtrainingSchema = Yup.object().shape({
 });
 export const validationSalaryAdvanceSchema = Yup.object().shape({
   applicable_advance_amt: Yup.number().required('Advance Amount is required'),
-  salary_purpose: Yup.string().required('Training Category is required'),
+  salary_purpose: Yup.string().required(' Salary Purpose is required'),
 
 
 });

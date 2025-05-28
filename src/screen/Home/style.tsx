@@ -2,10 +2,11 @@ import { StyleSheet } from 'react-native';
 import { colors } from '../../utils/color';
 import { Dimensions } from 'react-native';
 const { height, width } = Dimensions.get('window');
+
 const cardGap = 16;
 
 const cardWidth = (Dimensions.get('window').width - cardGap * 3) / 2;
-export const styles = StyleSheet.create({
+export const homeStyles = StyleSheet.create({
 
   CardContainer: {
 
@@ -59,5 +60,8 @@ export const styles = StyleSheet.create({
     fontWeight: 600,
     marginHorizontal: 3
 
+  },
+  Main:{
+    justifyContent: 'center', width: width, height: height, alignItems: 'center'
   }
 });

@@ -18,6 +18,9 @@ import TrainingApprovedScreen from '../screen/ApprovedFolder/ERP/Training/traini
 import ViewPersonalScreen from '../screen/ERP/ViewData/ApplicationView';
 import NestedViewApplication from './ERP/ViewApplication/viewApplication';
 import SalaryAdvance from '../screen/ERP/SalaryAdvance/salaryAdvance';
+import ClaimsOverviewScreen from '../screen/ERP/Claim/OverView/ClaimsOverViewScreen';
+import ClaimsNavigator from './ERP/Claims/ClaimsNavigator';
+import NotificationScreen from '../screen/ERP/Notifications/NotificationScreen';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
 
@@ -102,6 +105,28 @@ export default function RootStack() {
        <Stack.Screen
         name="SalaryAdvance"
         component={SalaryAdvance}
+        options={{ headerShown: false }}
+      />
+
+      {/* //Claims */}
+       <Stack.Screen
+        name="ClaimsOverviewScreen"
+        component={ClaimsOverviewScreen}
+        options={{ headerShown: false }}
+      />
+      
+      <Stack.Screen
+        name="ClaimsNavigator"
+        component={ClaimsNavigator}
+        options={{ headerShown: false }}
+      />
+
+      {/* NotificationScreen */}
+
+        
+      <Stack.Screen
+        name="NotificationScreen"
+        component={NotificationScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

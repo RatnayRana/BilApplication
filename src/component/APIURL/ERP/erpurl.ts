@@ -22,7 +22,7 @@ export const ERPURL = {
     trainingVerification: `${ERPURLAPI}/trainingVerification`,
     travelList: `${ERPURLAPI}/travelList`,
     fetchAdvancedetail: `${ERPURLAPI}/fetchAdvancedetail`,
-
+    applySalaryAdvance: `${ERPURLAPI}/applySalaryAdvance`,
 
     // leaveApplication: 'leave-applications',
 };

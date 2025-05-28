@@ -1,21 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
 import Wrapper from '../../auth';
 import NavComponent from '../../../component/NavComponent/navvomponent';
 import { styles } from '../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
-import applicationStyles from '../LeaveApplication/style.leave';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackNavigatorParamsList } from '../../../component/interface/routeinterface';
 import { ERPHomeData } from '../../../public/utility/data/erpHomeData';
 import { RoleAndPermission } from '../../../component/home/roleAndPermission';
 import { requiredPermissions } from '../../../public/utility/data/approvalPermission';
 import GlobalUseEffect from '../../../public/middleware/useEffect/universalUseEffect';
-import PermissionCard from '../../../component/PermissionCard/permissionCard';
 import CustomDialog from '../../../component/DialogBox/dialogbox';
+import { RenderFlatList } from './erpFlatList';
+import { Dimensions, View } from 'react-native';
+import { erpServiceStyles } from './style';
+import { homeStyles } from '../../Home/style';
+import { colors } from '../../../utils/color';
+const { height, width } = Dimensions.get('window');
+
 const ERPSystem = () => {
   const tokenData = GlobalUseEffect();
-
   const [openStart, setOpenStart] = useState(true);
   const [resultMessage, setResultMessage] = useState<string | null>(null);
   const [errorMessage, seterrorMessage] = useState<string | null>(null);
@@ -64,8 +67,8 @@ const ERPSystem = () => {
       username,
     });
     setShowDialog(true);
-   
-    
+
+
 
     if ('permission' in result) {
       const Authenticated = requiredPermissions.some(permission =>
@@ -112,23 +115,9 @@ const ERPSystem = () => {
         textSytle={styles.text}
         text="ERP Services"
       />
-
-      <ScrollView style={applicationStyles.scrollview}>
-        {ERPHomeData.map((item, index) => (
-          <PermissionCard
-            iconLib={item.iconLib}
-            iconName={item.iconName}
-            item_name={item.item_name}
-            key={index}
-            imagecardStyle={applicationStyles.imageStyle}
-            imageandTitleStyle={applicationStyles.imageandTitleStyle}
-            titleStyle={applicationStyles.textStyle}
-            SubmitStyle={applicationStyles.submitStyle}
-            SubmitTextStyle={applicationStyles.SubmitTextStyle}
-            onPress={() => handleChange(item, tokenData?.employee_id)} size={0} />
-        ))}
-      </ScrollView>
-
+      <View style={homeStyles.Main}>
+        <RenderFlatList data={ERPHomeData} onPress={(item) => handleChange(item, tokenData?.employee_id)} />
+      </View>
     </Wrapper>
   );
 };

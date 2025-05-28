@@ -19,14 +19,13 @@ export const SalaryAdvanceRequestForm = (
         },
         {
             type: 'displaytext',
-            label: 'Take Home Salary',
-            name: 'take_home_salary',
+            label: 'Applicable Advance',
+            name: 'applicable_advance_amt',
         },
         {
             type: 'text',
             label: 'Advance Amount ',
-            name: 'applicable_advance_amt', // ✅ Corrected
-            placeholder: 'Enter Training Course',
+            name: 'salary_advance_amt', // ✅ Corrected
         },
         {
             type: 'displaytext',

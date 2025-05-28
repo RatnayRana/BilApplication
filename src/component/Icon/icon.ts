@@ -10,5 +10,7 @@ export const iconLibraries: {[key: string]: any} = {
     FontAwesome6,
     Ionicons,
     AntDesign,
-    MaterialIcons
+    MaterialIcons,
+    
+
   };

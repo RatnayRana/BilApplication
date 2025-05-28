@@ -2,7 +2,6 @@ import React from 'react';
 import { ScrollView, View } from 'react-native';
 import HomeHeader from '../../component/HomeHeader';
 import Card from '../../component/card';
-import { styles } from './style';
 import { HomeItem } from '../../public/utility/data/homeItem';
 import { Wrapper } from './wrapper';
 import { WrapperHeader } from '../../component/HomeHeader/WrapperHeader';
@@ -12,6 +11,7 @@ import GlobalUseEffect from '../../public/middleware/useEffect/universalUseEffec
 import { colors } from '../../utils/color';
 import Label from '../../component/Label/index.label';
 import { Dimensions } from 'react-native';
+import { homeStyles } from './style';
 const { height, width } = Dimensions.get('window');
 
 const Home = () => {
@@ -43,7 +43,7 @@ const Home = () => {
         <Label
           text="Services"
           style={[
-            styles.text1,
+            homeStyles.text1,
             // eslint-disable-next-line react-native/no-inline-styles
             {
               color: colors.primary,
@@ -53,7 +53,7 @@ const Home = () => {
           ]}
         />
 
-        <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={styles.CardContainer}>
+        <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={homeStyles.CardContainer}>
 
 
           {HomeItem.map((item, index) => (
@@ -61,12 +61,12 @@ const Home = () => {
             <Card
               paragraph={item.Paragraph}
               iconLib={item.iconLib}
-              CardConatinerStyle={styles.Card}
+              CardConatinerStyle={homeStyles.Card}
               key={index}
               iconName={item.homeIcon}
               size={40}
               name={item.item_name}
-              Textstyle={styles.cardTextStyle}
+              Textstyle={homeStyles.cardTextStyle}
               onPress={() => handleButton(item.screen)}
               backgroundColor={item.backgroundColor}
             />
