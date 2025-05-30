@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
-import ApprovalCard from '../../../../ImportantComponent/ApprovalCard';
+import {  Text, View } from 'react-native';
+
 import Wrapper from '../../../auth';
 
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -14,9 +14,9 @@ import { NavigationProp, useNavigation } from '@react-navigation/core';
 import NavComponent from '../../../../component/NavComponent/navvomponent';
 import { styles } from '../../LeaveApplicationPage/style.leaveapplicationpage';
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
-import { TravelApprovalData } from '../../../../interface/ERP/travelApproval';
-import leaveApprovalStyles from '../../../Approval/ERP/LeaveApproval/style';
+
 import { CreateTrainingAttributes } from '../../../../interface/ERP/tainingTypes';
+import { ApprovalCardFlatList } from '../../../../component/card/ApprovalCard/ApprovalCarFlatList';
 
 
 
@@ -81,7 +81,7 @@ const ViewTrainingApplication = () => {
         };
 
         fetchTokenData();
-    }, []); 
+    }, []);
     const handleSubmit = (selectedItem: CreateTrainingAttributes) => {
 
         navogation.navigate('NestedNavigatorName', { screen: 'TrainingApplicationScreen', params: { approvedData: [selectedItem] } });
@@ -104,33 +104,22 @@ const ViewTrainingApplication = () => {
             {isPending ? (
                 <Text>Loading...</Text>
             ) : (
-                <ScrollView contentContainerStyle={{
-                    paddingVertical: 10
-                }}>
-                    {testData && testData.data.data.length>0 ? (
-                        testData.data.data.map(item => (
+               
+                    testData && testData.data.data.length > 0 ? (
+                      
 
-                            <ApprovalCard
-                                key={item.training_id}
-                                onPress={() => handleSubmit(item)}
-                                cardContainer={leaveApprovalStyles.cardContainer}
-                                infoContainer={leaveApprovalStyles.infoContainer}
-                                name={item.emp_full_name}
-                                EmployeeID={item.emp_employee_number}
-                                Branch={item.branch_name}
-                                nameStyle={leaveApprovalStyles.name}
-                                details={leaveApprovalStyles.details}
-                                leaveContainer={leaveApprovalStyles.leaveContainer}
-                                leaveType={leaveApprovalStyles.leaveType}
-                                durationStyle={leaveApprovalStyles.durationStyle}
-                                actionButton={leaveApprovalStyles.actionButton}
-                                imageViewStyle={leaveApprovalStyles.ImageStyle}
-                                Duration={item.training_duration}
-                                iconSize={35}
-                                iconname='edit'
-                            />
-
-                        ))
+                        <ApprovalCardFlatList
+                            data={testData.data.data}
+                            onPress={(item) => handleSubmit(item)}
+                            getName={(item) => item.emp_full_name ?? 'N/A'}
+                            getEmployeeNumber={(item) => item.emp_employee_number ?? 'N/A'}
+                            getBranch={(item) => item.branch_name ?? 'N/A'}
+                            getDuration={item =>
+                                item.training_duration !== undefined
+                                    ? `${item.training_duration}`  // convert number to string here
+                                    : "N/A"
+                            } getKey={(item) => item.training_id?.toString() ?? '0'}
+                        />
                     ) : error ? (
                         <View>
                             <CustomDialog
@@ -146,8 +135,8 @@ const ViewTrainingApplication = () => {
                         <View style={{ alignItems: 'center' }}>
                             <Text >No leave requests available.</Text>
                         </View>
-                    )}
-                </ScrollView>
+                    )
+               
             )}
         </Wrapper>
     );

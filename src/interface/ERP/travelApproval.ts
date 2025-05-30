@@ -50,3 +50,4 @@ export interface TravelApproval {
     travel_status?: number;     // E.g., 12 = approved by admin
     travel_remarks?: string;   // Optional remarks
 }
+

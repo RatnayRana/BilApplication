@@ -10,6 +10,8 @@ import { colors } from '../../utils/color';
 import { iconLibraries } from '../Icon/icon';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+
+
 interface CardProps {
   iconName: string;
   iconLib: string;

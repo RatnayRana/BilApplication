@@ -11,11 +11,10 @@ import { requiredPermissions } from '../../../public/utility/data/approvalPermis
 import GlobalUseEffect from '../../../public/middleware/useEffect/universalUseEffect';
 import CustomDialog from '../../../component/DialogBox/dialogbox';
 import { RenderFlatList } from './erpFlatList';
-import { Dimensions, View } from 'react-native';
-import { erpServiceStyles } from './style';
+import {  View } from 'react-native';
+
 import { homeStyles } from '../../Home/style';
-import { colors } from '../../../utils/color';
-const { height, width } = Dimensions.get('window');
+
 
 const ERPSystem = () => {
   const tokenData = GlobalUseEffect();

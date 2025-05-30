@@ -16,13 +16,13 @@ export const homeStyles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: 12
+    gap: 10
 
 
   },
   Card: {
     width: cardWidth,
-    height: height / 5,
+    height: height/4,
     marginTop: 10,
     borderRadius: 18,
     display: 'flex',
@@ -31,12 +31,11 @@ export const homeStyles = StyleSheet.create({
     elevation: 6,
     paddingHorizontal: 22,
     paddingVertical: 20,
-
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
-
+    
   },
   cardimageStyle: {
     width: 40,

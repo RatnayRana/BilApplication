@@ -64,7 +64,7 @@ const SalaryAdvance: React.FC = () => {
   useEffect(() => {
     setSalaryData({
       employee_name: salaryAdvance?.data.employee_name || '',
-      take_home_salary: salaryAdvance?.data.take_home_salary,
+      take_home_salary: salaryAdvance?.data.take_home_pay,
       applicable_advance_amt:salaryAdvance?.data.applicable_advance_amt,
       monthly_installment_amt: monthly_installment,
       salary_advance_amt: '',
@@ -107,7 +107,7 @@ const SalaryAdvance: React.FC = () => {
       }
     }
   });
-  console.log('SalaryAdvanceData',SalaryAdvanceDataError?.stack)
+  console.log('SalaryAdvanceData',salaryAdvance)
   const handleFieldChange = (fieldName: string, value: any, setFieldValue: Function) => {
 
     setFieldValue(fieldName, value);
@@ -150,12 +150,12 @@ const SalaryAdvance: React.FC = () => {
         setFieldValue('monthly_installment_amt', formattedInstallment);
 
         // Check if we have valid data and installment is not zero
-        if (salaryAdvance?.data?.take_home_salary !== undefined &&
+        if (salaryAdvance?.data?.take_home_pay !== undefined &&
           salaryAdvance?.data?.gross_salary) {
 
           if (formattedInstallment > 0) {
             // Calculate new take home using the newly calculated installment amount
-            const sa_new_take_home = parseFloat(salaryAdvance.data.take_home_salary) - installment;
+            const sa_new_take_home = parseFloat(salaryAdvance.data?.take_home_pay) - installment;
             const formattedNewTakeHome = parseFloat(sa_new_take_home.toFixed(2));
 
             // Update take-home state and form value

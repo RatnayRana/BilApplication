@@ -136,6 +136,7 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
             inputStyle={styles.inputstyle}
             buttonStyle={styles.buttonStyle}
             labelButtonstyle={styles.labelButtonstyle}
+          
           />
         </ScrollView>
       </SafeAreaView>

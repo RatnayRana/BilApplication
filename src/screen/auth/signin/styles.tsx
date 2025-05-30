@@ -1,5 +1,4 @@
-// import { StyleSheet } from "react-native";
-// import { colors } from "../../utils/color";
+
 
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../utils/color';
@@ -31,6 +30,7 @@ export const styles = StyleSheet.create({
   },
   placeholder: {
     fontSize: 14,
+    color:'black',
   },
   inputstyle: {
     justifyContent:'space-between',

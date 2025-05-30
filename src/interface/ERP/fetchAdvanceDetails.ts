@@ -5,7 +5,7 @@ export interface SalaryAdvanceAttributes {
     gross_salary?:string;
     applicable_advance_amt?:number;
     monthly_installment_amt?:number
-    take_home_salary?:string
+    take_home_pay?:string
 }
 
 export interface SalaryAdvanceResponseAttributes{
