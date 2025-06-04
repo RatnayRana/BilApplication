@@ -1,21 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {useEffect, useState} from 'react';
-import {ScrollView, Text, View} from 'react-native';
-import ApprovalCard from '../../../../ImportantComponent/ApprovalCard';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
 import Wrapper from '../../../auth';
-
 import EncryptedStorage from 'react-native-encrypted-storage';
-import {jwtDecode} from 'jwt-decode';
-import {ERPURL} from '../../../../component/APIURL/ERP/erpurl';
+import { jwtDecode } from 'jwt-decode';
+import { ERPURL } from '../../../../component/APIURL/ERP/erpurl';
 import apiClient from '../../../../post/postapi';
-import {useMutation} from '@tanstack/react-query';
-import {RootStackNavigatorParamsList} from '../../../../component/interface/routeinterface';
-import {NavigationProp, useNavigation} from '@react-navigation/core';
+import { useMutation } from '@tanstack/react-query';
+import { RootStackNavigatorParamsList } from '../../../../component/interface/routeinterface';
+import { NavigationProp, useNavigation } from '@react-navigation/core';
 import NavComponent from '../../../../component/NavComponent/navvomponent';
-import leaveApprovalStyles from './style';
-import {styles} from '../../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
-import {colors} from '../../../../utils/color';
+import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
+import { ApprovalCardFlatList } from '../../../../component/card/ApprovalCard/ApprovalCarFlatList';
 
 export interface TokenAttributes {
   email: string;
@@ -26,8 +23,8 @@ export interface TokenAttributes {
 export interface LeaveApprovalData {
   leave_id: string;
   employee_code: string;
-  leave_type:number;
-  leave_half_day:string;
+  leave_type: number;
+  leave_half_day: string;
   emp_full_name: string;
   emp_employee_number: string;
   branch_name: string;
@@ -35,11 +32,11 @@ export interface LeaveApprovalData {
   leave_type_name: string;
   leave_from_date: Date;
   leave_to_date: Date;
-  leave_reason:string
+  leave_reason: string
 }
 
 const LeaveApproval = () => {
-const [openStart, setOpenStart] = useState(true);
+  const [openStart, setOpenStart] = useState(true);
 
   const navogation =
     useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
@@ -64,24 +61,24 @@ const [openStart, setOpenStart] = useState(true);
       )) as {
         status: number;
         message: string;
-        data: {data: LeaveApprovalData[]};
+        data: { data: LeaveApprovalData[] };
       };
     },
   });
   function handleClose() {
     setOpenStart(!openStart);
-    
+
   }
 
-  
+
   useEffect(() => {
     const fetchTokenData = async () => {
       const data = await EncryptedStorage.getItem('accessToken');
       if (data) {
         const tokenData: any = jwtDecode(data);
         const decodedToken = tokenData?.dataValues;
-        const {email, employee_code, employee_id} = decodedToken;
-        
+        const { email, employee_code, employee_id } = decodedToken;
+
 
         const approvedCredentials = {
           email: email,
@@ -99,11 +96,10 @@ const [openStart, setOpenStart] = useState(true);
 
     fetchTokenData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+  }, []);
 
   const handleSubmit = (selectedItem: LeaveApprovalData) => {
-    // const approvedData = testData?.data.data;
-    navogation.navigate('ApprovedScreen', {approvedData: [selectedItem]});
+    navogation.navigate('ApprovedScreen', { approvedData: [selectedItem] });
   };
 
   return (
@@ -124,36 +120,22 @@ const [openStart, setOpenStart] = useState(true);
       {isPending ? (
         <Text>Loading...</Text>
       ) : (
-        <ScrollView contentContainerStyle={{
-          paddingVertical: 10
-        }}>
-          {testData && testData.data.data.length > 0 ? (
-            testData.data.data.map(item => (
-              <ApprovalCard
-                key={item.leave_id}
-                onPress={() => handleSubmit(item)}
-                cardContainer={leaveApprovalStyles.cardContainer}
-                infoContainer={leaveApprovalStyles.infoContainer}
-                name={item.emp_full_name}
-                EmployeeID={item.emp_employee_number}
-                Branch={item.branch_name}
-                nameStyle={leaveApprovalStyles.name}
-                details={leaveApprovalStyles.details}
-                leaveContainer={leaveApprovalStyles.leaveContainer}
-                leaveType={leaveApprovalStyles.leaveType}
-                durationStyle={leaveApprovalStyles.durationStyle}
-                actionButton={leaveApprovalStyles.actionButton}
-                imageViewStyle={leaveApprovalStyles.ImageStyle}
-                LeaveType={item.leave_type_name}
-                Duration={item.leave_total_days}
-                iconSize={35}
-                iconname='edit'
-              />
-              
-            ))
-          ) : error ? (
-            <View>
-              <CustomDialog
+        testData && testData.data.data.length > 0 ? (
+          <ApprovalCardFlatList
+            data={testData.data.data}
+            onPress={(item) => handleSubmit(item)}
+            getName={(item) => item.emp_full_name ?? 'N/A'}
+            getEmployeeNumber={(item) => item.emp_employee_number ?? 'N/A'}
+            getBranch={(item) => item.branch_name ?? 'N/A'}
+            getDuration={item =>
+              item.leave_total_days !== undefined
+                ? `${item.leave_total_days}`  // convert number to string here
+                : "N/A"
+            } getKey={(item) => item.leave_id?.toString() ?? '0'}
+          />
+        ) : error ? (
+          <View>
+            <CustomDialog
               message={JSON.stringify(error.message)}
               color="#D32F2F"
               iconName='sticker-remove-outline'
@@ -161,13 +143,13 @@ const [openStart, setOpenStart] = useState(true);
               visible={openStart}
               onClose={handleClose}
             />
-            </View>
-          ) : (
-            <View>
-              <Text >No leave requests available.</Text>
-            </View>
-          )}
-        </ScrollView>
+          </View>
+        ) : (
+          <View>
+            <Text >No leave requests available.</Text>
+          </View>
+        )
+        // </ScrollView>
       )}
     </Wrapper>
   );

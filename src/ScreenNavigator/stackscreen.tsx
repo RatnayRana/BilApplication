@@ -21,9 +21,9 @@ import SalaryAdvance from '../screen/ERP/SalaryAdvance/salaryAdvance';
 import ClaimsOverviewScreen from '../screen/ERP/Claim/OverView/ClaimsOverViewScreen';
 import ClaimsNavigator from './ERP/Claims/ClaimsNavigator';
 import NotificationScreen from '../screen/ERP/Notifications/NotificationScreen';
+import SalaryAdvanceApprovedScreen from '../screen/ApprovedFolder/ERP/SalaryAdvance/SalaryAdvanceApprovedScreen';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
-
 export default function RootStack() {
   return (
     <Stack.Navigator>
@@ -127,6 +127,14 @@ export default function RootStack() {
       <Stack.Screen
         name="NotificationScreen"
         component={NotificationScreen}
+        options={{ headerShown: false }}
+      />
+
+      {/* Salavary Advance Screen */}
+
+      <Stack.Screen
+        name="SalaryAdvanceApprovedScreen"
+        component={SalaryAdvanceApprovedScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

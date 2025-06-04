@@ -58,7 +58,7 @@ const CardNavigation: React.FC<CardNavigationProps> = ({ route }) => {
       throw error;
     }
   };
-
+  console.log("Prmiison", permissions)
   useEffect(() => {
 
     fetchRoleAndPermission();

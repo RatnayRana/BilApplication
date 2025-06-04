@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import {  Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import Wrapper from '../../../auth';
 
@@ -104,39 +104,37 @@ const ViewTrainingApplication = () => {
             {isPending ? (
                 <Text>Loading...</Text>
             ) : (
-               
-                    testData && testData.data.data.length > 0 ? (
-                      
 
-                        <ApprovalCardFlatList
-                            data={testData.data.data}
-                            onPress={(item) => handleSubmit(item)}
-                            getName={(item) => item.emp_full_name ?? 'N/A'}
-                            getEmployeeNumber={(item) => item.emp_employee_number ?? 'N/A'}
-                            getBranch={(item) => item.branch_name ?? 'N/A'}
-                            getDuration={item =>
-                                item.training_duration !== undefined
-                                    ? `${item.training_duration}`  // convert number to string here
-                                    : "N/A"
-                            } getKey={(item) => item.training_id?.toString() ?? '0'}
+                testData && testData.data.data.length > 0 ? (
+                    <ApprovalCardFlatList
+                        data={testData.data.data}
+                        onPress={(item) => handleSubmit(item)}
+                        getName={(item) => item.emp_full_name ?? 'N/A'}
+                        getEmployeeNumber={(item) => item.emp_employee_number ?? 'N/A'}
+                        getBranch={(item) => item.branch_name ?? 'N/A'}
+                        getDuration={item =>
+                            item.training_duration !== undefined
+                                ? `${item.training_duration}`  // convert number to string here
+                                : "N/A"
+                        } getKey={(item) => item.training_id?.toString() ?? '0'}
+                    />
+                ) : error ? (
+                    <View>
+                        <CustomDialog
+                            message={JSON.stringify(error.message)}
+                            color="#D32F2F"
+                            iconName='sticker-remove-outline'
+                            iconColor='#D32F2F'
+                            visible={openStart}
+                            onClose={handleClose}
                         />
-                    ) : error ? (
-                        <View>
-                            <CustomDialog
-                                message={JSON.stringify(error.message)}
-                                color="#D32F2F"
-                                iconName='sticker-remove-outline'
-                                iconColor='#D32F2F'
-                                visible={openStart}
-                                onClose={handleClose}
-                            />
-                        </View>
-                    ) : (
-                        <View style={{ alignItems: 'center' }}>
-                            <Text >No leave requests available.</Text>
-                        </View>
-                    )
-               
+                    </View>
+                ) : (
+                    <View style={{ alignItems: 'center' }}>
+                        <Text >No leave requests available.</Text>
+                    </View>
+                )
+
             )}
         </Wrapper>
     );

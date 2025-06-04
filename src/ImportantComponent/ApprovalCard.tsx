@@ -60,7 +60,7 @@ const ApprovalCard: React.FC<ApprovalCardProps> = ({
 
         <View style={leaveContainer}>
           <Text style={leaveType}>{LeaveType}</Text>
-          <Text style={durationStyle}>{Duration} days</Text>
+          <Text style={durationStyle}>{Duration} </Text>
         </View>
       </View>
 

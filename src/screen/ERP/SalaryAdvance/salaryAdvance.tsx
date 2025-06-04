@@ -107,7 +107,6 @@ const SalaryAdvance: React.FC = () => {
       }
     }
   });
-  console.log('SalaryAdvanceData',salaryAdvance)
   const handleFieldChange = (fieldName: string, value: any, setFieldValue: Function) => {
 
     setFieldValue(fieldName, value);

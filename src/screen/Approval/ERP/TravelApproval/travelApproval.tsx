@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
-import ApprovalCard from '../../../../ImportantComponent/ApprovalCard';
+import { Text, View } from 'react-native';
 import Wrapper from '../../../auth';
 
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -14,15 +13,12 @@ import { NavigationProp, useNavigation } from '@react-navigation/core';
 import NavComponent from '../../../../component/NavComponent/navvomponent';
 import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
-import leaveApprovalStyles from '../LeaveApproval/style';
 import { TravelApprovalData } from '../../../../interface/ERP/travelApproval';
-
-
-
+import { ApprovalCardFlatList } from '../../../../component/card/ApprovalCard/ApprovalCarFlatList';
 
 const TravelApproval = () => {
     const [openStart, setOpenStart] = useState(true);
-    const [ApprovedCredentials,setApprovedCredentials] = useState<string>()
+    const [ApprovedCredentials, setApprovedCredentials] = useState<string>()
 
     const navogation =
         useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
@@ -89,7 +85,7 @@ const TravelApproval = () => {
     const handleSubmit = (selectedItem: TravelApprovalData) => {
         const selectedItemData = {
             ...selectedItem,
-            employee_code:ApprovedCredentials
+            employee_code: ApprovedCredentials
         }
         navogation.navigate('TravelApprovedScreen', { approvedData: [selectedItemData] });
     };
@@ -112,50 +108,36 @@ const TravelApproval = () => {
             {isPending ? (
                 <Text>Loading...</Text>
             ) : (
-                <ScrollView contentContainerStyle={{
-                    paddingVertical: 10
-                }}>
-                    {testData && testData.data.data.data.length > 0 ? (
-                        testData.data.data.data.map(item => (
+                testData && testData.data.data.data.length > 0 ? (
+                    <ApprovalCardFlatList
+                        data={testData.data.data.data}
+                        onPress={(item) => handleSubmit(item)}
+                        getName={(item) => item.emp_full_name ?? 'N/A'}
+                        getEmployeeNumber={(item) => item.emp_employee_number ?? 'N/A'}
+                        getBranch={(item) => item.branch_name ?? 'N/A'}
+                        getDuration={item =>
+                            item.travel_duration !== undefined
+                                ? `${item.travel_duration}`  // convert number to string here
+                                : "N/A"
+                        } getKey={(item) => item.travel_id?.toString() ?? '0'}
+                    />
 
-                            <ApprovalCard
-                                key={item.travel_id}
-                                onPress={() => handleSubmit(item)}
-                                cardContainer={leaveApprovalStyles.cardContainer}
-                                infoContainer={leaveApprovalStyles.infoContainer}
-                                name={item.emp_full_name}
-                                EmployeeID={item.emp_employee_number}
-                                Branch={item.branch_name}
-                                nameStyle={leaveApprovalStyles.name}
-                                details={leaveApprovalStyles.details}
-                                leaveContainer={leaveApprovalStyles.leaveContainer}
-                                leaveType={leaveApprovalStyles.leaveType}
-                                durationStyle={leaveApprovalStyles.durationStyle}
-                                actionButton={leaveApprovalStyles.actionButton}
-                                imageViewStyle={leaveApprovalStyles.ImageStyle}
-                                Duration={item.travel_duration}
-                                iconSize={35}
-                                iconname='edit'
-                            />
-
-                        ))
-                    ) : error ? (
-                        <View>
-                            <CustomDialog
-                                message={JSON.stringify(error.message)}
-                                color="#D32F2F"
-                                iconName='sticker-remove-outline'
-                                iconColor='#D32F2F'
-                                visible={openStart}
-                                onClose={handleClose}
-                            />
-                        </View>
-                    ) : (
-                        <View style={{ alignItems: 'center' }}>
-                            <Text >No leave requests available.</Text>
-                        </View>
-                    )}
-                </ScrollView>
+                ) : error ? (
+                    <View>
+                        <CustomDialog
+                            message={JSON.stringify(error.message)}
+                            color="#D32F2F"
+                            iconName='sticker-remove-outline'
+                            iconColor='#D32F2F'
+                            visible={openStart}
+                            onClose={handleClose}
+                        />
+                    </View>
+                ) : (
+                    <View style={{ alignItems: 'center' }}>
+                        <Text >No leave requests available.</Text>
+                    </View>
+                )
             )}
         </Wrapper>
     );

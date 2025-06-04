@@ -7,8 +7,6 @@ import leaveApprovalStyles from "../../../screen/Approval/ERP/LeaveApproval/styl
 
 interface CardListData<T> {
     data: T[],
-
-
     onPress: (item: T) => void
     // getter function to display the name form different component÷
     getName: (item: T) => string;
@@ -16,6 +14,7 @@ interface CardListData<T> {
     getBranch: (item: T) => string;
     getDuration: (item: T) => string;
     getKey: (item: T) => string;
+    getAmount?:(item:T)=>string
 }
 export const ApprovalCardFlatList = <T,>({ data, onPress, getName,
     getEmployeeNumber,

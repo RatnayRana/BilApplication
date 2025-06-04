@@ -8,8 +8,8 @@ export const HomeItem = [
     iconLib: 'MaterialCommunityIcons',
     screen: 'LMS_Screen',
     skipPermissionCheck: false,
-    backgroundColor : 'rgba(246, 245, 253, 1)',
-    Paragraph:'Your complete digital loan management system',
+    backgroundColor: 'rgba(246, 245, 253, 1)',
+    Paragraph: 'Your complete digital loan management system',
   },
   {
     item_id: 2,
@@ -18,8 +18,8 @@ export const HomeItem = [
     screen: 'PPF_Screen',
     iconLib: 'MaterialCommunityIcons',
     skipPermissionCheck: false,
-    backgroundColor : 'rgba(217, 231, 219, 1)',
-    Paragraph:'Reliable platform for provident fund management'
+    backgroundColor: 'rgba(217, 231, 219, 1)',
+    Paragraph: 'Reliable platform for provident fund management'
   },
   {
     item_id: 3,
@@ -28,8 +28,8 @@ export const HomeItem = [
     screen: 'IMS_Screen',
     iconLib: 'FontAwesome6',
     skipPermissionCheck: false,
-    backgroundColor : '#FFF9F1',
-    Paragraph:'Digital solution for insurance management system'
+    backgroundColor: '#FFF9F1',
+    Paragraph: 'Digital solution for insurance management system'
 
   },
   {
@@ -39,8 +39,8 @@ export const HomeItem = [
     screen: 'ERP_Screen',
     iconLib: 'MaterialCommunityIcons',
     skipPermissionCheck: false,
-    backgroundColor : '#F3F4F6',
-    Paragraph:'All-in-one insurance control at fingertips'
+    backgroundColor: '#F3F4F6',
+    Paragraph: 'All-in-one insurance control at fingertips'
   },
   // {
   //   item_id: 5,
@@ -128,12 +128,15 @@ export const ERPApprovalOption = [
     permission: 'approve-training',
     screen: 'TrainingApproval',
     icon: 'chevron-forward',
+
   },
   {
     item_id: 4,
-    item_name: 'Tour Approval ',
-    permission: 'training-travel',
-    screen: 'ChangeRequestScreen',
+    iconLib: 'FontAwesome6',
+    iconName: 'money-bill-transfer',
+    item_name: 'Salary Advance  Approval ',
+    permission: "approve-salary-advance",
+    screen: 'SalaryAdvanceApprovalScreen',
     icon: 'chevron-forward',
   },
 ];

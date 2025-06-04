@@ -11,6 +11,7 @@ export const iconLibraries: {[key: string]: any} = {
     Ionicons,
     AntDesign,
     MaterialIcons,
+  
     
 
   };

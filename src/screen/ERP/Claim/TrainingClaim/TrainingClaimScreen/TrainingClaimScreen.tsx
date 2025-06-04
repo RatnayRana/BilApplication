@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
 
-import { styles } from '../../LeaveApplicationPage/style.leaveapplicationpage';
-import NavComponent from '../../../../component/NavComponent/navvomponent';
-import Wrapper from '../../../auth';
+import { styles } from '../../../LeaveApplicationPage/style.leaveapplicationpage';
+import NavComponent from '../../../../../component/NavComponent/navvomponent';
+import Wrapper from '../../../../auth';
 // import travelStyles from './style.travelapplication';
 // import { useMutation } from '@tanstack/react-query';
 // import apiClient from '../../../post/postapi';
