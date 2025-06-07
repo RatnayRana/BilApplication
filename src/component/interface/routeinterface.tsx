@@ -3,6 +3,7 @@ import { LeaveApprovalData } from '../../screen/Approval/ERP/LeaveApproval/leave
 import { TravelApprovalData } from '../../interface/ERP/travelApproval';
 import { CreateTrainingAttributes } from '../../interface/ERP/tainingTypes';
 import { SalaryAdvancelData } from '../../screen/Approval/ERP/SalaryAdvance/SalaryAdvanceApprovalScreen.';
+import { LeaveCashmentData } from '../../interface/ERP/LeaveEncash/leaveEncashment';
 // import {LeavedApprovedAttributes} from '../../interface/ERP/leavetypes';
 // Define your param list, ensuring it extends ParamListBase
 export interface RootStackNavigatorParamsList extends ParamListBase {
@@ -48,4 +49,8 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
   }        // NotificationScreen
 
   NotificationScreen: undefined
+
+  LeaveEncashmentScreen:{ approvedData:Array<LeaveCashmentData>}
+  
+ 
 }

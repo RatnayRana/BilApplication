@@ -1,3 +1,5 @@
+import { colors } from "../../../utils/color";
+
 export const ERPHomeData = [
   {
     item_id: 1,
@@ -6,67 +8,77 @@ export const ERPHomeData = [
     screen: 'LeaveApplication',
     icon: 'chevron-forward',
     skipPermissionCheck: true,
-    backgroundColor: '#EDF4FF', // soft blue
-    iconLib: 'MaterialCommunityIcons'
+    backgroundColor: '#D6EAF8', // soft sky blue
+    iconLib: 'MaterialCommunityIcons',
   },
   {
     item_id: 2,
     item_name: 'Approved Application',
-    iconName: 'checkbox-marked-outline',
+    iconName: 'check-decagram',
     skipPermissionCheck: false,
-    backgroundColor: '#E6F5EA', // mint green
+    backgroundColor: '#D5F5E3', // mint green
     screen: 'CardNavigation',
     icon: 'chevron-forward',
-    iconLib: 'MaterialCommunityIcons'
+    iconLib: 'MaterialCommunityIcons',
   },
   {
     item_id: 3,
     item_name: 'Search Application',
-    iconName: 'database-search-outline',
+    iconName: 'database-search',
     skipPermissionCheck: true,
-    backgroundColor: '#FFF5E5', // soft peach
+    backgroundColor: '#FFEBCC', // warm peach
     screen: 'SearchApplication',
     icon: 'chevron-forward',
-    iconLib: 'MaterialCommunityIcons'
+    iconLib: 'MaterialCommunityIcons',
   },
   {
     item_id: 4,
     item_name: 'View Application',
-    iconName: 'local-see',
+    iconName: 'visibility',
     skipPermissionCheck: true,
-    backgroundColor: '#F9F1FF', // lavender
+    backgroundColor: '#EAD1F5', // lavender
     screen: 'ViewPersonalScreen',
     icon: 'chevron-forward',
-    iconLib: 'MaterialIcons'
+    iconLib: 'MaterialIcons',
   },
   {
-    item_id: 5, // Fixed duplicate ID
+    item_id: 5,
     item_name: 'Employee Benefits',
-    iconName: 'money-check',
-    skipPermissionCheck: true,
-    backgroundColor: '#F1FAFF', // light cyan
+    iconName: 'hand-holding-dollar',
+    skipPermissionCheck: false,
+    backgroundColor: '#D0F0F6', // light aqua
     screen: 'SalaryAdvance',
     icon: 'chevron-forward',
-    iconLib: 'FontAwesome6'
+    iconLib: 'FontAwesome6',
   },
-   {
-    item_id: 6, // Fixed duplicate ID
-    item_name: 'Claims',
-    iconName: 'money-bills',
-    skipPermissionCheck: true,
-    backgroundColor: '#F1FAFF', // light cyan
-    screen: 'ClaimsOverviewScreen',
-    icon: 'chevron-forward',
-    iconLib: 'FontAwesome6'
-  },
+  // {
+  //   item_id: 6,
+  //   item_name: 'Claims',
+  //   iconName: 'file-invoice-dollar',
+  //   skipPermissionCheck: true,
+  //   backgroundColor: '#FFF9C4', // soft lemon
+  //   screen: 'ClaimsOverviewScreen',
+  //   icon: 'chevron-forward',
+  //   iconLib: 'FontAwesome6',
+  // },
+  // {
+  //   item_id: 7,
+  //   item_name: 'Notifications',
+  //   iconName: 'notifications-outline',
+  //   skipPermissionCheck: true,
+  //   backgroundColor: '#F8BBD0', // light rose pink
+  //   screen: 'NotificationScreen',
+  //   icon: 'chevron-forward',
+  //   iconLib: 'Ionicons',
+  // },
   {
-    item_id: 7, // Fixed duplicate ID
-    item_name: 'Notification',
-    iconName: 'notifications',
-    skipPermissionCheck: true,
-    backgroundColor: '#F1FAFF', // light cyan
-    screen: 'NotificationScreen',
-    icon: 'chevron-forward',
-    iconLib: 'Ionicons'
+    item_id: 8,
+    item_name: 'Leave Encashment',
+    iconName: 'cash-outline',
+    skipPermissionCheck: false,
+    backgroundColor: '#FFF9C4', // soft gold
+    screen: 'LeaveEncashmentCardScreen',
+    icon: 'arrow-forward-circle-outline',
+    iconLib: 'Ionicons',
   },
 ];

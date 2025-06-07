@@ -9,14 +9,21 @@ type ResponseCustom = {
   // errorMessage?:string
   roles: string[];
   permission: string[];
+    errorMessage?:string
+
 };
 
-type errorResponse = {
+export type errorResponse = {
+  errorMessage: string;
+};
+
+// Add a new type that includes errorMessage for ResponseCustom when needed
+export type errorResponseData = {
   errorMessage: string;
 };
 const cacheManager = new CacheManager();
 
-type combinedResponse = ResponseCustom | errorResponse;
+type combinedResponse = ResponseCustom | errorResponse | errorResponseData;
 // Example ERP-related API functions
 export const ERPURLAPI = async (
   username?: string,

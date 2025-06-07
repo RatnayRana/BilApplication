@@ -25,5 +25,7 @@ export const ERPURL = {
     applySalaryAdvance: `${ERPURLAPI}/applySalaryAdvance`,
     fetchSalaryAdvance:`${ERPURLAPI}/fetchSalaryAdvance`,
  approveSalaryAdvance:`${ERPURLAPI}/approveSalaryAdvance`,
+  fetchLeaveEncashment:`${ERPURLAPI}/fetchLeaveEncashment`,
+
     // leaveApplication: 'leave-applications',
 };

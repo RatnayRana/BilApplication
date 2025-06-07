@@ -11,7 +11,7 @@ import { requiredPermissions } from '../../../public/utility/data/approvalPermis
 import GlobalUseEffect from '../../../public/middleware/useEffect/universalUseEffect';
 import CustomDialog from '../../../component/DialogBox/dialogbox';
 import { RenderFlatList } from './erpFlatList';
-import {  View } from 'react-native';
+import { View } from 'react-native';
 
 import { homeStyles } from '../../Home/style';
 
@@ -46,7 +46,6 @@ const ERPSystem = () => {
   }
 
   const handleChange = async (
-
     item: {
       item_name: string;
       item_id: number;
@@ -54,20 +53,48 @@ const ERPSystem = () => {
       screen: string;
     },
     username: string | undefined,
+    employee_code: string|undefined
   ) => {
     setCurrentItem(item);
+
+    // ✅ Case 1: Skip permission check entirely
     if (item.skipPermissionCheck) {
       navigation.navigate(item.screen);
       return;
     }
-    let result;
-    result = await RoleAndPermission({
+     
+      console.log("Employee code", employee_code ?? tokenData?.employee_code);
+       console.log("item screen",item.item_name)
+    // ✅ Case 2: Special handling for "Leave Encashment"
+    if (item.item_name === 'Leave Encashment') {
+      console.log("Employee code", employee_code ?? tokenData?.employee_code);
+
+      const leaveResult = await RoleAndPermission({
+        itemName: item.item_name,
+        employee_code,
+      });
+
+      if ('message' in leaveResult) {
+        // Assume the call is successful — no permission needed
+        navigation.navigate('LeaveEncashmentScreen', {
+          itemName: item.item_name,
+          approveData:leaveResult
+          ,
+        });
+      } else {
+        // If the call fails, show error dialog
+        seterrorMessage(leaveResult.errorMessage);
+        setShowDialog(true);
+        setIsAuthenticated(false);
+      }
+      return; // Stop further processing
+    }
+
+    // ✅ Case 3: All other screens with permission check
+    const result = await RoleAndPermission({
       itemName: item.item_name,
       username,
     });
-    setShowDialog(true);
-
-
 
     if ('permission' in result) {
       const Authenticated = requiredPermissions.some(permission =>
@@ -75,10 +102,15 @@ const ERPSystem = () => {
       );
       setIsAuthenticated(Authenticated);
       setResultMessage(result.message);
-    } else {
-      seterrorMessage(result.errorMessage);
     }
+     else {
+      setIsAuthenticated(false);
+      seterrorMessage(result.errorMessage ?? null);
+    }
+
+    setShowDialog(true); // Show dialog in either case
   };
+
 
   return (
     <Wrapper>
@@ -115,7 +147,7 @@ const ERPSystem = () => {
         text="ERP Services"
       />
       <View style={homeStyles.Main}>
-        <RenderFlatList data={ERPHomeData} onPress={(item) => handleChange(item, tokenData?.employee_id)} />
+        <RenderFlatList data={ERPHomeData} onPress={(item) => handleChange(item, tokenData?.employee_id, tokenData?.employee_code)} />
       </View>
     </Wrapper>
   );

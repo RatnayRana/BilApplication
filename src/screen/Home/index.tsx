@@ -33,8 +33,6 @@ const Home = () => {
 
   return (
     <Wrapper>
-      {/* <View style={{ backgroundColor: colors.white, justifyContent: 'center', width: width, height: height }}> */}
-
       <WrapperHeader>
         <HomeHeader
           imageSource={require('../../assets/profileimage.jpg')}
@@ -59,28 +57,6 @@ const Home = () => {
         <CardFlatList data={HomeItem} onPressItem={(item) => handleButton(item.screen)} />
 
       </View>
-      {/* 
-        <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={homeStyles.CardContainer}>
-
-
-          {HomeItem.map((item, index) => (
-
-            <Card
-              paragraph={item.Paragraph}
-              iconLib={item.iconLib}
-              CardConatinerStyle={homeStyles.Card}
-              key={index}
-              iconName={item.homeIcon}
-              size={40}
-              name={item.item_name}
-              Textstyle={homeStyles.cardTextStyle}
-              onPress={() => handleButton(item.screen)}
-              backgroundColor={item.backgroundColor}
-            />
-
-          ))}
-        </ScrollView> */}
-      {/* </View> */}
     </Wrapper>
   );
 };

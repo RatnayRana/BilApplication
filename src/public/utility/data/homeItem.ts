@@ -4,7 +4,6 @@ export const HomeItem = [
     item_id: 1,
     item_name: 'LMS',
     homeIcon: 'hand-coin-outline',
-
     iconLib: 'MaterialCommunityIcons',
     screen: 'LMS_Screen',
     skipPermissionCheck: false,

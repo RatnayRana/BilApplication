@@ -1,24 +1,28 @@
+import LeaveEncashApi from './LeaveEncashment/leaveEncashment';
 import {ERPURLAPI} from './rolePermissionAPI';
 
 interface RoleAndPermissionAttributes {
   itemName: string;
   username?: string;
+  employee_code?:string
 }
 
 export const RoleAndPermission = ({
   itemName,
   username,
+  employee_code
 }: RoleAndPermissionAttributes) => {
   // return new Promise(async (resolve, reject) => {
   try {
     if (itemName === 'Approved Application') {
+      console.log("username Role Permission")
       return ERPURLAPI(username);
 
-      // } else if (itemName === 'HR') {
-      //   // If itemName is 'HR', call the HR-related APIs
-      //   const result1 = await HRAPI1(itemName);
-      //   const result2 = await HRAPI2(itemName);
-      //   result = { result1, result2 };
+      } 
+      
+    else if (itemName === 'Leave Encashment') {
+        // If itemName is 'HR', call the HR-related APIs
+        return LeaveEncashApi(employee_code)
       // } else if (itemName === 'Finance') {
       //   // If itemName is 'Finance', call the Finance-related APIs
       //   const result1 = await FinanceAPI1(itemName);
