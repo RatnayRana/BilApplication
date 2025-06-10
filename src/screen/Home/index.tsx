@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import HomeHeader from '../../component/HomeHeader';
 import Card from '../../component/card';
@@ -13,12 +13,13 @@ import Label from '../../component/Label/index.label';
 import { Dimensions } from 'react-native';
 import { homeStyles } from './style';
 import { CardFlatList } from '../../component/card/CardFlatList/CardList';
+import { TokenAttributes, tokenMiddleware } from '../../public/middleware/token.middleware';
 const { height, width } = Dimensions.get('window');
 
 const Home = () => {
+  
   const tokenData = GlobalUseEffect();
-
-
+  
 
   function handleButton(screen: string) {
 

@@ -73,9 +73,8 @@ const SalaryAdvanceApprovalScreen = () => {
             const data = await EncryptedStorage.getItem('accessToken');
             if (data) {
                 const tokenData: any = jwtDecode(data);
-                const decodedToken = tokenData?.dataValues;
+                const decodedToken = tokenData;
                 const { email, employee_code, employee_id } = decodedToken;
-
 
                 const approvedCredentials = {
                     email: email,
@@ -94,7 +93,6 @@ const SalaryAdvanceApprovalScreen = () => {
         fetchTokenData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
     const handleSubmit = (selectedItem: SalaryAdvancelData) => {
         navogation.navigate('SalaryAdvanceApprovedScreen', { approvedData: [selectedItem] });
     };

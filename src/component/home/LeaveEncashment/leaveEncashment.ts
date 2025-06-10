@@ -38,7 +38,6 @@ export const LeaveEncashApi = async (
     }
 
     
-    
     const response = await apiClient.post(ERPURL.fetchLeaveEncashment, Employee_Code);
     const data = response?.data;
     if (data) {

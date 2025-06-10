@@ -15,7 +15,6 @@ export const RoleAndPermission = ({
   // return new Promise(async (resolve, reject) => {
   try {
     if (itemName === 'Approved Application') {
-      console.log("username Role Permission")
       return ERPURLAPI(username);
 
       } 

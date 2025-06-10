@@ -46,7 +46,7 @@ const LeaveApproval = () => {
     error,
     data: testData,
   } = useMutation({
-    mutationKey: ['test'],
+    mutationKey: ['LeaveApproval'],
     mutationFn: async (val: {
       leaveQueryApproval: string;
       approvedCredentials: {
@@ -74,10 +74,12 @@ const LeaveApproval = () => {
   useEffect(() => {
     const fetchTokenData = async () => {
       const data = await EncryptedStorage.getItem('accessToken');
+      console.log(data)
       if (data) {
         const tokenData: any = jwtDecode(data);
-        const decodedToken = tokenData?.dataValues;
+        const decodedToken = tokenData;
         const { email, employee_code, employee_id } = decodedToken;
+
 
 
         const approvedCredentials = {

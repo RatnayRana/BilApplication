@@ -7,7 +7,7 @@ export const fetchAdvanceDetails=(employee_code: string | undefined, options?:Om
     return useQuery({
         queryKey:['FetchAdvanceDetails'],
         queryFn:async ()=>{
-            const response = await apiClient.post(ERPURL.fetchAdvancedetail,{employee_code})
+            const response = await apiClient.post(ERPURL.fetchAdvanceDetail,{employee_code})
             return response.data as SalaryAdvanceResponseAttributes
 
         },

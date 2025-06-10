@@ -61,7 +61,7 @@ const TravelApproval = () => {
             const data = await EncryptedStorage.getItem('accessToken');
             if (data) {
                 const tokenData: any = jwtDecode(data);
-                const decodedToken = tokenData?.dataValues;
+                const decodedToken = tokenData;
                 const { email, employee_code, employee_id } = decodedToken;
                 setApprovedCredentials(employee_code)
 

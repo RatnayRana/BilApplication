@@ -68,7 +68,6 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
     useEffect(() => {
         if (approvedData && approvedData.length > 0) {
             const firstLeaveData = approvedData[0];
-            console.log(firstLeaveData)
             setInitialValues({
                 sa_monthly_installment: firstLeaveData.sa_monthly_installment,
                 sa_request_advance_amt: firstLeaveData.sa_request_advance_amt,

@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react';
 import NavComponent from '../../component/NavComponent/navvomponent';
 import { styles } from '../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import aprrovalStyles from './style.cardnavigation';
-import { Screen } from 'react-native-screens';
 import { Item } from '../../component/interface/card.interface';
 type RolePermission = {
   permission: string;
@@ -58,7 +57,7 @@ const CardNavigation: React.FC<CardNavigationProps> = ({ route }) => {
       throw error;
     }
   };
-  console.log("Prmiison", permissions)
+
   useEffect(() => {
 
     fetchRoleAndPermission();

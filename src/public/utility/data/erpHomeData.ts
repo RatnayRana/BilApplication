@@ -45,7 +45,7 @@ export const ERPHomeData = [
     item_id: 5,
     item_name: 'Employee Benefits',
     iconName: 'hand-holding-dollar',
-    skipPermissionCheck: false,
+    skipPermissionCheck: true,
     backgroundColor: '#D0F0F6', // light aqua
     screen: 'SalaryAdvance',
     icon: 'chevron-forward',

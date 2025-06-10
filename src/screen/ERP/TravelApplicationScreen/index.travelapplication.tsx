@@ -122,7 +122,7 @@ let isUpdateMode:boolean;
   } = useMutation({
     mutationFn: async (credentials: CreateTravelAttributes) => {
       try {
-        const response = await apiClient.post(ERPURL.createtravel, credentials);
+        const response = await apiClient.post(ERPURL.createTravel, credentials);
 
         if (response) {
           setOpenDialog(true);

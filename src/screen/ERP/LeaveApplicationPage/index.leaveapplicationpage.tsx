@@ -74,7 +74,7 @@ const FormExample = () => {
   } = useMutation({
     mutationFn: async (credentials: CreateLeaveAttributes) => {
       try {
-        const response = await apiClient.post(ERPURL.createleave, credentials);
+        const response = await apiClient.post(ERPURL.createLeave, credentials);
 
         if (response) {
           setOpenDialog(true);

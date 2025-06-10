@@ -12,6 +12,7 @@ export interface TokenAttributes {
 export const tokenMiddleware = async ():Promise<TokenAttributes | undefined>=> {
   try {
     const data = await EncryptedStorage.getItem('accessToken');
+
     if(!data){
       return undefined;
     }
@@ -19,10 +20,10 @@ export const tokenMiddleware = async ():Promise<TokenAttributes | undefined>=> {
       const decoded: any = jwtDecode(data);
 
      const TokenData :TokenAttributes = {
-      email: decoded?.dataValues?.email || 'Email not found',
-      name: decoded?.dataValues?.name || 'Name not found',
-      employee_id: decoded?.dataValues?.employee_id || 'Employee ID not found',
-      employee_code: decoded?.dataValues?.employee_code || 'Employee Code not found',
+      email: decoded?.email || 'Email not found',
+      name: decoded?.name || 'Name not found',
+      employee_id: decoded?.employee_id || 'Employee ID not found',
+      employee_code: decoded?.employee_code || 'Employee Code not found',
      };
      return TokenData;
 

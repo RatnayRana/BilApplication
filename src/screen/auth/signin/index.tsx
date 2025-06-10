@@ -50,8 +50,9 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
   } = useMutation({
     mutationFn: async (credentials: AuthAttributes) => {
       try {
-        console.log("ERP",ERPURL.login)
-        const data = await apiClient.post('http://192.168.167.221:3000/api/v1/login', credentials);
+        console.log("Erp Login",ERPURL.login)
+        const data = await apiClient.post(ERPURL.login, credentials);
+        console.log("Binod Ghalley Data",data.data)
         if (data) {
           await EncryptedStorage.setItem(
             'accessToken',

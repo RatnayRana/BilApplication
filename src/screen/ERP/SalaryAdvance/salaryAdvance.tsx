@@ -44,7 +44,7 @@ const SalaryAdvance: React.FC = () => {
       undefined,
     );
 
-
+  console.log("TokenDatatatat employeecode ",tokenData?.employee_code)
   const { data: salaryAdvance, isPending } = fetchAdvanceDetails(
     tokenData?.employee_code,
     {
@@ -83,7 +83,6 @@ const SalaryAdvance: React.FC = () => {
   } = useMutation({
     mutationFn: async (credentials: SalaryAttributes) => {
       try {
-        console.log(ERPURL.applySalaryAdvance)
         const response = await apiClient.post(ERPURL.applySalaryAdvance, credentials);
 
         if (response) {
@@ -207,6 +206,7 @@ const SalaryAdvance: React.FC = () => {
     // setOpenDialog(true);
 
   }
+  console.log("Erooro",SalaryAdvanceDataError)
   return (
     <Wrapper>
       <ErrorDialog

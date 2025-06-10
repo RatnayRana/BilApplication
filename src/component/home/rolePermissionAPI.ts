@@ -29,6 +29,7 @@ export const ERPURLAPI = async (
   username?: string,
 ): Promise<combinedResponse> => {
   const UserName = {username: username};
+  console.log("Username",UserName)
   try {
     username = JSON.stringify(`erprolepermission${username}`);
     if (cacheManager.has(username)) {
@@ -48,7 +49,7 @@ export const ERPURLAPI = async (
       roles: data.data.role,
       permission: data.data.permission,
     } as ResponseCustom;
-
+    console.log("bonG tAMANF ",resultdata)
     cacheManager.set(username,resultdata );
     return resultdata;
   } catch (error: unknown) {

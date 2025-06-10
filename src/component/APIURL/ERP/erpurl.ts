@@ -1,31 +1,38 @@
+export const ERPURLAPI = process.env.APIERPURL;
 
-export const ERPURLAPI = process.env.ERPAPIURL;
-// export const AUTHAPIURL = 'http://192.168.137.28:3000/api/v1'
-export const AUTHAPIURL = process.env.AUTHAPIURL;
 export const ERPURL = {
-    login: `${AUTHAPIURL}/login`,
-    leaveType: `${ERPURLAPI}/leaveTypesQuery`,
-    createleave: `${ERPURLAPI}/createleave`,
-    leaveQueryApproval: `${ERPURLAPI}/leaveQueryApproval`,
-    permission: `${ERPURLAPI}/permission`,
-    approvedLeave: `${ERPURLAPI}/approvedLeave`,
-    createtravel: `${ERPURLAPI}/createtravel`,
-    travelTypesQuery: `${ERPURLAPI}/travelTypesQuery`,
-    travelApprovalList: `${ERPURLAPI}/travelApprovalList`,
-    travelVerification: `${ERPURLAPI}/travelVerification`,
-    trainingType: `${ERPURLAPI}/trainingType`,
-    trainingCategory: `${ERPURLAPI}/trainingCategory`,
-    fetchTrainingCountryFunding: `${ERPURLAPI}/fetchTrainingCountryFunding`,
-    createTraining: `${ERPURLAPI}/createTraining`,
-    traininglist: `${ERPURLAPI}/traininglist`,
-    fetchTrainingByCode: `${ERPURLAPI}/fetchTrainingByCode`,
-    trainingVerification: `${ERPURLAPI}/trainingVerification`,
-    travelList: `${ERPURLAPI}/travelList`,
-    fetchAdvancedetail: `${ERPURLAPI}/fetchAdvancedetail`,
-    applySalaryAdvance: `${ERPURLAPI}/applySalaryAdvance`,
-    fetchSalaryAdvance:`${ERPURLAPI}/fetchSalaryAdvance`,
- approveSalaryAdvance:`${ERPURLAPI}/approveSalaryAdvance`,
-  fetchLeaveEncashment:`${ERPURLAPI}/fetchLeaveEncashment`,
+  // Authentication
+  login: `${ERPURLAPI}/login`,
 
-    // leaveApplication: 'leave-applications',
+  // Leave Management
+  leaveType: `${ERPURLAPI}/erp/leaveTypesQuery`,
+  createLeave: `${ERPURLAPI}/erp/createleave`,
+  leaveQueryApproval: `${ERPURLAPI}/erp/leaveQueryApproval`,
+  approvedLeave: `${ERPURLAPI}/erp/approvedLeave`,
+  fetchLeaveEncashment: `${ERPURLAPI}/erp/fetchLeaveEncashment`,
+
+  // Permission
+  permission: `${ERPURLAPI}/erp/permission`,
+
+  // Travel Management
+  createTravel: `${ERPURLAPI}/erp/createtravel`,
+  travelTypesQuery: `${ERPURLAPI}/erp/travelTypesQuery`,
+  travelApprovalList: `${ERPURLAPI}/erp/travelApprovalList`,
+  travelVerification: `${ERPURLAPI}/erp/travelVerification`,
+  travelList: `${ERPURLAPI}/erp/travelList`,
+
+  // Training Management
+  trainingType: `${ERPURLAPI}/erp/trainingType`,
+  trainingCategory: `${ERPURLAPI}/erp/trainingCategory`,
+  fetchTrainingCountryFunding: `${ERPURLAPI}/erp/fetchTrainingCountryFunding`,
+  createTraining: `${ERPURLAPI}/erp/createTraining`,
+  trainingList: `${ERPURLAPI}/erp/traininglist`,
+  fetchTrainingByCode: `${ERPURLAPI}/erp/fetchTrainingByCode`,
+  trainingVerification: `${ERPURLAPI}/erp/trainingVerification`,
+
+  // Salary Advance
+  fetchAdvanceDetail: `${ERPURLAPI}/erp/fetchAdvancedetail`,
+  applySalaryAdvance: `${ERPURLAPI}/erp/applySalaryAdvance`,
+  fetchSalaryAdvance: `${ERPURLAPI}/erp/fetchSalaryAdvance`,
+  approveSalaryAdvance: `${ERPURLAPI}/erp/approveSalaryAdvance`,
 };

@@ -4,13 +4,11 @@ import { View, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import Button from '../../../component/Button';
 import Wrapper from '../../auth';
-import dayjs from 'dayjs';
-import { DateType } from 'react-native-ui-datepicker';
+
 import NavComponent from '../../../component/NavComponent/navvomponent';
 
 import { validationtravelSchema } from '../../auth/validation/signIn.validation';
 import { renderField } from '../../../public/customfields/custom.fields';
-import { CreateTravelAttributes } from '../../../interface/ERP/leaveapplication';
 import {
   TokenAttributes,
   tokenMiddleware,

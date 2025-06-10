@@ -44,7 +44,6 @@ const ERPSystem = () => {
       });
     }
   }
-
   const handleChange = async (
     item: {
       item_name: string;
@@ -62,12 +61,11 @@ const ERPSystem = () => {
       navigation.navigate(item.screen);
       return;
     }
+    console.log(employee_code)
      
-      console.log("Employee code", employee_code ?? tokenData?.employee_code);
-       console.log("item screen",item.item_name)
+ 
     // ✅ Case 2: Special handling for "Leave Encashment"
     if (item.item_name === 'Leave Encashment') {
-      console.log("Employee code", employee_code ?? tokenData?.employee_code);
 
       const leaveResult = await RoleAndPermission({
         itemName: item.item_name,
