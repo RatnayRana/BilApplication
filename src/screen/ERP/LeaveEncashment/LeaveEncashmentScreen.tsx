@@ -7,7 +7,7 @@ import Wrapper from '../../auth';
 
 import NavComponent from '../../../component/NavComponent/navvomponent';
 
-import { validationtravelSchema } from '../../auth/validation/signIn.validation';
+import { leave_encash_validation } from '../../auth/validation/signIn.validation';
 import { renderField } from '../../../public/customfields/custom.fields';
 import {
   TokenAttributes,
@@ -21,6 +21,13 @@ import travelStyles from '../TravelApplicationScreen/style.travelapplication';
 import { LeaveCashmentData } from '../../../interface/ERP/LeaveEncash/leaveEncashment';
 import { LeaveEncashmentForm } from '../../../utils/erp/LeaveCashment/leavecashment';
 import approvedLeaveStyles from '../../ApprovedFolder/ERP/Leave/style';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { ERPURL } from '../../../component/APIURL/ERP/erpurl';
+import apiClient from '../../../post/postapi';
+import ErrorDialog from '../../../component/ErrorDialog/errordialog';
+import SuccessDialog from '../../../component/SuccessDialog/successdialog';
+import LoaderComponent from '../../../component/UniversalLoader/loader';
 
 type RouteParams = {
   approveData?: {
@@ -32,6 +39,7 @@ type RouteParams = {
       employee_name: string;
       financial_year: string;
       total_leave_balance: number;
+      grade:number
     };
     message: string;
     status: number;
@@ -68,7 +76,7 @@ const LeaveEncashmentScreen: React.FC = () => {
     // navigation.navigate('Main');
   }
   const getInitialValues = (): LeaveCashmentData => {
-    if (params.approveData ) {
+    if (params.approveData) {
       const EncashmentData = params.approveData;
       return {
         employee_name: EncashmentData.data.employee_name || '',
@@ -86,7 +94,7 @@ const LeaveEncashmentScreen: React.FC = () => {
       casual_leave_balance: '',
       earned_leave_balance: '',
       total_leave_balance: 0,
-      
+
     };
   };
   useEffect(() => {
@@ -97,47 +105,60 @@ const LeaveEncashmentScreen: React.FC = () => {
     fetchData();
   }, []);
 
-//   const {
-//     mutateAsync,
-//     error,
-//     isPending,
-//     isSuccess,
-//     data: testData,
-//   } = useMutation({
-//     mutationFn: async (credentials: CreateTravelAttributes) => {
-//       try {
-//         const response = await apiClient.post(ERPURL.createtravel, credentials);
+    const {
+      mutateAsync:LeaveEncashDataMutate,
+      error,
+      isPending,
+      isSuccess,
+      data: LeaveEncashData,
+    } = useMutation({
+      mutationFn: async (credentials: LeaveCashmentData) => {
+        try {
+          const response = await apiClient.post(ERPURL.applyLeaveEncashment, credentials);
 
-//         if (response) {
-//           setOpenDialog(true);
+          if (response) {
+            setOpenDialog(true);
 
-//           return response;
-//         }
+            return response;
+          }
 
-//         // eslint-disable-next-line no-catch-shadow
-//       } catch (error) {
+          // eslint-disable-next-line no-catch-shadow
+        } catch (error) {
 
-//         if (error) {
-//           setErrorMessage((error as AxiosError)?.message);
-//           throw error;
-//         }
-//         setErrorMessage((error as unknown as axiosError)?.response.data.error);
-//         setServerError(true);
+          if (error) {
+            setErrorMessage((error as AxiosError)?.message);
+            throw error;
+          }
+          setErrorMessage((error as unknown as axiosError)?.response.data.error);
+          setServerError(true);
 
-//         throw error;
-//       }
-//     },
-//   });
+          throw error;
+        }
+      },
+    });
 
-  const onFormSubmit = (values: LeaveCashmentData) => {
-    console.log(values)
+  const handleSubmit = (values: LeaveCashmentData) => {
+     const LeaveEncashData = {
+          ...(tokenData?.employee_code && { employee_code: tokenData.employee_code }),
+          employee_id: tokenData?.employee_id,
+          employee_name: tokenData?.name,
+          basic_pay: values.basic_pay,
+          financial_year: values.financial_year,
+          casual_leave_balance: values.casual_leave_balance,
+          earned_leave_balance:values?.earned_leave_balance,
+          total_leave_balance:values.total_leave_balance,
+          grade:params.approveData?.data.grade
+        }
+        
+    
+        LeaveEncashDataMutate(LeaveEncashData as LeaveCashmentData)
   };
 
 
 
   return (
     <Wrapper>
-      {/* <ErrorDialog
+      <ErrorDialog
         error={error || servError}
         errormessage={
           (error as unknown as axiosError)?.response?.data?.error ||
@@ -158,10 +179,10 @@ const LeaveEncashmentScreen: React.FC = () => {
       />
       <SuccessDialog
         isSuccess={isSuccess}
-        message={testData?.data.message || 'successFull '}
+        message={LeaveEncashData?.data.message || 'successFull '}
         visible={openDialog}
         onClose={handleSuccess}
-      /> */}
+      />
 
       <NavComponent
         size={35}
@@ -178,14 +199,15 @@ const LeaveEncashmentScreen: React.FC = () => {
       <ScrollView style={{ paddingHorizontal: 16, flexGrow: 1 }}>
         <Formik
           initialValues={getInitialValues()}
-          validationSchema={validationtravelSchema}
-          onSubmit={onFormSubmit}>
+          validationSchema={leave_encash_validation}
+          onSubmit={handleSubmit}>
           {({ handleSubmit, values, setFieldValue, errors, touched }) => {
-            
+            console.log(errors)
+
             return (
               <View>
                 {LeaveEncashmentForm(
-                  
+
                 ).map((fieldConfig: any, index) => {
                   return (
                     <View key={index}>
@@ -203,8 +225,8 @@ const LeaveEncashmentScreen: React.FC = () => {
                         textInputStyle: styles.textInputStyle,
                         placeholderStyle: styles.placeHolderStyle,
                         dateLabelStyle: styles.textInputStyle,
-                         DisplayView: approvedLeaveStyles.displaycontainer,
-                   
+                        DisplayView: approvedLeaveStyles.displaycontainer,
+
                       })}
                     </View>
                   );

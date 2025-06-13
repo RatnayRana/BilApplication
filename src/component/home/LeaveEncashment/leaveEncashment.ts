@@ -10,7 +10,8 @@ export type LeaveCashmentData={
   financial_year: string;
   casual_leave_balance: string;
   earned_leave_balance: string;
-  total_leave_balance: number
+  total_leave_balance: number;
+  grade:number
 }
 type ResponseCustom = {
   status: string;

@@ -138,22 +138,14 @@ export const ERPApprovalOption = [
     screen: 'SalaryAdvanceApprovalScreen',
     icon: 'chevron-forward',
   },
-  {
-    item_id: 5,
-    iconLib: 'FontAwesome6',
-    iconName: 'money-bill-transfer',
-    item_name: 'Salary Advance  Approval ',
-    permission: "review-salary-advance",
-    screen: 'SalaryAdvanceApprovalScreen',
-    icon: 'chevron-forward',
-  },
+ 
     {
     item_id: 6,
     iconLib: 'Fontisto',
     iconName: 'holiday-village',
     item_name: 'Verify Leave Encash',
     permission: "verify-leave-encash",
-    screen: 'SalaryAdvanceApprovalScreen',
+    screen: 'LeaveEncashmentApprovalScreen',
     icon: 'chevron-forward',
   },
    {

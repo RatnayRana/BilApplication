@@ -39,3 +39,10 @@ export const validationSalaryAdvanceSchema = Yup.object().shape({
 
 
 });
+
+export const leave_encash_validation = Yup.object().shape({
+  basic_pay: Yup.number().required('basic_pay is required'),
+  earned_leave_balance: Yup.string().required(' Earned Leave Balance is required'),
+
+
+});

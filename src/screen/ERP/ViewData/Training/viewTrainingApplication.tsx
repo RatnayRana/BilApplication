@@ -63,7 +63,7 @@ const ViewTrainingApplication = () => {
             const data = await EncryptedStorage.getItem('accessToken');
             if (data) {
                 const tokenData: any = jwtDecode(data);
-                const decodedToken = tokenData?.dataValues;
+                const decodedToken = tokenData;
                 const { employee_code } = decodedToken;
                 setApprovedCredentials(employee_code)
 
@@ -74,7 +74,7 @@ const ViewTrainingApplication = () => {
                 };
 
                 mutateAsync({
-                    leaveQueryApproval: ERPURL.traininglist,
+                    leaveQueryApproval: ERPURL.trainingList,
                     approvedCredentials: approvedCredentials,
                 });
             }

@@ -132,7 +132,7 @@ const ApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
       {
         type: 'displaytext',
         label: 'From Date',
-        name: 'leave_from_date',
+        name: ' ',
         value: initialValues.leave_from_date,
       },
       {

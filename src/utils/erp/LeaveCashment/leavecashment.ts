@@ -15,11 +15,6 @@ export const LeaveEncashmentForm = (
       },
        {
         type: 'displaytext',
-        label: 'Employee Name',
-        name: 'employee_name',
-      },
-       {
-        type: 'displaytext',
         label: 'Financial Year',
         name: 'financial_year',
       },
@@ -38,11 +33,7 @@ export const LeaveEncashmentForm = (
         label: 'Total Leave Balance',
         name: 'total_leave_balance',
       },
-    {
-      type: 'text',
-      label: 'Encash Description',
-      name: 'Encash Description',
-    },
+   
   ];
 };
 

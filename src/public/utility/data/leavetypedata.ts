@@ -15,3 +15,11 @@ export const Status = [
   {index: 12, name: 'Approved'},
   {index: 13, name: 'Reject'},
 ];
+
+//LEAVEeNCASHment
+
+export const leaveStatus = [
+  {index: 6, name: 'ADM Verified'},
+  {index: 7, name: 'ADM Reject'},
+];
+

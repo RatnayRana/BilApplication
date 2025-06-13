@@ -84,7 +84,7 @@ const SalaryAdvance: React.FC = () => {
     mutationFn: async (credentials: SalaryAttributes) => {
       try {
         const response = await apiClient.post(ERPURL.applySalaryAdvance, credentials);
-
+        console.log(response)
         if (response) {
           setOpenDialog(true);
 
@@ -193,20 +193,21 @@ const SalaryAdvance: React.FC = () => {
   const onFormSubmit = (values: SalaryAttributes) => {
     const SalaryAdvanceData = {
       ...(tokenData?.employee_code && { employee_code: tokenData.employee_code }),
-      gross_salary: values.gross_salary,
+      gross_salary: salaryAdvance?.data.gross_salary,
       applicable_advance_amt: values.applicable_advance_amt,
       monthly_installment_amt: values.monthly_installment_amt,
       salary_advance_amt: values.salary_advance_amt,
       salary_purpose: values.salary_purpose,
-      
+      take_home_salary:salaryAdvance?.data.take_home_pay,
+      take_home_percentage:values.saAmtPercentage
     }
+    
 
     SalaryAdvanceDataMutate(SalaryAdvanceData as SalaryAttributes)
     // setServerError(false);
     // setOpenDialog(true);
 
   }
-  console.log("Erooro",SalaryAdvanceDataError)
   return (
     <Wrapper>
       <ErrorDialog
