@@ -9,7 +9,7 @@ import {
 
     ShiftCreationAttributes,
 } from '../../../../interface/ERP/leavetypes';
-import { Status } from '../../../../public/utility/data/leavetypedata';
+import { admn, manager } from '../../../../public/utility/data/leavetypedata';
 
 import Button from '../../../../component/Button';
 import apiClient from '../../../../post/postapi';
@@ -85,6 +85,7 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
         mutationFn: async (credentials: TravelApproval) => {
             try {
                 const data = await apiClient.post(ERPURL.travelVerification, credentials);
+                console.log("???????????????????????????????? ", data);
                 if (data) {
                     setOpenDialog(true);
 
@@ -125,8 +126,21 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             </View>
         );
     }
+    const getStatusList = () => {
+        const travel_status = approvedData[0].travel_status
 
+
+        if (travel_status === 1) {
+            // Manager's status options
+            return admn;
+        } else {
+            // Admin's status options
+            return manager;
+        }
+    };
     const formConfig = (Status: ShiftCreationAttributes) => {
+        const statusList = getStatusList(); // Dynamically get status based on condition
+
         return [
             {
                 type: 'displaytext',
@@ -151,17 +165,15 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
                 type: 'dropdown',
                 label: 'Status',
                 name: 'travel_status',
-                data: Array.isArray(Status?.data)
-                    ? Status.data.map(item => ({
-                        label: item.name, // Assuming each item has a `name` field
-                        value: item.index, // Assuming each item has an `id` field
-                    }))
-                    : [],
+                data: statusList.map(item => ({
+                    label: item.name,
+                    value: item.index,
+                })),
                 placeholder: 'Select the Status',
             },
             {
                 type: 'text',
-                label: 'Approval Remarks',
+                label: 'Remarks',
                 name: 'approval_remarks',
                 placeholder: 'Enter reason for travel',
                 value: initialValues.travel_description,
@@ -183,9 +195,13 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             travel_duration,
             travel_from_place,
             travel_to_place,
+
         } = approvedData[0];
+        // "travel_advance_amount": "0.00"
+
         // const travel_advance_amount = Number(approvedData[0].travel_advance_amount)
         const travel_advance_amount = approvedData[0].travel_advance_amount ? Number(approvedData[0].travel_advance_amount) : null
+   
         const DataToSend = {
             travel_advance_amount: travel_advance_amount,
             travel_from_place,
@@ -196,13 +212,12 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             travel_expense_applicable,
             travel_funding,
             travel_mode,
+            travel_status: values.travel_status,
             employee_id: emp_employee_number,
             employee_code: employee_code,
-            leave_type: travel_type,
             travel_from_date,
             travel_to_date,
             travel_duration: Number(travel_duration),
-
             travel_description: values.travel_description,
         };
         mutateAsync(DataToSend as TravelApproval);
@@ -255,7 +270,7 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
                     {({ handleSubmit, errors, values, setFieldValue, touched }) => {
                         return (
                             <View>
-                                {formConfig({ data: Status }).map((fieldConfig: any, index) => (
+                                {formConfig({} as ShiftCreationAttributes).map((fieldConfig: any, index) => (
                                     <View key={index}>
                                         {renderField({
                                             fieldConfig,

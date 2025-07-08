@@ -112,6 +112,8 @@ const TrainingApproval = () => {
                 TraingData && TraingData.data.data.length > 0 ? (
 
                     <ApprovalCardFlatList
+                                            getStatus={(item) => item.status_name?? 'N/A'}
+
                         data={TraingData.data.data}
                         onPress={(item) => handleSubmit(item)}
                         getName={(item) => item.emp_full_name ?? 'N/A'}

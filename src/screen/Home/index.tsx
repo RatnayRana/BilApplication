@@ -19,6 +19,7 @@ const { height, width } = Dimensions.get('window');
 const Home = () => {
   
   const tokenData = GlobalUseEffect();
+  console.log(tokenData, 'tokenData');
   
 
   function handleButton(screen: string) {

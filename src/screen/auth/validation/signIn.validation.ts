@@ -46,3 +46,16 @@ export const leave_encash_validation = Yup.object().shape({
 
 
 });
+
+export const calculatorLoanSchema = Yup.object().shape({
+  loanAmount: Yup.number()
+    .typeError('Loan amount must be a number')
+    .required('Loan amount is required'),
+  interestRate: Yup.number()
+    .typeError('Interest rate must be a number')
+    .required('Interest rate is required'),
+  tenureYears: Yup.number()
+    .typeError('Loan tenure must be a number')
+    .required('Loan tenure is required'),
+});
+

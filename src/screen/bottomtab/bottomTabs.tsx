@@ -6,7 +6,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Search from '../search/search';
+import Calculator from '../calculator/calculator';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,13 +38,13 @@ const BottomTab = () => {
                 />   ),
       }} />
       <Tab.Screen
-        name="Search"
-        component={Search}
+        name="Calculator"
+        component={Calculator}
         // eslint-disable-next-line react/no-unstable-nested-components
         options={{headerShown: false,tabBarIcon: ({ focused, color, size }) => (
 
           <FontAwesome
-            name={focused ? 'search-plus' : 'search-plus'}  // Choose icon based on focus
+            name={focused ? 'calculator' : 'calculator'}  // Choose icon based on focus
             size={size}  // Use the provided size
             color={color}  // Use the provided color
           />   )   }}

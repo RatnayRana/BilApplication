@@ -7,6 +7,7 @@ import TravelApproval from '../../screen/Approval/ERP/TravelApproval/travelAppro
 import TrainingApproval from '../../screen/Approval/ERP/TrainingApproval/trainingApproval';
 import SalaryAdvanceApprovalScreen from '../../screen/Approval/ERP/SalaryAdvance/SalaryAdvanceApprovalScreen.';
 import LeaveEncashmentApprovalScreen from '../../screen/Approval/ERP/approval-leaveencashment/approved-leaveencash';
+import ClaimsOverviewScreen from '../../screen/ERP/Claim/OverView/ClaimsOverViewScreen';
 // import TravelApplicationScreen from '../../screen/ERP/TravelApplicationScreen/index.travelapplication';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
@@ -37,6 +38,11 @@ export const ApprovalNavigator = () => {
        <Stack.Screen
         name="LeaveEncashmentApprovalScreen"
         component={LeaveEncashmentApprovalScreen}
+        options={{ headerShown: false }}
+      />
+         <Stack.Screen
+        name="ClaimsOverviewScreen"
+        component={ClaimsOverviewScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

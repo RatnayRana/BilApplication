@@ -111,6 +111,7 @@ const TravelApproval = () => {
                 testData && testData.data.data.data.length > 0 ? (
                     <ApprovalCardFlatList
                         data={testData.data.data.data}
+                        getStatus={(item) => item.status_name ?? 'N/A'}
                         onPress={(item) => handleSubmit(item)}
                         getName={(item) => item.emp_full_name ?? 'N/A'}
                         getEmployeeNumber={(item) => item.emp_employee_number ?? 'N/A'}

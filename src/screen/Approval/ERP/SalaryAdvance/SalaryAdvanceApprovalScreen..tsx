@@ -117,6 +117,7 @@ const SalaryAdvanceApprovalScreen = () => {
             ) : (
                 salaryAdvanvceData && salaryAdvanvceData.data.data.length > 0 ? (
                     <ApprovalCardFlatList
+                    getStatus={(item) =>  item.status_name ?? 'N/A'}
                         data={salaryAdvanvceData.data.data}
                         onPress={(item) => handleSubmit(item)}
                         getName={(item) => item.emp_full_name ?? 'N/A'}

@@ -193,7 +193,7 @@ let isUpdateMode:boolean;
     setOpenDialog(true);
   };
   const travelType = {
-    data: TrainingDropDownData?.data?.data.Travel_funding ?? []
+    data: TrainingDropDownData?.data?.data.Travel_type?? []
   };
   const travel_purpose = {
     data: TrainingDropDownData?.data?.data.Travel_purpose ?? []

@@ -47,6 +47,7 @@ export interface CreateTrainingAttributes {
   branch_name?:string;
   training_status?:number;
   approval_remarks?:string;
+  status_name?: string;
   
 }
 

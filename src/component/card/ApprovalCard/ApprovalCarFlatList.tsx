@@ -2,6 +2,7 @@ import { FlatList } from "react-native"
 
 import ApprovalCard from "../../../ImportantComponent/ApprovalCard";
 import leaveApprovalStyles from "../../../screen/Approval/ERP/LeaveApproval/style";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 
 
@@ -15,11 +16,13 @@ interface CardListData<T> {
     getDuration: (item: T) => string;
     getKey: (item: T) => string;
     getAmount?:(item:T)=>string
+    getStatus?: (item: T) => string;
 }
 export const ApprovalCardFlatList = <T,>({ data, onPress, getName,
     getEmployeeNumber,
     getBranch,
     getDuration,
+    getStatus,
     getKey, }: CardListData<T>) => {
     return (
         <FlatList
@@ -31,6 +34,7 @@ export const ApprovalCardFlatList = <T,>({ data, onPress, getName,
                 name={getName(item)}
                 EmployeeID={getEmployeeNumber(item)}
                 Branch={getBranch(item)}
+                status_name={getStatus?.(item)}
                 nameStyle={leaveApprovalStyles.name}
                 details={leaveApprovalStyles.details}
                 leaveContainer={leaveApprovalStyles.leaveContainer}
@@ -38,6 +42,7 @@ export const ApprovalCardFlatList = <T,>({ data, onPress, getName,
                 durationStyle={leaveApprovalStyles.durationStyle}
                 actionButton={leaveApprovalStyles.actionButton}
                 imageViewStyle={leaveApprovalStyles.ImageStyle}
+                statusStyle={leaveApprovalStyles.statusStyle}
                 Duration={getDuration(item)}
                 iconSize={35}
                 iconname='edit'

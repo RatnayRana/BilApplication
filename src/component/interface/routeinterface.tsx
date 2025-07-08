@@ -4,7 +4,7 @@ import { TravelApprovalData } from '../../interface/ERP/travelApproval';
 import { CreateTrainingAttributes } from '../../interface/ERP/tainingTypes';
 import { SalaryAdvancelData } from '../../screen/Approval/ERP/SalaryAdvance/SalaryAdvanceApprovalScreen.';
 import { LeaveCashmentData } from '../../interface/ERP/LeaveEncash/leaveEncashment';
-import {  LeaveEncashmentDataAttributes } from '../../screen/Approval/ERP/approval-leaveencashment/approved-leaveencash';
+import { LeaveEncashmentDataAttributes } from '../../screen/Approval/ERP/approval-leaveencashment/approved-leaveencash';
 // import {LeavedApprovedAttributes} from '../../interface/ERP/leavetypes';
 // Define your param list, ensuring it extends ParamListBase
 export interface RootStackNavigatorParamsList extends ParamListBase {
@@ -12,7 +12,6 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
   Home: undefined;
   LeaveApplicationScreen: undefined;
   TravelApplicationScreen: Array<TravelApprovalData>;
-  ClaimsOverviewScreen: undefined
   TravelApproval: undefined
   NestedViewApplication: undefined
   ClaimsNavigator: undefined
@@ -47,15 +46,16 @@ export interface RootStackNavigatorParamsList extends ParamListBase {
   }
   SalaryAdvanceApprovedScreen: {
     approvedData: Array<SalaryAdvancelData>
-  } 
-  LeaveEncashApprovedScreen:{
-        approvedData: Array<LeaveEncashmentDataAttributes>
+  }
+  LeaveEncashApprovedScreen: {
+    approvedData: Array<LeaveEncashmentDataAttributes>
 
   }       // NotificationScreen
 
   NotificationScreen: undefined
+  LoanScreen: undefined
+  InsuranceCalculatorScreen: undefined
+  LeaveEncashmentScreen: { approvedData: Array<LeaveCashmentData> }
 
-  LeaveEncashmentScreen:{ approvedData:Array<LeaveCashmentData>}
-  
- 
+
 }

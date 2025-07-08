@@ -79,7 +79,8 @@ const leaveApprovalStyles = StyleSheet.create({
   },
   durationStyle: {
     fontSize: 14,
-    color: '#333',
+    color: '#008000', // Green color for status
+    fontWeight: 'bold',
   },
   actionButton: {
     marginLeft: 10,
@@ -94,6 +95,12 @@ const leaveApprovalStyles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center',
     paddingHorizontal: 10, // Add some padding for spacing
+  },
+  statusStyle: {
+    marginRight:16,
+    fontSize: 14,
+    color: '#008000', // Green color for status
+    fontWeight: 'bold',
   },
 });
 

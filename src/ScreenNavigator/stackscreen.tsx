@@ -24,6 +24,8 @@ import NotificationScreen from '../screen/ERP/Notifications/NotificationScreen';
 import SalaryAdvanceApprovedScreen from '../screen/ApprovedFolder/ERP/SalaryAdvance/SalaryAdvanceApprovedScreen';
 import LeaveEncashmentScreen from '../screen/ERP/LeaveEncashment/LeaveEncashmentScreen';
 import LeaveEncashApprovedScreen from '../screen/ApprovedFolder/ERP/LeaveEncashment/leave-encash-approved';
+import LoanScreem from '../screen/calcultor/loan';
+import { InsuranceCalculatorScreen } from '../screen/calcultor/insurance';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
 export default function RootStack() {
@@ -111,11 +113,7 @@ export default function RootStack() {
       />
 
       {/* //Claims */}
-       <Stack.Screen
-        name="ClaimsOverviewScreen"
-        component={ClaimsOverviewScreen}
-        options={{ headerShown: false }}
-      />
+    
       
       <Stack.Screen
         name="ClaimsNavigator"
@@ -148,6 +146,16 @@ export default function RootStack() {
        <Stack.Screen
         name="LeaveEncashApprovedScreen"
         component={LeaveEncashApprovedScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoanScreen"
+        component={LoanScreem}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name="InsuranceCalculatorScreen"
+        component={InsuranceCalculatorScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

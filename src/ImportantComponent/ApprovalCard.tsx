@@ -25,15 +25,18 @@ interface ApprovalCardProps {
   details?: StyleProp<TextStyle>;
   leaveType?: StyleProp<TextStyle>;
   durationStyle?: StyleProp<TextStyle>;
+  statusStyle?: StyleProp<TextStyle>;
   imageViewStyle?: StyleProp<ImageStyle>;
   onPress?: () => void;
   iconname: string;
   iconSize: number;
+  status_name?: string;
 }
 
 const ApprovalCard: React.FC<ApprovalCardProps> = ({
   cardContainer,
   infoContainer,
+  statusStyle,
   onPress,
   name,
   EmployeeID,
@@ -48,6 +51,7 @@ const ApprovalCard: React.FC<ApprovalCardProps> = ({
   leaveType,
   durationStyle,
   actionButton,
+  status_name
 }) => {
   return (
     <View style={cardContainer}>
@@ -60,7 +64,10 @@ const ApprovalCard: React.FC<ApprovalCardProps> = ({
 
         <View style={leaveContainer}>
           <Text style={leaveType}>{LeaveType}</Text>
-          <Text style={durationStyle}>{Duration} </Text>
+          <View style={{flexDirection: 'row',justifyContent: 'space-between'}}>
+            <Text style={durationStyle}>{Duration} </Text>
+            <Text style={statusStyle}>{status_name} </Text>
+          </View>
         </View>
       </View>
 

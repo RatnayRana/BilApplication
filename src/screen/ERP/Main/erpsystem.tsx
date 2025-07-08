@@ -61,7 +61,6 @@ const ERPSystem = () => {
       navigation.navigate(item.screen);
       return;
     }
-    console.log(employee_code)
      
  
     // ✅ Case 2: Special handling for "Leave Encashment"

@@ -228,7 +228,7 @@ export const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    marginVertical: 10,
+    marginVertical: 16,
     alignSelf: 'center',
     alignItems: 'center', // Ensures button is centered
     width: '100%',

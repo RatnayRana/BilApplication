@@ -9,7 +9,7 @@ import {
   ApprovedLeaveAttributes,
   ShiftCreationAttributes,
 } from '../../../../interface/ERP/leavetypes';
-import { Status } from '../../../../public/utility/data/leavetypedata';
+import { manager } from '../../../../public/utility/data/leavetypedata';
 import approvedLeaveStyles from './style';
 import Button from '../../../../component/Button';
 import apiClient from '../../../../post/postapi';
@@ -248,7 +248,7 @@ const ApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
           {({ handleSubmit, errors, values, setFieldValue, touched }) => {
             return (
               <View>
-                {formConfig({ data: Status }).map((fieldConfig: any, index) => (
+                {formConfig({ data: manager }).map((fieldConfig: any, index) => (
                   <View key={index}>
                     {renderField({
                       fieldConfig,

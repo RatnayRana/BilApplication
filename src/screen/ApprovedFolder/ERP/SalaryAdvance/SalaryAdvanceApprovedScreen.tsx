@@ -9,7 +9,7 @@ import {
 
     ShiftCreationAttributes,
 } from '../../../../interface/ERP/leavetypes';
-import { Status } from '../../../../public/utility/data/leavetypedata';
+import { account, Head, manager } from '../../../../public/utility/data/leavetypedata';
 
 import Button from '../../../../component/Button';
 import apiClient from '../../../../post/postapi';
@@ -25,7 +25,6 @@ import Wrapper from '../../../auth';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
 import approvedLeaveStyles from '../Leave/style';
 import { SalaryAdvancelData } from '../../../Approval/ERP/SalaryAdvance/SalaryAdvanceApprovalScreen.';
-import GlobalUseEffect from '../../../../public/middleware/useEffect/universalUseEffect';
 
 type approvedScreen = NativeStackScreenProps<
     RootStackNavigatorParamsList,
@@ -61,7 +60,7 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
 
     function handleSuccess() {
         setOpenDialog(!openDialog);
-        navigation.navigate('SalaryAdvanceApprovalScreen')
+        navigation.goBack()
 
     }
 
@@ -73,7 +72,7 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
                 sa_request_advance_amt: firstLeaveData.sa_request_advance_amt,
 
                 approval_remarks: '',
-                sa_status: 12
+                sa_status: 8
             });
         }
     }, [approvedData]);
@@ -127,8 +126,34 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             </View>
         );
     }
+        const getStatusList = () => {
+            const travel_status = approvedData[0].status_name
+            console.log('travel_status', travel_status)
+      
+    
+    
+            if (travel_status === "Pending") {
+                // Manager's status options
+                return account;
+            }
+            else if (travel_status === "Payroll Veified") {
+                // CEO's status options
+                return Head;
+            } 
+            // else if (travel_status === "CEO") {
+            //     // Admin's status options
+            //     return manager;
+            // } 
+            
+            else {
+                // Admin's status options
+                return manager;
+            }
+        };
 
     const formConfig = (Status: ShiftCreationAttributes) => {
+                const statusList = getStatusList(); // Dynamically get status based on condition
+
         return [
             {
                 type: 'displaytext',
@@ -143,18 +168,17 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
                 value: initialValues.sa_request_advance_amt,
             },
 
-            {
+         {
                 type: 'dropdown',
                 label: 'Status',
                 name: 'sa_status',
-                data: Array.isArray(Status?.data)
-                    ? Status.data.map(item => ({
-                        label: item.name, // Assuming each item has a `name` field
-                        value: item.index, // Assuming each item has an `id` field
-                    }))
-                    : [],
+                data: statusList.map(item => ({
+                    label: item.name,
+                    value: item.index,
+                })),
                 placeholder: 'Select the Status',
             },
+
             {
                 type: 'text',
                 label: 'Approval Remarks',
@@ -237,7 +261,7 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
                     {({ handleSubmit, errors, values, setFieldValue, touched }) => {
                         return (
                             <View>
-                                {formConfig({ data: Status }).map((fieldConfig: any, index) => (
+                                {formConfig({} as ShiftCreationAttributes).map((fieldConfig: any, index) => (
                                     <View key={index}>
                                         {renderField({
                                             fieldConfig,

@@ -36,7 +36,7 @@ interface FieldConfig {
 interface ConditionalFieldConfig {
   targetField: string;
   dependsOn: string;
-  condition: (value: boolean) => boolean;
+  condition: (value: any) => boolean;
 }
 
 interface customInputFields {
@@ -93,23 +93,27 @@ export const renderField = ({
   dateLabelStyle,
 }: customInputFields) => {
   const isFieldVisible = () => {
+  
     if (!ConditionalFieldConfig || ConditionalFieldConfig.length === 0) {
       return false;
     }
     const condition = ConditionalFieldConfig.find(
       c => c.targetField === fieldConfig.name
     )
+    console.log(condition)
+
     if (!condition) {
       return false
     }
     return !condition.condition(values[condition.dependsOn])
   }
-  
+
   const visible = isFieldVisible()
+  console.log(visible)
   if (visible) {
     return null
   }
-
+  
   switch (fieldConfig.type) {
     case 'dropdown':
       return (
@@ -255,7 +259,7 @@ export const renderField = ({
             inputStyle={reasonTextStyle}
             onChangeText={text =>
 
-             setFieldValue?.(fieldConfig.name, text)
+              setFieldValue?.(fieldConfig.name, text)
             }
             value={values[fieldConfig.name]}
           />

@@ -5,6 +5,7 @@ export interface imageInterface {
     name ?: string
     width ?: number
     height?:number//
+    onPress?: () => void; // Optional onPress function
     // Use ImageSourcePropType for images
 
 }

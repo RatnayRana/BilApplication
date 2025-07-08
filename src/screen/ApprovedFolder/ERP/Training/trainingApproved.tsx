@@ -9,7 +9,7 @@ import {
 
     ShiftCreationAttributes,
 } from '../../../../interface/ERP/leavetypes';
-import { Status } from '../../../../public/utility/data/leavetypedata';
+import { admn, manager } from '../../../../public/utility/data/leavetypedata';
 
 import Button from '../../../../component/Button';
 import apiClient from '../../../../post/postapi';
@@ -127,8 +127,22 @@ const TrainingApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             </View>
         );
     }
+    const getStatusList = () => {
+        const travel_status = approvedData[0].training_status
+
+
+        if (travel_status === 1) {
+            // Manager's status options
+            return admn;
+        } else {
+            // Admin's status options
+            return manager;
+        }
+    };
 
     const formConfig = (Status: ShiftCreationAttributes) => {
+        const statusList = getStatusList(); // Dynamically get status based on condition
+
         return [
             {
                 type: 'displaytext',
@@ -149,16 +163,15 @@ const TrainingApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
                 placeholder: 'Enter reason for travel',
                 value: initialValues.training_description,
             },
+            //   
             {
                 type: 'dropdown',
                 label: 'Status',
                 name: 'training_status',
-                data: Array.isArray(Status?.data)
-                    ? Status.data.map(item => ({
-                        label: item.name, // Assuming each item has a `name` field
-                        value: item.index, // Assuming each item has an `id` field
-                    }))
-                    : [],
+                data: statusList.map(item => ({
+                    label: item.name,
+                    value: item.index,
+                })),
                 placeholder: 'Select the Status',
             },
             {
@@ -256,14 +269,14 @@ const TrainingApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
                 height={24}
                 imageStyle={styles.imagev}
                 textSytle={styles.text}
-                text="Approved Travel"
+                text="Approved Training"
             />
             <ScrollView style={{ paddingHorizontal: 16, flexGrow: 1 }}>
                 <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                     {({ handleSubmit, errors, values, setFieldValue, touched }) => {
                         return (
                             <View>
-                                {formConfig({ data: Status }).map((fieldConfig: any, index) => (
+                                {formConfig({} as ShiftCreationAttributes).map((fieldConfig: any, index) => (
                                     <View key={index}>
                                         {renderField({
                                             fieldConfig,
