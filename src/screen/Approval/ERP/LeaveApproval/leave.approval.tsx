@@ -13,6 +13,10 @@ import NavComponent from '../../../../component/NavComponent/navvomponent';
 import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
 import { ApprovalCardFlatList } from '../../../../component/card/ApprovalCard/ApprovalCarFlatList';
+import TextCompoment from '../../../../component/TextComponent/index.text';
+import { colors } from '../../../../utils/color';
+import LoaderCompoment from '../../../../component/Loader/index.loader';
+import leaveApprovalStyles from './style';
 
 export interface TokenAttributes {
   email: string;
@@ -74,7 +78,6 @@ const LeaveApproval = () => {
   useEffect(() => {
     const fetchTokenData = async () => {
       const data = await EncryptedStorage.getItem('accessToken');
-      console.log(data)
       if (data) {
         const tokenData: any = jwtDecode(data);
         const decodedToken = tokenData;
@@ -120,7 +123,7 @@ const LeaveApproval = () => {
       />
 
       {isPending ? (
-        <Text>Loading...</Text>
+        <LoaderCompoment isLoading={isPending} />
       ) : (
         testData && testData.data.data.length > 0 ? (
           <ApprovalCardFlatList
@@ -147,8 +150,8 @@ const LeaveApproval = () => {
             />
           </View>
         ) : (
-          <View>
-            <Text >No leave requests available.</Text>
+          <View style={leaveApprovalStyles.norequestavailableStyle}>
+            <TextCompoment text='No Leave Requests Available' style={leaveApprovalStyles.norequestavilavleTextStyle} />
           </View>
         )
         // </ScrollView>

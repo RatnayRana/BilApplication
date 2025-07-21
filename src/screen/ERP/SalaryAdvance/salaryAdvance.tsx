@@ -44,7 +44,6 @@ const SalaryAdvance: React.FC = () => {
       undefined,
     );
 
-  console.log("TokenDatatatat employeecode ",tokenData?.employee_code)
   const { data: salaryAdvance, isPending } = fetchAdvanceDetails(
     tokenData?.employee_code,
     {
@@ -84,7 +83,6 @@ const SalaryAdvance: React.FC = () => {
     mutationFn: async (credentials: SalaryAttributes) => {
       try {
         const response = await apiClient.post(ERPURL.applySalaryAdvance, credentials);
-        console.log(response)
         if (response) {
           setOpenDialog(true);
 
@@ -94,11 +92,9 @@ const SalaryAdvance: React.FC = () => {
         // eslint-disable-next-line no-catch-shadow
       } catch (error) {
         if (error) {
-          console.log()
           setErrorMessage((error as AxiosError)?.message);
           throw error;
         }
-        console.log((error as unknown as axiosError)?.response.data.error)
         setErrorMessage((error as unknown as axiosError)?.response.data.error);
         setServerError(true);
 

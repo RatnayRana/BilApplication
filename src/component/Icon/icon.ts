@@ -6,14 +6,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
 
-export const iconLibraries: {[key: string]: any} = {
-    MaterialCommunityIcons,
-    FontAwesome6,
-    Ionicons,
-    AntDesign,
-    MaterialIcons,
-    Fontisto
-  
-    
+export const iconLibraries: { [key: string]: any } = {
+  MaterialCommunityIcons,
+  FontAwesome6,
+  Ionicons,
+  AntDesign,
+  MaterialIcons,
+  Fontisto
 
-  };
+
+
+};

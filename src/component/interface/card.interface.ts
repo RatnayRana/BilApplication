@@ -26,7 +26,8 @@ export interface CardProps {
   titleStyle?: StyleProp<TextStyle>;
   SubmitStyle?: StyleProp<ViewStyle>;
   SubmitTextStyle?: StyleProp<TextStyle>;
-  item?: Item[];
+  item?: Item[] ;
   title?: string;
+
   onPress: (item:Item) => void;
 }

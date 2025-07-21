@@ -10,5 +10,6 @@ export const colors = {
     homepageheadercolor:'#0265FF',
     borderColor:'#FDFDFD',
     special_backgroundcolor:'#FEA002',
-    primary: "rgb(37, 99, 235)"
+    primary: "rgb(37, 99, 235)",
+    primarygreen:'#008000',
 };

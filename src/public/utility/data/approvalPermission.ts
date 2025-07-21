@@ -6,4 +6,6 @@ export const requiredPermissions = [
     'approve-stock-issue',
     'approve-asset-requisition',
     'approve-asset-bill',
+    'verify-salary-advance',
+    'review-training',
 ];

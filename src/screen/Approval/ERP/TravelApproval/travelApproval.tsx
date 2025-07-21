@@ -15,6 +15,9 @@ import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplication
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
 import { TravelApprovalData } from '../../../../interface/ERP/travelApproval';
 import { ApprovalCardFlatList } from '../../../../component/card/ApprovalCard/ApprovalCarFlatList';
+import LoaderCompoment from '../../../../component/Loader/index.loader';
+import TextCompoment from '../../../../component/TextComponent/index.text';
+import leaveApprovalStyles from '../LeaveApproval/style';
 
 const TravelApproval = () => {
     const [openStart, setOpenStart] = useState(true);
@@ -106,7 +109,7 @@ const TravelApproval = () => {
             />
 
             {isPending ? (
-                <Text>Loading...</Text>
+                <LoaderCompoment isLoading={isPending} />
             ) : (
                 testData && testData.data.data.data.length > 0 ? (
                     <ApprovalCardFlatList
@@ -135,8 +138,8 @@ const TravelApproval = () => {
                         />
                     </View>
                 ) : (
-                    <View style={{ alignItems: 'center' }}>
-                        <Text >No leave requests available.</Text>
+                    <View style={leaveApprovalStyles.norequestavailableStyle}>
+                        <TextCompoment text='No Travel Requests Available' style={leaveApprovalStyles.norequestavilavleTextStyle} />
                     </View>
                 )
             )}

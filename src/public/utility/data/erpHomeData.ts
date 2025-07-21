@@ -21,16 +21,16 @@ export const ERPHomeData = [
     icon: 'chevron-forward',
     iconLib: 'MaterialCommunityIcons',
   },
-  {
-    item_id: 3,
-    item_name: 'Search Application',
-    iconName: 'database-search',
-    skipPermissionCheck: true,
-    backgroundColor: '#FFEBCC', // warm peach
-    screen: 'SearchApplication',
-    icon: 'chevron-forward',
-    iconLib: 'MaterialCommunityIcons',
-  },
+  // {
+  //   item_id: 3,
+  //   item_name: 'Search Application',
+  //   iconName: 'database-search',
+  //   skipPermissionCheck: true,
+  //   backgroundColor: '#FFEBCC', // warm peach
+  //   screen: 'SearchApplication',
+  //   icon: 'chevron-forward',
+  //   iconLib: 'MaterialCommunityIcons',
+  // },
   {
     item_id: 4,
     item_name: 'View Application',

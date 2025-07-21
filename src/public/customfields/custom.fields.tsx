@@ -93,50 +93,93 @@ export const renderField = ({
   dateLabelStyle,
 }: customInputFields) => {
   const isFieldVisible = () => {
-  
+    // If no conditional config, always show the field
     if (!ConditionalFieldConfig || ConditionalFieldConfig.length === 0) {
-      return false;
+      return true;
     }
+
+
     const condition = ConditionalFieldConfig.find(
       c => c.targetField === fieldConfig.name
-    )
-    console.log(condition)
+    );
 
+
+    // If no condition found for this field, show it
     if (!condition) {
-      return false
+      return true;
     }
-    return !condition.condition(values[condition.dependsOn])
+    // Apply the condition - if condition returns true, hide the field
+    return condition.condition(values[condition.dependsOn]);
+  };
+
+  const visible = isFieldVisible();
+  if (!visible) {
+    return null;
   }
 
-  const visible = isFieldVisible()
-  console.log(visible)
-  if (visible) {
-    return null
-  }
-  
+  //  const isDropDownVisible = () => {
+  //     const condition = ConditionalFieldConfig?.find(
+  //       (c: any) => c.targetField === fieldConfig.name
+  //     );
+  //     if (!condition) return true;
+
+  //     const dependentValue = values[condition.dependsOn];
+  //     return condition.condition(dependentValue);
+  //   };
+
+  //   if (!isDropDownVisible()) return null;
+
   switch (fieldConfig.type) {
     case 'dropdown':
+        console.log(`Dropdown ${fieldConfig.name} selected value:`, values[fieldConfig.name]);
+
       return (
         <>
           <Label text={fieldConfig.label} style={textInputStyle} />
           <Dropdown
-            placeholderStyle={placeholderStyle} // This is correct, the prop name should be lowercase 'h'
+            placeholderStyle={placeholderStyle}
             style={dropdownStyle}
             data={fieldConfig.data || []}
-            onChange={(item: any) =>
-              setFieldValue?.(fieldConfig.name, item.value)
+            onChange={(item: any) =>{
+                        console.log('Dropdown onChange item:', item);
+
+                            setFieldValue?.(fieldConfig.name, item.value)
+
+            }
+              
             }
             labelField="label"
             valueField="value"
             placeholder={fieldConfig.placeholder}
             value={values[fieldConfig.name]}
-
           />
           {touched[fieldConfig.name] && errors[fieldConfig.name] && (
             <Text style={styles.errorText}>{errors[fieldConfig.name]}</Text>
           )}
         </>
       );
+
+    // return (
+    //   <>
+    //     <Label text={fieldConfig.label} style={textInputStyle} />
+    //     <Dropdown
+    //       placeholderStyle={placeholderStyle} // This is correct, the prop name should be lowercase 'h'
+    //       style={dropdownStyle}
+    //       data={fieldConfig.data || []}
+    //       onChange={(item: any) =>
+    //         setFieldValue?.(fieldConfig.name, item.value)
+    //       }
+    //       labelField="label"
+    //       valueField="value"
+    //       placeholder={fieldConfig.placeholder}
+    //       value={values[fieldConfig.name]}
+
+    //     />
+    //     {touched[fieldConfig.name] && errors[fieldConfig.name] && (
+    //       <Text style={styles.errorText}>{errors[fieldConfig.name]}</Text>
+    //     )}
+    //   </>
+    // );
     // Updated MultiSelect case in renderField function
     case 'MultiSelect':
       return (
@@ -284,6 +327,83 @@ export const renderField = ({
           )}
         </>
       );
+
+    case 'driver-license-input':
+      return (
+        <>
+          <Label text={fieldConfig.label} style={textInputStyle} />
+          <CustomTextInput
+            autoCapitalize="characters"
+            required={true}
+            containerStyle={inputContainer}
+            inputStyle={reasonTextStyle}
+            onChangeText={text => {
+              // Remove all existing dashes and force uppercase
+              const cleaned = text.replace(/-/g, '').toUpperCase();
+
+              let formatted = '';
+
+              // Format: BP-1-D3899 (2 letters - 1 digit - rest)
+              if (cleaned.length <= 2) {
+                formatted = cleaned;
+              } else if (cleaned.length <= 3) {
+                formatted = cleaned.slice(0, 2) + '-' + cleaned.slice(2);
+              } else if (cleaned.length <= 4) {
+                formatted = cleaned.slice(0, 2) + '-' + cleaned[2] + '-' + cleaned[3];
+              } else {
+                formatted = cleaned.slice(0, 2) + '-' + cleaned[2] + '-' + cleaned.slice(3);
+              }
+
+              setFieldValue?.(fieldConfig.name, formatted);
+            }}
+
+            value={values[fieldConfig.name]}
+          />
+          {touched[fieldConfig.name] && errors[fieldConfig.name] && (
+            <Text style={styles.errorText}>{errors[fieldConfig.name]}</Text>
+          )}
+        </>
+      );
+
+
+    case 'specialdropdown':
+      return (
+        <>
+          <Label text={fieldConfig.label} style={textInputStyle} />
+          <Dropdown
+            placeholderStyle={placeholderStyle}
+            style={dropdownStyle}
+            data={fieldConfig.data || []}
+            onChange={(item: any) => {
+              const selectedOption = item.value;
+
+              // Set selected value for policy_options
+              setFieldValue?.(fieldConfig.name, selectedOption);
+
+              // Reset other related fields
+              const fieldsToReset = [
+                'policy_number',
+                'vehicle_reg_number',
+                'claim_number',
+                'cid_number',
+              ];
+              fieldsToReset.forEach(field => {
+                if (field !== selectedOption.toLowerCase().replace(' ', '_')) {
+                  setFieldValue?.(field, '');
+                }
+              });
+            }}
+            labelField="label"
+            valueField="value"
+            placeholder={fieldConfig.placeholder}
+            value={values[fieldConfig.name]}
+          />
+          {touched[fieldConfig.name] && errors[fieldConfig.name] && (
+            <Text style={styles.errorText}>{errors[fieldConfig.name]}</Text>
+          )}
+        </>
+      );
+
 
     default:
       return null;

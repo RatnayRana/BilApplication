@@ -1,19 +1,19 @@
 import { colors } from "../../../utils/color";
 
 export const IMSHomeData = [
-    {
-        item_id: 1,
-        item_name: 'EMI Calculator',
-        iconName: 'calculator-variant-outline', // Better match for EMI tools
-        screen: 'InsuranceCalculatorScreen', // Use screen name consistent with item_name
-        icon: 'chevron-forward',
-        skipPermissionCheck: true,
-        backgroundColor: '#E3F2FD', // Light sky blue (cleaner shade)
-        iconLib: 'MaterialCommunityIcons',
-    },
+    // {
+    //     item_id: 1,
+    //     item_name: 'EMI Calculator',
+    //     iconName: 'calculator-variant-outline', // Better match for EMI tools
+    //     screen: 'InsuranceCalculatorScreen', // Use screen name consistent with item_name
+    //     icon: 'chevron-forward',
+    //     skipPermissionCheck: true,
+    //     backgroundColor: '#E3F2FD', // Light sky blue (cleaner shade)
+    //     iconLib: 'MaterialCommunityIcons',
+    // },
 
     {
-        item_id: 2,
+        item_id: 1,
         item_name: 'Search Application',
         iconName: 'file-search-outline', // More accurate than database-search
         screen: 'SearchApplication',

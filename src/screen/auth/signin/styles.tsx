@@ -4,7 +4,6 @@ import {StyleSheet} from 'react-native';
 import {colors} from '../../../utils/color';
 
 export const styles = StyleSheet.create({
-  container: {},
   mainContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -15,7 +14,9 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
   },
   titleStyle: {
-    fontSize: 30,
+    fontSize: 22,
+    marginBottom: 5
+
   },
 
   viewStyle: {
@@ -23,7 +24,8 @@ export const styles = StyleSheet.create({
     gap: 10,
   },
   contentStyle: {
-    fontSize: 20,
+    fontSize: 18,
+    marginBottom: 18
   },
   labelStyle: {
     fontSize: 16,
@@ -33,7 +35,7 @@ export const styles = StyleSheet.create({
     color:'black',
   },
   inputstyle: {
-    justifyContent:'space-between',
+    // justifyContent:'space-between',
     padding: 1,
   },
   buttonStyle: {

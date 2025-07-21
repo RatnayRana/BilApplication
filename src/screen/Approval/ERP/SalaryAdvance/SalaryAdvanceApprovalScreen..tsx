@@ -13,6 +13,9 @@ import NavComponent from '../../../../component/NavComponent/navvomponent';
 import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
 import { ApprovalCardFlatList } from '../../../../component/card/ApprovalCard/ApprovalCarFlatList';
+import LoaderCompoment from '../../../../component/Loader/index.loader';
+import leaveApprovalStyles from '../LeaveApproval/style';
+import TextCompoment from '../../../../component/TextComponent/index.text';
 
 export interface TokenAttributes {
     email: string;
@@ -113,7 +116,7 @@ const SalaryAdvanceApprovalScreen = () => {
             />
 
             {isPending ? (
-                <Text>Loading...</Text>
+                <LoaderCompoment isLoading={isPending} />
             ) : (
                 salaryAdvanvceData && salaryAdvanvceData.data.data.length > 0 ? (
                     <ApprovalCardFlatList
@@ -141,8 +144,8 @@ const SalaryAdvanceApprovalScreen = () => {
                         />
                     </View>
                 ) : (
-                    <View>
-                        <Text >No leave requests available.</Text>
+                     <View style={leaveApprovalStyles.norequestavailableStyle}>
+                        <TextCompoment text='No Salary Advance Requests Available' style={leaveApprovalStyles.norequestavilavleTextStyle} />
                     </View>
                 )
                 // </ScrollView>

@@ -92,7 +92,6 @@ const ERPSystem = () => {
       itemName: item.item_name,
       username,
     });
-
     if ('permission' in result) {
       const Authenticated = requiredPermissions.some(permission =>
         result.permission.includes(permission),

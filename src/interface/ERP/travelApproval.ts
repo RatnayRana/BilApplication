@@ -48,6 +48,29 @@ export interface TravelApproval {
     travel_to_place?: string;
     travel_description?: string;
     travel_status?: number;     // E.g., 12 = approved by admin
-    travel_remarks?: string;   // Optional remarks
+    travel_remarks?: string; 
+    approval_remarks?:string  // Optional remarks
+}
+//CLAIM
+export interface TravelClaimAttributes {
+  trv_bil_id?: string;
+  trv_bill_travel_id?: string;
+  trv_bil_status?: number;
+  trv_bill_claim_date?: string;
+  trv_bill_balance_amount?: string;
+  emp_employee_number?: string;
+  emp_full_name?: string;
+  status_name?: string;
+  branch_name?: string;
+  employee_code?:string;
 }
 
+export interface TravelclaimSendData{
+ employee_code?:string
+    //employee_code20190114755", //ADM
+   travel_bill_id?:string
+   travel_bill_status?:string
+    //travel_bill_status":6,//ADM
+   travel_bill_remarks?:string
+}
+// CLAIM SEND DATA

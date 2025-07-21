@@ -26,11 +26,22 @@ import LeaveEncashmentScreen from '../screen/ERP/LeaveEncashment/LeaveEncashment
 import LeaveEncashApprovedScreen from '../screen/ApprovedFolder/ERP/LeaveEncashment/leave-encash-approved';
 import LoanScreem from '../screen/calcultor/loan';
 import { InsuranceCalculatorScreen } from '../screen/calcultor/insurance';
+import ReviewTrainingApprovedScreen from '../screen/ApprovedFolder/ERP/Training/review-training-approved';
+import TrainingClaimApprovedScreen from '../screen/ApprovedFolder/ERP/claim/claim-training-approved';
+import SearchDetailedScreen from '../screen/ERP/Search/Search-details/search-details';
+import TravelClaimApprovedScreen from '../screen/ApprovedFolder/ERP/claim/claim-travel-approved';
+import SettingDisplayScreem from '../screen/Favourite/setting-display';
+import SplashScreen from '../screen/splash-screen/splash-screen';
 
 const Stack = createNativeStackNavigator<RootStackNavigatorParamsList>();
 export default function RootStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName='SplashScreen'>
+      <Stack.Screen
+        name="SplashScreen"
+        component={SplashScreen} // Use SignInStack here
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="SignInStack"
         component={SignInScreen} // Use SignInStack here
@@ -66,13 +77,19 @@ export default function RootStack() {
         component={TrainingApprovedScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="ReviewTrainingApprovedScreen"
+        component={ReviewTrainingApprovedScreen}
+        options={{ headerShown: false }}
+      />
+
 
       <Stack.Screen
         name="ApprovalNavigator"
         component={ApprovalNavigator}
         options={{ headerShown: false }}
       />
-      
+
       <Stack.Screen
         name="HomeNavigator"
         component={HomeNavigator}
@@ -106,15 +123,15 @@ export default function RootStack() {
         component={ViewPersonalScreen}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="SalaryAdvance"
         component={SalaryAdvance}
         options={{ headerShown: false }}
       />
 
       {/* //Claims */}
-    
-      
+
+
       <Stack.Screen
         name="ClaimsNavigator"
         component={ClaimsNavigator}
@@ -123,7 +140,7 @@ export default function RootStack() {
 
       {/* NotificationScreen */}
 
-        
+
       <Stack.Screen
         name="NotificationScreen"
         component={NotificationScreen}
@@ -138,14 +155,26 @@ export default function RootStack() {
         options={{ headerShown: false }}
       />
 
-       <Stack.Screen
+      <Stack.Screen
         name="LeaveEncashmentScreen"
         component={LeaveEncashmentScreen}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="LeaveEncashApprovedScreen"
         component={LeaveEncashApprovedScreen}
+        options={{ headerShown: false }}
+      />
+      {/* //claim */}
+      <Stack.Screen
+        name="TrainingClaimApprovedScreen"
+        component={TrainingClaimApprovedScreen}
+        options={{ headerShown: false }}
+      />
+      {/* //claim travel */}
+      <Stack.Screen
+        name="TravelClaimApprovedScreen"
+        component={TravelClaimApprovedScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -153,9 +182,26 @@ export default function RootStack() {
         component={LoanScreem}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="InsuranceCalculatorScreen"
         component={InsuranceCalculatorScreen}
+        options={{ headerShown: false }}
+      />
+
+      {/* //Search÷ */}
+      <Stack.Screen
+        name="SearchDetailedScreen"
+        component={SearchDetailedScreen}
+        options={{ headerShown: false }}
+      />
+
+      {/* //÷setting */}
+
+      {/* SettingDisplayScreem */}
+
+      <Stack.Screen
+        name="SettingDisplayScreem"
+        component={SettingDisplayScreem}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

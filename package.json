@@ -26,6 +26,7 @@
     "formik": "^2.4.6",
     "install": "^0.13.0",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.525.0",
     "react": "18.3.1",
     "react-native": "0.76.4",
     "react-native-animatable": "^1.4.0",
@@ -44,7 +45,6 @@
     "react-native-screens": "^4.3.0",
     "react-native-toast-message": "^2.2.1",
     "react-native-ui-datepicker": "^2.0.11",
-    "react-native-vector-icons": "^10.2.0",
     "wretch": "^2.11.0",
     "yup": "^1.5.0"
   },

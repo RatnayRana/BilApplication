@@ -44,7 +44,7 @@ const lmsandisStyles = StyleSheet.create({
   emiText: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#673AB7',
+    color: '#008000',
     marginRight: 2
   },
   emiLabel: {
@@ -60,7 +60,7 @@ const lmsandisStyles = StyleSheet.create({
   },
   breakdown: {
     marginTop: 12,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   maincontainerStyle: {
     backgroundColor: '#fff',

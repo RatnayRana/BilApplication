@@ -56,7 +56,6 @@ const TrainingApproval = () => {
         setOpenStart(!openStart);
 
     }
-
     useEffect(() => {
         const fetchTokenData = async () => {
             const data = await EncryptedStorage.getItem('accessToken');
@@ -73,7 +72,7 @@ const TrainingApproval = () => {
                 };
 
                 mutateAsync({
-                    TrainingQueryApproval: ERPURL.fetchTrainingByCode,
+                    TrainingQueryApproval: ERPURL.fetchTrainingdetails,
                     approvedCredentials: approvedCredentials,
                 });
             }

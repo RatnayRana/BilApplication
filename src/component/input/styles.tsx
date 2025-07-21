@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
   container: {
     alignItems: 'flex-start',
     marginBottom: 10,
-    // marginTop: 10,
     gap: 10,
   },
   label: {
@@ -13,27 +12,28 @@ export const styles = StyleSheet.create({
     color: colors.black,
   },
   inputContainer: {
-    padding: 8,
     width: 300,
     height: 50,
     borderWidth: 1,
-    borderRadius:10,
-    flexDirection: 'row', 
-    justifyContent:'space-between'    
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
   input: {
-    marginRight:100,
-    flex: 1, // Ensure the TextInput takes up all available space
-    textAlignVertical: 'center', // Center text vertically (Android-specific)
-    // paddingTop: 6, // Adjust this value to move the placeholder down
-    // paddingLeft: 10, // Reset margin to avoid conflict
+    flex: 1,
     height: '100%',
+    textAlignVertical: 'center', // Ensures center text vertically on Android
+    color: colors.black,
   },
-
-
+  eyeContainer: {
+    paddingLeft: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   eye: {
-    width: 30,
-    height: 30,
-      marginLeft: 10,
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
   },
 });

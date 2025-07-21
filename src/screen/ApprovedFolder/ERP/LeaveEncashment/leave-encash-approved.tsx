@@ -9,7 +9,7 @@ import {
 
     ShiftCreationAttributes,
 } from '../../../../interface/ERP/leavetypes';
-import { leaveStatus } from '../../../../public/utility/data/leavetypedata';
+import { admn, Head, leaveStatus, manager } from '../../../../public/utility/data/leavetypedata';
 
 import Button from '../../../../component/Button';
 import apiClient from '../../../../post/postapi';
@@ -25,6 +25,8 @@ import Wrapper from '../../../auth';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
 import approvedLeaveStyles from '../Leave/style';
 import { LeaveEncashmentDataAttributes } from '../../../Approval/ERP/approval-leaveencashment/approved-leaveencash';
+import GlobalUseEffect from '../../../../public/middleware/useEffect/universalUseEffect';
+import { TokenAttributes, tokenMiddleware } from '../../../../public/middleware/token.middleware';
 
 type approvedScreen = NativeStackScreenProps<
     RootStackNavigatorParamsList,
@@ -33,14 +35,25 @@ type approvedScreen = NativeStackScreenProps<
 
 interface apData {
     encash_amount?: string;
-  
+
     approval_remarks?: string
     encash_status?: number
 }
 
 const LeaveEncashApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
 
+    const [tokenData, setTokenData] = useState<TokenAttributes | undefined>(
+        undefined,
+    );
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await tokenMiddleware();
+
+            setTokenData(data);
+        };
+        fetchData();
+    }, []);
 
     const { approvedData } = route.params;
     const [initialValues, setInitialValues] = useState<apData | null>(null);
@@ -59,7 +72,8 @@ const LeaveEncashApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
 
     function handleSuccess() {
         setOpenDialog(!openDialog);
-        navigation.navigate('LeaveEncashmentApprovalScreen')
+        navigation.goBack();
+        navigation.goBack();
 
     }
 
@@ -76,7 +90,7 @@ const LeaveEncashApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
     }, [approvedData]);
 
     const {
-        mutateAsync:ApprovedLeaveEncashDataMutate,
+        mutateAsync: ApprovedLeaveEncashDataMutate,
         isPending,
         error,
         isSuccess,
@@ -124,8 +138,21 @@ const LeaveEncashApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             </View>
         );
     }
+    const getStatusList = () => {
+        const travel_status = approvedData[0].encash_status
 
+
+        if (travel_status === 1) {
+            // Manager's status options
+            return admn;
+        }
+        else {
+            // Admin's status options
+            return manager;
+        }
+    };
     const formConfig = (Status: ShiftCreationAttributes) => {
+        const statusList = getStatusList();
         return [
             {
                 type: 'displaytext',
@@ -133,18 +160,16 @@ const LeaveEncashApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
                 name: 'encash_amount',
                 value: initialValues.encash_amount,
             },
-            
+
 
             {
                 type: 'dropdown',
                 label: 'Status',
                 name: 'encash_status',
-                data: Array.isArray(Status?.data)
-                    ? Status.data.map(item => ({
-                        label: item.name, // Assuming each item has a `name` field
-                        value: item.index, // Assuming each item has an `id` field
-                    }))
-                    : [],
+                data: statusList.map(item => ({
+                    label: item.name, // Assuming each item has a `name` field
+                    value: item.index, // Assuming each item has an `id` field
+                })),
                 placeholder: 'Select the Status',
             },
             {
@@ -157,24 +182,21 @@ const LeaveEncashApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
         ];
     };
     const handleSubmit = (values: LeaveEncashmentDataAttributes) => {
-        console.log(values)
         const {
             encash_emp_code,
             encash_id,
             encash_total_leave_balance
-            
+
         } = approvedData[0];
-console.log("Govindaalala",encash_id)
         const DataToSend = {
-            encash_amount:values.encash_amount,
+            encash_amount: values.encash_amount,
 
             encash_id: encash_id,
-            employee_code: encash_emp_code,
+            employee_code: tokenData?.employee_code,
             encash_total_leave_balance,
             encash_status: values.encash_status,
             approval_remarks: values.approval_remarks,
         };
-        console.log('data to be send ', DataToSend)
 
         ApprovedLeaveEncashDataMutate(DataToSend);
         setServerError(false);

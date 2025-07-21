@@ -13,6 +13,9 @@ import NavComponent from '../../../../component/NavComponent/navvomponent';
 import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
 import { ApprovalCardFlatList } from '../../../../component/card/ApprovalCard/ApprovalCarFlatList';
+import LoaderCompoment from '../../../../component/Loader/index.loader';
+import TextCompoment from '../../../../component/TextComponent/index.text';
+import leaveApprovalStyles from '../LeaveApproval/style';
 
 export interface TokenAttributes {
     email: string;
@@ -130,7 +133,7 @@ const LeaveEncashmentApprovalScreen = () => {
             />
 
             {isPending ? (
-                <Text>Loading...</Text>
+                <LoaderCompoment isLoading={isPending} />
             ) : (
                 LeaveEncashData && LeaveEncashData.data.data.length > 0 ? (
                     <ApprovalCardFlatList
@@ -139,6 +142,7 @@ const LeaveEncashmentApprovalScreen = () => {
                         getName={(item) => item.emp_full_name ?? 'N/A'}
                         getEmployeeNumber={(item) => item.emp_employee_number ?? 'N/A'}
                         getBranch={(item) => item.branch_name ?? 'N/A'}
+                        getStatus={(item)=> item.status_name ?? 'N/A'}
                         getDuration={item =>
                             item.encash_amount !== undefined
                                 ? `Nu ${item.encash_amount} `  // convert number to string here
@@ -157,8 +161,8 @@ const LeaveEncashmentApprovalScreen = () => {
                         />
                     </View>
                 ) : (
-                    <View>
-                        <Text >No leave requests available.</Text>
+                     <View style={leaveApprovalStyles.norequestavailableStyle}>
+                        <TextCompoment text='No Leave Encashment Requests Available' style={leaveApprovalStyles.norequestavilavleTextStyle} />
                     </View>
                 )
                 // </ScrollView>

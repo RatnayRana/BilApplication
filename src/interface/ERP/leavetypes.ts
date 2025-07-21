@@ -17,13 +17,21 @@ export interface LeaveTypeResponse {
 }
 
 export interface shiftAtrributes {
-  name: string;
+  name?: string;
   index?: number;
   id?:number
 }
 
+
 export interface ShiftCreationAttributes {
   data: Array<shiftAtrributes>;
+}
+export interface deatils{
+  value?: string;
+  label?: string;
+}
+export interface SearchOptionsAttributes {
+  policy: Array<deatils>;
 }
 
 export interface LeaveTypeResponseAttributes {

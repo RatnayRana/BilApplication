@@ -14,13 +14,14 @@ import { Dimensions } from 'react-native';
 import { homeStyles } from './style';
 import { CardFlatList } from '../../component/card/CardFlatList/CardList';
 import { TokenAttributes, tokenMiddleware } from '../../public/middleware/token.middleware';
+import { styles } from '../ERP/LeaveApplicationPage/style.leaveapplicationpage';
+import EncryptedStorage from 'react-native-encrypted-storage';
 const { height, width } = Dimensions.get('window');
 
 const Home = () => {
-  
+
   const tokenData = GlobalUseEffect();
-  console.log(tokenData, 'tokenData');
-  
+
 
   function handleButton(screen: string) {
 
@@ -31,15 +32,29 @@ const Home = () => {
   }
   const navigation =
     useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
-
+  const clearSessionData = async () => {
+    try {
+      await EncryptedStorage.removeItem('accessToken');
+      navigation.goBack(); // Or other relevant keys
+      // Remove other session-related data as needed
+    } catch (error) {
+      throw new Error('Failed to clear session data');
+    }
+  };
 
   return (
     <Wrapper>
       <WrapperHeader>
         <HomeHeader
+        TextViewStyle={homeStyles.TextView}
+        ImagedivStyle={homeStyles.Imagediv}
+        TextStyle={homeStyles.TextStyle}
+          label='Welcome ,'
+          onPress={clearSessionData}
+          iconName="poweroff" // ✅ Must be present
+          mainContainerStyle={homeStyles.headercontainer}
           imageSource={require('../../assets/profileimage.jpg')}
-          name={tokenData?.name}
-        />
+          name={tokenData?.name} iconLib="AntDesign" />
       </WrapperHeader>
       <Label
         text="Services"

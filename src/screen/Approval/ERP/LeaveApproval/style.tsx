@@ -102,6 +102,13 @@ const leaveApprovalStyles = StyleSheet.create({
     color: '#008000', // Green color for status
     fontWeight: 'bold',
   },
+  norequestavailableStyle: {
+    flex: 1, justifyContent: 'center', alignItems: 'center'
+  },
+  norequestavilavleTextStyle: {
+    color: colors.primary,
+    fontSize: 20,
+  },
 });
 
 export default leaveApprovalStyles;

@@ -17,6 +17,9 @@ import CustomDialog from '../../../../component/DialogBox/dialogbox';
 
 import { CreateTrainingAttributes } from '../../../../interface/ERP/tainingTypes';
 import { ApprovalCardFlatList } from '../../../../component/card/ApprovalCard/ApprovalCarFlatList';
+import LoaderCompoment from '../../../../component/Loader/index.loader';
+import TextCompoment from '../../../../component/TextComponent/index.text';
+import leaveApprovalStyles from '../../../Approval/ERP/LeaveApproval/style';
 
 
 
@@ -102,7 +105,7 @@ const ViewTrainingApplication = () => {
             />
 
             {isPending ? (
-                <Text>Loading...</Text>
+                <LoaderCompoment isLoading={isPending} />
             ) : (
 
                 testData && testData.data.data.length > 0 ? (
@@ -130,8 +133,8 @@ const ViewTrainingApplication = () => {
                         />
                     </View>
                 ) : (
-                    <View style={{ alignItems: 'center' }}>
-                        <Text >No leave requests available.</Text>
+                    <View style={leaveApprovalStyles.norequestavailableStyle}>
+                        <TextCompoment text='No Training Requests Available' style={leaveApprovalStyles.norequestavilavleTextStyle} />
                     </View>
                 )
 

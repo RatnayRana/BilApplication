@@ -13,8 +13,8 @@ export enum CustomTab {
   Tab2 = 1
 }
 const Calculator = () => {
-  const [selecctedTab, setSelectedTab] = useState<CustomTab>(CustomTab.Tab2);
-  const buttons: TabButtonType[] = [{ title: "Tab1" }, { title: "Tab2" }];
+  // const [selecctedTab, setSelectedTab] = useState<CustomTab>(CustomTab.Tab2);
+  // const buttons: TabButtonType[] = [{ title: "Tab1" }, { title: "Tab2" }];
   return (
     <Wrapper>
       <NavComponent
@@ -29,16 +29,17 @@ const Calculator = () => {
         textSytle={styles.text}
         text="Calculator"
       />
-      <TabButton buttons={buttons} selectedTab={selecctedTab} setSelectedTab={setSelectedTab} />
+      {/* <TabButton buttons={buttons} selectedTab={selecctedTab} setSelectedTab={setSelectedTab} /> */}
 
       <View>
-        {selecctedTab=== CustomTab.Tab1 ? (
+        {/* {selecctedTab=== CustomTab.Tab1 ? (
           <Text style={{ color: colors.primary, fontSize: 20, textAlign: 'center', marginTop: 20 }}>
             This is Tab 1
           </Text>
         ):( <Text style={{ color: colors.primary, fontSize: 20, textAlign: 'center', marginTop: 20 }}>
             This is Tab 2
-          </Text>)}
+          </Text>)} */}
+          <TextCompoment text='Coming UP'/>
       </View>
     </Wrapper>
   );

@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
   },
   Text: {
     fontSize: 20,
-    color: "white",
+    color: colors.white,
     fontWeight: 600
   },
   ButtonView: {

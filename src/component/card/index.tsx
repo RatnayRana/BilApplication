@@ -35,13 +35,13 @@ const Card: React.FC<CardProps & { onPress: () => void }> = ({
   paragraph
 
 }) => {
-  const IconComponent = iconLibraries[iconLib] || MaterialCommunityIcons; // fallback
+  const IconComponent = iconLibraries[iconLib] || MaterialCommunityIcons; 
   return (
 
     <TouchableOpacity style={[CardConatinerStyle, { backgroundColor: backgroundColor }]} onPress={onPress} >
       <IconComponent name={iconName} size={size} color={colors.primary} />
       <Text style={Textstyle}>{name}</Text>
-      <Text style={{ fontWeight: 400 }}>{paragraph}</Text>
+      <Text style={{ fontWeight: 400,marginBottom:70 }}>{paragraph}</Text>
     </TouchableOpacity>
 
   );

@@ -9,7 +9,7 @@ import {
 
     ShiftCreationAttributes,
 } from '../../../../interface/ERP/leavetypes';
-import { admn, manager } from '../../../../public/utility/data/leavetypedata';
+import { admn, Head, manager } from '../../../../public/utility/data/leavetypedata';
 
 import Button from '../../../../component/Button';
 import apiClient from '../../../../post/postapi';
@@ -134,7 +134,12 @@ const TrainingApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
         if (travel_status === 1) {
             // Manager's status options
             return admn;
-        } else {
+        }
+        else if (travel_status === 6) {
+            // Head's status options
+            return Head;
+        }
+        else {
             // Admin's status options
             return manager;
         }

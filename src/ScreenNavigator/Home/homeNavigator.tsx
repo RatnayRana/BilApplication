@@ -30,7 +30,7 @@ export const HomeNavigator = () => {
       <Stack.Screen
         name="PPF_Screen"
         component={PPF_Screen}
-        options={{ headerShown: true }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

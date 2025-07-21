@@ -61,6 +61,7 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
     function handleSuccess() {
         setOpenDialog(!openDialog);
         navigation.goBack()
+        navigation.goBack()
 
     }
 
@@ -126,33 +127,32 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             </View>
         );
     }
-        const getStatusList = () => {
-            const travel_status = approvedData[0].status_name
-            console.log('travel_status', travel_status)
-      
-    
-    
-            if (travel_status === "Pending") {
-                // Manager's status options
-                return account;
-            }
-            else if (travel_status === "Payroll Veified") {
-                // CEO's status options
-                return Head;
-            } 
-            // else if (travel_status === "CEO") {
-            //     // Admin's status options
-            //     return manager;
-            // } 
-            
-            else {
-                // Admin's status options
-                return manager;
-            }
-        };
+    const getStatusList = () => {
+        const travel_status = approvedData[0].status_name
+
+
+
+        if (travel_status === "Pending") {
+            // Manager's status options
+            return account;
+        }
+        else if (travel_status === "Payroll Veified") {
+            // CEO's status options
+            return Head;
+        }
+        // else if (travel_status === "CEO") {
+        //     // Admin's status options
+        //     return manager;
+        // } 
+
+        else {
+            // Admin's status options
+            return manager;
+        }
+    };
 
     const formConfig = (Status: ShiftCreationAttributes) => {
-                const statusList = getStatusList(); // Dynamically get status based on condition
+        const statusList = getStatusList(); // Dynamically get status based on condition
 
         return [
             {
@@ -168,7 +168,7 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
                 value: initialValues.sa_request_advance_amt,
             },
 
-         {
+            {
                 type: 'dropdown',
                 label: 'Status',
                 name: 'sa_status',
@@ -189,7 +189,6 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
         ];
     };
     const handleSubmit = (values: SalaryAdvancelData) => {
-        console.log(values)
         const {
             sa_monthly_installment,
             sa_request_advance_amt,
@@ -209,7 +208,6 @@ const SalaryAdvanceApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             sa_status: values.sa_status,
             approval_remarks: values.approval_remarks,
         };
-        console.log('data to be send ', DataToSend)
 
         mutateAsync(DataToSend);
         setServerError(false);

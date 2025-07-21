@@ -45,7 +45,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   // Validate input when value changes or component loses focus
   const validate = React.useCallback(() => {
     if (required && (!value || value.trim() === '')) {
-      setLocalError('This field is required');
+      // setLocalError('This field is required');
       return false;
     }
     setLocalError(error);

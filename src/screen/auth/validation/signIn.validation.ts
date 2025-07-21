@@ -58,4 +58,8 @@ export const calculatorLoanSchema = Yup.object().shape({
     .typeError('Loan tenure must be a number')
     .required('Loan tenure is required'),
 });
+export const PolicyValidationSchema = Yup.object().shape({
+   policy_type: Yup.string().required(' policy_type is required'),
+
+});
 

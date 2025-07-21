@@ -57,7 +57,8 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
 
     function handleSuccess() {
         setOpenDialog(!openDialog);
-        navigation.navigate('TravelApproval')
+        navigation.goBack()
+        navigation.goBack()
 
     }
 
@@ -84,8 +85,12 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
     } = useMutation({
         mutationFn: async (credentials: TravelApproval) => {
             try {
-                const data = await apiClient.post(ERPURL.travelVerification, credentials);
-                console.log("???????????????????????????????? ", data);
+                let data;
+                if (credentials.travel_status === 12) {
+                    data = await apiClient.post(ERPURL.approvedTravel, credentials);
+                } else {
+                    data = await apiClient.post(ERPURL.travelVerification, credentials);
+                }
                 if (data) {
                     setOpenDialog(true);
 
@@ -133,7 +138,8 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
         if (travel_status === 1) {
             // Manager's status options
             return admn;
-        } else {
+        }
+        else {
             // Admin's status options
             return manager;
         }
@@ -195,13 +201,14 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             travel_duration,
             travel_from_place,
             travel_to_place,
+            travel_description
 
         } = approvedData[0];
         // "travel_advance_amount": "0.00"
 
         // const travel_advance_amount = Number(approvedData[0].travel_advance_amount)
         const travel_advance_amount = approvedData[0].travel_advance_amount ? Number(approvedData[0].travel_advance_amount) : null
-   
+
         const DataToSend = {
             travel_advance_amount: travel_advance_amount,
             travel_from_place,
@@ -218,7 +225,8 @@ const TravelApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
             travel_from_date,
             travel_to_date,
             travel_duration: Number(travel_duration),
-            travel_description: values.travel_description,
+            travel_description: travel_description,
+            travel_remarks: values.approval_remarks 
         };
         mutateAsync(DataToSend as TravelApproval);
         setServerError(false);

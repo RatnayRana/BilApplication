@@ -9,7 +9,7 @@ interface userinterface extends imageInterface{
 
 const ImageComponent:React.FC<userinterface> = ({imageSource,width,height,style}) => {
     return (
-        <View style={styles.container}>
+        <View >
             <Image
                 source={imageSource}
                 style={[styles.image,style]}

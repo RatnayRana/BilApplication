@@ -35,3 +35,11 @@ export interface CreateTravelAttributes {
   travel_description?: string;
   need_advance?:string | boolean
 }
+export interface LeaveDetails {
+  leave_id: number;
+  leave_emp_code: string;
+  leave_reason: string;
+  leave_year: number;
+  status_name: string;
+  leave_type_name: string;
+}

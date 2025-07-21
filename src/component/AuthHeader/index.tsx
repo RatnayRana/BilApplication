@@ -34,14 +34,14 @@ const AuthHeader = ({
         imageSource={require('../../assets/billogo.png')}
         width={200}
         height={200}
-        style={headerImage}
+        style={[headerImage,{alignItems:'center'}]}
       />
 
       {/* Title Positioned Differently */}
       <View style={viewStyle}>
-        <Text style={titleStyle}>{title}</Text>
+        <Text style={[titleStyle,{textAlign:'center'}]}>{title}</Text>
 
-        <Text style={contentStyle}>{content}</Text>
+        <Text style={[contentStyle,{textAlign: 'center'}]}>{content}</Text>
       </View>
     </View>
   );

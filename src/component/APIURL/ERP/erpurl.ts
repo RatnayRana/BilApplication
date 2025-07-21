@@ -20,6 +20,7 @@ export const ERPURL = {
   travelApprovalList: `${ERPURLAPI}/erp/travelApprovalList`,
   travelVerification: `${ERPURLAPI}/erp/travelVerification`,
   travelList: `${ERPURLAPI}/erp/travelList`,
+   approvedTravel: `${ERPURLAPI}/erp/approvedTravel`,
 
   // Training Management
   trainingType: `${ERPURLAPI}/erp/trainingType`,
@@ -27,8 +28,9 @@ export const ERPURL = {
   fetchTrainingCountryFunding: `${ERPURLAPI}/erp/fetchTrainingCountryFunding`,
   createTraining: `${ERPURLAPI}/erp/createTraining`,
   trainingList: `${ERPURLAPI}/erp/traininglist`,
-  fetchTrainingByCode: `${ERPURLAPI}/erp/fetchTrainingByCode`,
+  fetchTrainingdetails: `${ERPURLAPI}/erp/fetchTrainingdetails`,
   trainingVerification: `${ERPURLAPI}/erp/trainingVerification`,
+  approvedTraining: `${ERPURLAPI}/erp/approvedTraining`,
 
   // Salary Advance
   fetchAdvanceDetail: `${ERPURLAPI}/erp/fetchAdvancedetail`,
@@ -40,4 +42,18 @@ export const ERPURL = {
   applyLeaveEncashment:`${ERPURLAPI}/erp/applyLeaveEncashment`,
   fetchApprovalLeaveEncashment:`${ERPURLAPI}/erp/fetchApprovalLeaveEncashment`,
   leaveEncashmentApprove:`${ERPURLAPI}/erp/leaveEncashmentApprove`,
+  leaveapplicant:`${ERPURLAPI}/erp/leaveapplicant`,
+
+  //claim
+  fetchTrainingClaimApproval:`${ERPURLAPI}/erp/fetchTrainingClaimApproval`,
+  approvedTrainingClaimExpenses:`${ERPURLAPI}/erp/approvedTrainingClaimExpenses`,
+
+  //Travel Claim
+  fetchTravelClaimApproval:`${ERPURLAPI}/erp/fetchTravelClaimApproval`,
+approvedTravelClaimExpenses:`${ERPURLAPI}/erp/approvedTravelClaimExpenses`
 };
+
+export const IMSURL={
+    policySearch:`${ERPURLAPI}/ims/policysearch`,
+
+}

@@ -9,13 +9,14 @@ import { jwtDecode } from 'jwt-decode';
 import { ERPURL } from '../../../../component/APIURL/ERP/erpurl';
 import apiClient from '../../../../post/postapi';
 import { useMutation } from '@tanstack/react-query';
-import { RootStackNavigatorParamsList } from '../../../../component/interface/routeinterface';
-import { NavigationProp, useNavigation } from '@react-navigation/core';
+//  
 import NavComponent from '../../../../component/NavComponent/navvomponent';
 import { styles } from '../../../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
-import { TravelApprovalData } from '../../../../interface/ERP/travelApproval';
 import leaveApprovalStyles from '../../../Approval/ERP/LeaveApproval/style';
+import LoaderCompoment from '../../../../component/Loader/index.loader';
+import TextCompoment from '../../../../component/TextComponent/index.text';
+import { LeaveDetails } from '../../../../interface/ERP/leaveapplication';
 
 
 
@@ -23,21 +24,22 @@ import leaveApprovalStyles from '../../../Approval/ERP/LeaveApproval/style';
 const   ViewLeaveApplication = () => {
     const [openStart, setOpenStart] = useState(true);
     const [ApprovedCredentials,setApprovedCredentials] = useState<string>()
+     const [name,setName] = useState<string>()
+      const [employee,setEmployeeId] = useState<string>()
 
-    const navogation =
-        useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
+    // const navogation =
+    //     useNavigation<NavigationProp<RootStackNavigatorParamsList>>();
     const {
         mutateAsync,
         isPending,
         error,
         data: testData,
     } = useMutation({
-        mutationKey: ['test'],
+        mutationKey: ['leaveViewDetails'],
         mutationFn: async (val: {
             leaveQueryApproval: string;
             approvedCredentials: {
-                email: string;
-                username: string;
+         
                 employee_code: string;
             };
         }) => {
@@ -48,9 +50,9 @@ const   ViewLeaveApplication = () => {
                 status: number;
                 message: string;
                 data: {
-                    data: {
-                        data: TravelApprovalData[]
-                    }
+                    
+                        data: LeaveDetails[]
+                    
                 };
             };
         },
@@ -63,21 +65,25 @@ const   ViewLeaveApplication = () => {
     useEffect(() => {
         const fetchTokenData = async () => {
             const data = await EncryptedStorage.getItem('accessToken');
+            console.log("Datata",data)
             if (data) {
                 const tokenData: any = jwtDecode(data);
-                const decodedToken = tokenData?.dataValues;
-                const { email, employee_code, employee_id } = decodedToken;
+              
+                const decodedToken = tokenData;
+            
+                const { employee_code, name,employee_id} = decodedToken;
                 setApprovedCredentials(employee_code)
+                setName(name)
+                setEmployeeId(employee_id)
 
                 const approvedCredentials = {
-                    email: email,
-                    username: employee_id,
+                 
                     employee_code: employee_code,
 
                 };
 
                 mutateAsync({
-                    leaveQueryApproval: ERPURL.travelApprovalList,
+                    leaveQueryApproval: ERPURL.leaveapplicant,
                     approvedCredentials: approvedCredentials,
                 });
             }
@@ -86,13 +92,15 @@ const   ViewLeaveApplication = () => {
         fetchTokenData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // Only run once when the component mounts
-    const handleSubmit = (selectedItem: TravelApprovalData) => {
-        const selectedItemData = {
-            ...selectedItem,
-            employee_code:ApprovedCredentials
-        }
-        navogation.navigate('TrainingApprovedScreen', { approvedData: [selectedItemData] });
-    };
+
+
+    // const handleSubmit = (selectedItem: LeaveDetails) => {
+    //     const selectedItemData = {
+    //         ...selectedItem,
+    //         employee_code:ApprovedCredentials
+    //     }
+    //     navogation.navigate('NestedNavigatorName', { screen: 'LeaveApplicationScreen', params: { approvedData: [selectedItem] } });
+    // };
 
     return (
         <Wrapper>
@@ -106,26 +114,27 @@ const   ViewLeaveApplication = () => {
                 height={24}
                 imageStyle={styles.imagev}
                 textSytle={styles.text}
-                text="View Personal Details"
+                text="View Leave  Details"
             />
 
             {isPending ? (
-                <Text>Loading...</Text>
+                                <LoaderCompoment isLoading={isPending} />
+                
             ) : (
                 <ScrollView contentContainerStyle={{
                     paddingVertical: 10
                 }}>
-                    {testData && testData.data.data.data.length > 0 ? (
-                        testData.data.data.data.map(item => (
+                    {testData && testData.data.data.length > 0 ? (
+                        testData.data.data.map(item => (
 
                             <ApprovalCard
-                                key={item.travel_id}
-                                onPress={() => handleSubmit(item)}
+                                key={item.leave_id}
+                                // onPress={() => handleSubmit(item)}
                                 cardContainer={leaveApprovalStyles.cardContainer}
                                 infoContainer={leaveApprovalStyles.infoContainer}
-                                name={item.emp_full_name}
-                                EmployeeID={item.emp_employee_number}
-                                Branch={item.branch_name}
+                                name={name}
+                                EmployeeID={employee}
+                                Branch={item.status_name}
                                 nameStyle={leaveApprovalStyles.name}
                                 details={leaveApprovalStyles.details}
                                 leaveContainer={leaveApprovalStyles.leaveContainer}
@@ -133,7 +142,7 @@ const   ViewLeaveApplication = () => {
                                 durationStyle={leaveApprovalStyles.durationStyle}
                                 actionButton={leaveApprovalStyles.actionButton}
                                 imageViewStyle={leaveApprovalStyles.ImageStyle}
-                                Duration={item.travel_duration}
+                                Duration={item.leave_type_name}
                                 iconSize={35}
                                 iconname='edit'
                             />
@@ -151,9 +160,9 @@ const   ViewLeaveApplication = () => {
                             />
                         </View>
                     ) : (
-                        <View style={{ alignItems: 'center' }}>
-                            <Text >No leave requests available.</Text>
-                        </View>
+                         <View style={leaveApprovalStyles.norequestavailableStyle}>
+                        <TextCompoment text='No Leave Requests Available' style={leaveApprovalStyles.norequestavilavleTextStyle} />
+                    </View>
                     )}
                 </ScrollView>
             )}

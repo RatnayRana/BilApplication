@@ -9,7 +9,7 @@ import { styles } from '../ERP/LeaveApplicationPage/style.leaveapplicationpage';
 import lmsandisStyles from './listyle';
 import NavComponent from '../../component/NavComponent/navvomponent';
 import Button from '../../component/Button';
-import { CalDisplayResukt } from '../../component/cal-displayresult/caldisplay-result';
+import {  CalDisplayResult } from '../../component/cal-displayresult/caldisplay-result';
 interface LoanData {
     loanAmount: string,
     interestRate: string,
@@ -27,26 +27,23 @@ export function LoanScreem() {
 
 
         const P = Number(values.loanAmount);
-        // console.log(
-        //     "P", P
-        // )
+    
         const R = Number(values.interestRate) / 12 / 100;
         const N = Number(values.tenureYears) * 12;
 
-        console.log(P, R, N);
 
 
 
         const emiValue = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
-        const roundedEmi = Math.round(emiValue);
+        const roundedEmi =emiValue.toFixed(2);
 
-        const totalPay = roundedEmi * N;
+        const totalPay = Number(roundedEmi) * N;
         const interest = totalPay - P;
 
         setPrincipal(P);
-        setEmi(roundedEmi);
-        setTotalInterest(Math.round(interest));
-        setTotalPayment(Math.round(totalPay));
+        setEmi(Number(roundedEmi));
+        setTotalInterest(Number(interest.toFixed(2)));
+        setTotalPayment((Number(totalPay.toFixed(2))));
     }
     return (
         <Wrapper>
@@ -96,7 +93,7 @@ export function LoanScreem() {
                                 />
                             </View>
 
-                            <CalDisplayResukt subContainerStyle={lmsandisStyles.subConstainerStyle} emiTextstyle={lmsandisStyles.emiText} totalPayment={totalPayment} principal={principal} emi={emi!} maincontainerStyle={lmsandisStyles.maincontainerStyle} emiLabelstyle={lmsandisStyles.emiLabel} />
+                            <CalDisplayResult  totalPayment={totalPayment} principal={principal} emi={emi!}  />
                         </View>
                     )}
                 </Formik>

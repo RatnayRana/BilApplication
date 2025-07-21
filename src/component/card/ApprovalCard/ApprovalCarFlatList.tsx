@@ -13,7 +13,7 @@ interface CardListData<T> {
     getName: (item: T) => string;
     getEmployeeNumber: (item: T) => string;
     getBranch: (item: T) => string;
-    getDuration: (item: T) => string;
+    getDuration?: (item: T) => string | undefined;
     getKey: (item: T) => string;
     getAmount?:(item:T)=>string
     getStatus?: (item: T) => string;
@@ -43,7 +43,7 @@ export const ApprovalCardFlatList = <T,>({ data, onPress, getName,
                 actionButton={leaveApprovalStyles.actionButton}
                 imageViewStyle={leaveApprovalStyles.ImageStyle}
                 statusStyle={leaveApprovalStyles.statusStyle}
-                Duration={getDuration(item)}
+                Duration={getDuration?.(item)}
                 iconSize={35}
                 iconname='edit'
             />}

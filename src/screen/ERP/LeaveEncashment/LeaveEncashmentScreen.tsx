@@ -202,7 +202,6 @@ const LeaveEncashmentScreen: React.FC = () => {
           validationSchema={leave_encash_validation}
           onSubmit={handleSubmit}>
           {({ handleSubmit, values, setFieldValue, errors, touched }) => {
-            console.log(errors)
 
             return (
               <View>

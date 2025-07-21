@@ -1,7 +1,7 @@
 import AuthHeader from '../../../component/AuthHeader';
 
 import React, { useState } from 'react';
-import {  SafeAreaView, ScrollView } from 'react-native';
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useMutation } from '@tanstack/react-query';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -16,6 +16,8 @@ import { styles } from './styles';
 import { authFields } from '../../../utils/InputFields/AuthInput';
 import CustomDialog from '../../../component/DialogBox/dialogbox';
 import { AxiosError } from 'axios'; // Ensure AxiosError is imported
+import TextCompoment from '../../../component/TextComponent/index.text';
+import { colors } from '../../../utils/color';
 
 type SignInProps = NativeStackScreenProps<
   RootStackNavigatorParamsList,
@@ -50,7 +52,9 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
   } = useMutation({
     mutationFn: async (credentials: AuthAttributes) => {
       try {
+        console.log('crendentials', credentials)
         const data = await apiClient.post(ERPURL.login, credentials);
+        console.log('dtydr', data)
         if (data) {
           await EncryptedStorage.setItem(
             'accessToken',
@@ -63,18 +67,20 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
 
         return data;
         // eslint-disable-next-line no-catch-shadow, @typescript-eslint/no-shadow
-      } catch (error) {
-        if (error) {
-          setErrorMessage((error as AxiosError)?.message);
-          throw error;
+      } catch (err) {
+        const axiosError = err as AxiosError;
+
+        // Check if it's an Axios error with a response
+        if (axiosError.response && axiosError.response.data) {
+          const errorResponse = axiosError.response.data as { error?: string };
+          setErrorMessage(errorResponse.error || 'Something went wrong');
+        } else {
+          // Network error or server down
+          setErrorMessage('Server is currently Down');
         }
-        setErrorMessage(
-          (error as unknown as axiosError)?.response?.data?.error,
-        );
 
         setServerError(true);
-
-        throw error;
+        throw err;
       }
     },
   });
@@ -92,7 +98,7 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
         <CustomDialog
           message={
             (error as unknown as axiosError)?.response?.data?.error ||
-            errorMessage
+            errorMessage || 'Server Down'
           }
           color="#D32F2F"
           iconColor="#D32F2F"
@@ -115,12 +121,12 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
 
 
       <SafeAreaView>
+
         <ScrollView contentContainerStyle={styles.mainContainer}>
           <AuthHeader
             title={'Signin'}
-            // style={styles.container}
             headerImage={styles.headerImage}
-            content={' Kindly input your Credientials'}
+            content={' With your ERP Credientials'}
             titleStyle={styles.titleStyle}
             viewStyle={styles.viewStyle}
             contentStyle={styles.contentStyle}
@@ -136,9 +142,22 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
             inputStyle={styles.inputstyle}
             buttonStyle={styles.buttonStyle}
             labelButtonstyle={styles.labelButtonstyle}
-          
+
           />
+           <TextCompoment text='By Logging into eBIL, you agree to the' style={{marginTop:5}}/>
+          <View style={{flex:1,flexDirection:'row', gap:12}}>
+            <TouchableOpacity>
+              <TextCompoment style={{color:colors.primary}} text='Terms & Conditions'/>
+            </TouchableOpacity>
+              <TouchableOpacity>
+              <TextCompoment text='and' style={{}}/>
+            </TouchableOpacity>
+             <TouchableOpacity>
+              <TextCompoment style={{color:colors.primary}} text='Privacy Policy'/>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
+
       </SafeAreaView>
     </Wrapper>
   );

@@ -15,6 +15,9 @@ import { styles } from '../../LeaveApplicationPage/style.leaveapplicationpage';
 import CustomDialog from '../../../../component/DialogBox/dialogbox';
 import { TravelApprovalData } from '../../../../interface/ERP/travelApproval';
 import { ApprovalCardFlatList } from '../../../../component/card/ApprovalCard/ApprovalCarFlatList';
+import TextCompoment from '../../../../component/TextComponent/index.text';
+import leaveApprovalStyles from '../../../Approval/ERP/LeaveApproval/style';
+import LoaderCompoment from '../../../../component/Loader/index.loader';
 
 const ViewTravelApplication = () => {
     const [openStart, setOpenStart] = useState(true);
@@ -49,7 +52,6 @@ const ViewTravelApplication = () => {
             };
         },
     });
-    console.log("gobinfdas",testData)
     function handleClose() {
         setOpenStart(!openStart);
 
@@ -59,10 +61,8 @@ const ViewTravelApplication = () => {
     useEffect(() => {
         const fetchTokenData = async () => {
             const data = await EncryptedStorage.getItem('accessToken');
-            console.log("FGHSHDSJHDSBHJBHJSD",data)
             if (data) {
                 const tokenData: any = jwtDecode(data);
-                console.log("TokenData")
                 const decodedToken = tokenData;
             
                 const { employee_code } = decodedToken;
@@ -105,7 +105,7 @@ const ViewTravelApplication = () => {
             />
 
             {isPending ? (
-                <Text>Loading...</Text>
+                 <LoaderCompoment isLoading={isPending} />
             ) : (
 
                 testData && testData.data.data.data.length > 0 ? (
@@ -133,8 +133,8 @@ const ViewTravelApplication = () => {
                         />
                     </View>
                 ) : (
-                    <View style={{ alignItems: 'center' }}>
-                        <Text >No leave requests available.</Text>
+                     <View style={leaveApprovalStyles.norequestavailableStyle}>
+                        <TextCompoment text='No Travel Requests Available' style={leaveApprovalStyles.norequestavilavleTextStyle} />
                     </View>
                 )
 

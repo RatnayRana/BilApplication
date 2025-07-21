@@ -56,7 +56,8 @@ const ApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
 
   function handleSuccess() {
     setOpenDialog(!openDialog);
-    navigation.navigate('ApprovalNavigator')
+    navigation.goBack();
+    navigation.goBack()
 
   }
 
@@ -132,7 +133,7 @@ const ApprovedScreen: React.FC<approvedScreen> = ({ route }) => {
       {
         type: 'displaytext',
         label: 'From Date',
-        name: ' ',
+        name: 'leave_from_date',
         value: initialValues.leave_from_date,
       },
       {
